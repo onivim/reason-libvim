@@ -5,11 +5,15 @@
   "license": "MIT",
   "esy": {
     "build": ["refmterr dune build -p libvim"],
-    "buildsInSource": "_build"
+    "buildsInSource": "_build",
+    "install": [
+        "esy-installer libvim.install"
+    ]
   },
   "resolutions": {
     "@esy-ocaml/esy-installer": "0.0.1",
-    "@opam/cmdliner": "1.0.2"
+    "@opam/cmdliner": "1.0.2",
+    "libvim": "link:../libvim2/src"
   },
   "dependencies": {
     "@opam/dune": "*",
