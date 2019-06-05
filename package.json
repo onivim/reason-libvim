@@ -3,6 +3,9 @@
   "version": "8.10869.1000",
   "description": "Reason adapter for libvim",
   "license": "MIT",
+  "scripts": {
+    "format": "esy dune build @fmt --auto-promote"
+  },
   "esy": {
     "build": ["refmterr dune build -p libvim"],
     "buildsInSource": "_build",
