@@ -1,0 +1,3 @@
+(library
+    (name libvim)
+    (public_name libvim))
