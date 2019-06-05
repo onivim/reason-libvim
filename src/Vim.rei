@@ -1,4 +1,7 @@
 module Buffer = Buffer;
 
 let init: unit => unit;
-/* print_endline("Hello, world!"); */
+
+let input: string => unit;
+
+let command: string => unit;

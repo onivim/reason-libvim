@@ -26,14 +26,26 @@ let c_flags = ["-I"; libvimIncludePath ; "-I"; Filename.concat libvimIncludePath
 
 let libPath = "-L" ^ (Sys.getenv "LIBVIM_LIB_PATH")
 
+let _ = print_endline (libPath)
+
 let ccopt s = ["-ccopt"; s]
 let cclib s = ["-cclib"; s]
 
 let flags =
     match get_os with
     | Windows ->  []
+        @ ccopt(libPath)
+        @ cclib("-lvim")
+        @ cclib("-luuid")
+        @ cclib("-lnetapi32")
+        @ cclib("-lole32")
+        @ cclib("-lgdi32")
     | Linux -> []
+        @ ccopt(libPath)
+        @ cclib("-lvim")
     | _ -> []
+        @ ccopt(libPath)
+        @ cclib("-lvim")
 ;;
 
 let cxx_flags =
