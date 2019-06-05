@@ -22,7 +22,13 @@ let get_os =
 let root = Sys.getenv "cur__root"
 let libvimIncludePath = Sys.getenv "LIBVIM_INCLUDE_PATH"
 let libvimLibPath = Sys.getenv "LIBVIM_LIB_PATH"
-let c_flags = ["-I"; libvimIncludePath ; "-I"; Filename.concat libvimIncludePath "proto"; "-DHAVE_CONFIG_H"; "-DMACOS_X"; "-DMACOS_X_DARWIN"] (* "-I"; Filename.concat root "src"] *)
+let c_flags = ["-I"; libvimIncludePath ; "-I"; Filename.concat libvimIncludePath "proto"] (* "-I"; Filename.concat root "src"] *)
+
+let c_flags =
+    match get_os with
+    | Windows -> c_flags
+    | Linux -> c_flags @ ["-DHAVE_CONFIG_H"]
+    | _ -> c_flags @ ["-DHAVE_CONFIG_H"; "-DMACOS_X"; "-DMACOS_X_DARWIN"]
 
 let libPath = "-L" ^ (Sys.getenv "LIBVIM_LIB_PATH")
 
