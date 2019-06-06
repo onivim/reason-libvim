@@ -50,7 +50,7 @@ let flags =
         @ ccopt(libPath)
         @ cclib("-lvim")
         @ cclib("-lX11")
-        @ cclib("-lsm")
+        @ cclib("-lSM")
         @ cclib("-lncurses")
         @ cclib("-lXt")
     | _ -> []
