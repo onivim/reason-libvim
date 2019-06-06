@@ -51,7 +51,6 @@ let flags =
         @ cclib("-lvim")
         @ cclib("-lX11")
         @ cclib("-lncurses")
-        @ cclib("-liconv")
     | _ -> []
         @ ccopt(libPath)
         @ cclib("-lvim")
