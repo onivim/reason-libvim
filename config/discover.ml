@@ -49,6 +49,7 @@ let flags =
     | Linux -> []
         @ ccopt(libPath)
         @ cclib("-lvim")
+        @ cclib("-lICE")
         @ cclib("-lX11")
         @ cclib("-lSM")
         @ cclib("-lncurses")
