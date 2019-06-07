@@ -1,0 +1,7 @@
+(executable
+    (name Example)
+    (package libvim-example)
+    (public_name Example)
+    (libraries
+        libvim
+            ))
