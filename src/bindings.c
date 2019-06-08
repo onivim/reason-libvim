@@ -19,10 +19,11 @@ Val_some( value v )
 }
 
 void onBufferChanged (bufferUpdate_T bu) {
-    static value* closure = NULL;
+    printf("RAW ONBUFFERCHANGED\n");
+    static value* lv_onBufferChanged = NULL;
 
-    if (closure == NULL) {
-        closure = caml_named_value("lv_onBufferChanged");
+    if (lv_onBufferChanged == NULL) {
+        lv_onBufferChanged = caml_named_value("lv_onBufferChanged");
     }
 
             value* pArgs = (value *)malloc(sizeof(value) * 4);
@@ -31,14 +32,26 @@ void onBufferChanged (bufferUpdate_T bu) {
             pArgs[2] = Val_int(bu.lnume);
             pArgs[3] = Val_long(bu.xtra);
 
-    caml_callbackN(*closure, 4, pArgs);
+    caml_callbackN(*lv_onBufferChanged, 4, pArgs);
 
     free(pArgs);
+}
+
+void onAutocommand (int event, buf_T *buf) {
+    printf("RAW AUTOCOMMAND: %d\n", event);
+    static value* lv_onAutocmd = NULL;
+
+    if (lv_onAutocmd == NULL) {
+        lv_onAutocmd = caml_named_value("lv_onAutocommand");
+    }
+
+    caml_callback2(*lv_onAutocmd, Val_int(event), (value)buf);
 }
 
 CAMLprim value
 libvim_vimInit(value unit) {
     vimSetBufferUpdateCallback(&onBufferChanged);
+    vimSetAutoCommandCallback(&onAutocommand);
 
     char *args[0];
     vimInit(0, args);

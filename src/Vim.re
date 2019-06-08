@@ -4,18 +4,25 @@ module Cursor = Cursor;
 module Mode = Mode;
 
 let _onAutocommand = (autoCommand: Types.autocmd, buffer: Buffer.t) => {
-    /* let n = switch(Buffer.getFilename(buffer)) { */
-    /* | Some(v) => v */
-    /* | None => "[none]" */
-    /* }; */
+    print_endline ("start autocmd handler...");
+    let n = switch(Buffer.getFilename(buffer)) {
+    | Some(v) => v
+    | None => "[none]"
+    };
 
-    let n = "test";
+    print_endline ("AUTOCOMMAND: " ++ string_of_int(Obj.magic(autoCommand)));
     
     switch (autoCommand) {
+    | BufNew => {
+        print_endline ("buf new start...");
+        Printf.printf("[AutoCommand] Buffer new: %d name: %s\n", Buffer.getId(buffer), n);
+        print_endline ("buf new end...");
+    }
     | BufEnter => Printf.printf("[AutoCommand] Buffer enter: %d name: %s\n", Buffer.getId(buffer), n);
     | _ => ();
     }
 
+    print_endline ("end autocmd handler...");
 };
 
 let _onBufferChanged = (buffer: Buffer.t, startLine: int, endLine: int, xtra: int) => {
@@ -26,6 +33,7 @@ let _onBufferChanged = (buffer: Buffer.t, startLine: int, endLine: int, xtra: in
 
 let init = () => {
   Callback.register("lv_onBufferChanged", _onBufferChanged);
+  Callback.register("lv_onAutocommand", _onAutocommand);
 
   Native.vimInit();
 
