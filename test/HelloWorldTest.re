@@ -1,8 +1,8 @@
 open TestFramework;
 
-describe("Preamble", ({test, _}) => {
-  test("fails", ({expect}) => {
-    expect.bool(false).toBe(
+describe("HelloWorld", ({test, _}) => {
+  test("passes", ({expect}) => {
+    expect.bool(true).toBe(
       true,
     );
   });
