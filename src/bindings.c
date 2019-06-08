@@ -50,6 +50,9 @@ libvim_vimInput(value v) {
     char_u *s;
     s = (char_u *)String_val(v);
     vimInput(s);
+
+    printf("Raw line: %d\n", vimCursorGetLine());
+    printf("Raw column: %d\n", vimCursorGetColumn());
     return Val_unit;
 }
 
@@ -112,6 +115,23 @@ libvim_vimBufferGetById(value v) {
     } else {
         value b = (value)buf;
         CAMLreturn(Val_some(b));
+    }
+}
+
+CAMLprim value
+libvim_vimBufferGetFilename(value v) {
+    CAMLparam1(v);
+    buf_T *buf = (buf_T *)v;
+
+    if (!buf) {
+        CAMLreturn(Val_none);
+    } else {
+        char_u* fname = vimBufferGetFilename(buf);
+        if (!fname) {
+            CAMLreturn(Val_none);
+        } else {
+            CAMLreturn(caml_copy_string(fname));
+        }
     }
 }
 

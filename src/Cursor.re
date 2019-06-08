@@ -3,7 +3,7 @@ let getLine = () => {
 };
 
 let getColumn = () => {
-    Native.vimCursorGetLine();
+    Native.vimCursorGetColumn();
 };
 
 let getPosition = () => {
@@ -11,4 +11,8 @@ let getPosition = () => {
         ~line=Native.vimCursorGetLine(),
         ~column=Native.vimCursorGetColumn(),
     );
+};
+
+let onCursorMoved = (f) => {
+    Event.add(f, Listeners.cursorMoved);
 };

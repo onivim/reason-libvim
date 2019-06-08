@@ -13,10 +13,6 @@ let show = (mode: t) => {
 
 let getCurrent = Native.vimGetMode;
 
-let onChanged = (f: Types.modeChangedListener) => {
-    Globals.modeChangedListeners := [f, ...Globals.modeChangedListeners^];
-
-    () => {
-        List.filter((g) => g !== f, Globals.modeChangedListeners^);
-    };
+let onChanged = (f: Listeners.modeChangedListener) => {
+    Event.add(f, Listeners.modeChanged);
 };

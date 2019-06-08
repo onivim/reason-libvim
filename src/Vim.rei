@@ -1,5 +1,6 @@
 module Buffer = Buffer;
 module BufferUpdate = BufferUpdate;
+module Cursor = Cursor;
 module Mode = Mode;
 
 let init: unit => unit;

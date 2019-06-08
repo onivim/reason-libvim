@@ -1,7 +1,11 @@
-type t = Types.buffer;
+type t = Native.buffer;
 
 let openFile = (filePath: string) => {
     Native.vimBufferOpen(filePath);
+}
+
+let getFilename = (buffer: t) => {
+    Native.vimBufferGetFilename(buffer);
 }
 
 let getId = (buffer: t) => {
@@ -16,6 +20,6 @@ let setCurrent = (buffer: t) => {
     Native.vimBufferSetCurrent(buffer);
 };
 
-let onUpdate = (f: Types.bufferUpdateListener) => {
-    Event.add(f, Globals.bufferUpdateListeners);
+let onUpdate = (f: Listeners.bufferUpdateListener) => {
+    Event.add(f, Listeners.bufferUpdate);
 };
