@@ -1,0 +1,13 @@
+{
+  "source": "./package.json",
+  "scripts": {
+    "run": "esy '@test' x LibvimUnitTestRunner"
+  },
+  "override": {
+      "build": ["dune build --root . -j4"],
+      "install": [
+          "esy-installer libvim.install",
+          "esy-installer libvim-test.install"
+      ]
+  }
+}
