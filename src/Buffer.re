@@ -19,5 +19,3 @@ let onUpdate = (f: bufferUpdateListener) => {
         List.filter((g) => g !== f, Global.bufferUpdateListeners^);
     };
 };
-
-let test = () => print_endline("Hello, world");
