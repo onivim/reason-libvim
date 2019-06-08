@@ -1,0 +1,7 @@
+(library
+    (name reason_jsonrpc_test)
+    (public_name reason-jsonrpc-test.lib)
+    (flags (:standard (-w -39)))
+    (ocamlopt_flags -linkall -g)
+    (libraries yojson rely.lib reason-jsonrpc)
+)
