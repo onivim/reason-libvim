@@ -2,9 +2,18 @@ module Buffer = Buffer;
 module BufferUpdate = BufferUpdate;
 module Mode = Mode;
 
-let init = _ => {
+let _onBufferChanged = (buffer: Buffer.t, startLine: int, endLine: int, xtra: int) => {
+
+    let bufferId = Buffer.getId(buffer);
+    Printf.printf("Buffer changed - id: %d startLine: %d endLine: %d xtra: %d\n", bufferId, startLine, endLine, xtra);
+}
+
+let init = () => {
+  Callback.register("lv_onBufferChanged", _onBufferChanged);
+
   Native.vimInit();
-  print_endline("Hello, world!");
+
+  Event.dispatch(Mode.getCurrent(), Globals.modeChangedListeners);
 };
 
 let input = v => {
@@ -17,7 +26,7 @@ let input = v => {
     print_endline ("New mode: " ++ Mode.show(newMode));
 
     if (newMode != prevMode) {
-        List.iter((f) => f(newMode), Globals.modeChangedListeners^);
+        Event.dispatch(newMode, Globals.modeChangedListeners);
     }
 };
 

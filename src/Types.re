@@ -116,3 +116,4 @@ type modeChangedListener = mode => unit;
 type buffer;
 
 type bufferUpdateListener = BufferUpdate.t => unit;
+type cursorPositionChangedListener = Position.t => unit;

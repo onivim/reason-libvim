@@ -10,15 +10,36 @@
 
 static value
 Val_some( value v )
-{   
+{
     CAMLparam1( v );
     CAMLlocal1( some );
     some = caml_alloc(1, 0);
     Store_field( some, 0, v );
     CAMLreturn( some );
 }
+
+void onBufferChanged (bufferUpdate_T bu) {
+    static value* closure = NULL;
+
+    if (closure == NULL) {
+        closure = caml_named_value("lv_onBufferChanged");
+    }
+
+            value* pArgs = (value *)malloc(sizeof(value) * 4);
+            pArgs[0] = (value)bu.buf;
+            pArgs[1] = Val_int(bu.lnum);
+            pArgs[2] = Val_int(bu.lnume);
+            pArgs[3] = Val_long(bu.xtra);
+
+    caml_callbackN(*closure, 4, pArgs);
+
+    free(pArgs);
+}
+
 CAMLprim value
 libvim_vimInit(value unit) {
+    vimSetBufferUpdateCallback(&onBufferChanged);
+
     char *args[0];
     vimInit(0, args);
     return Val_unit;
@@ -65,6 +86,13 @@ libvim_vimGetMode(value unit) {
 }
 
 CAMLprim value
+libvim_vimBufferGetId(value v) {
+    buf_T *buf = (buf_T *)v;
+    int id = vimBufferGetId(buf);
+    return Val_int(id);
+}
+
+CAMLprim value
 libvim_vimBufferOpen(value v) {
     CAMLparam1(v);
     char_u *s;
@@ -93,4 +121,17 @@ libvim_vimBufferSetCurrent(value v) {
     buf_T *buf = (buf_T *)v;
 
     vimBufferSetCurrent(buf);
+    return Val_unit;
+}
+
+CAMLprim value
+libvim_vimCursorGetLine(value unit) {
+    int line = vimCursorGetLine();
+    return Val_int(line);
+}
+
+CAMLprim value
+libvim_vimCursorGetColumn(value unit) {
+    int column = vimCursorGetColumn();
+    return Val_int(column);
 }
