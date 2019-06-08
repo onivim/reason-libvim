@@ -5,6 +5,9 @@
   },
   "override": {
       "build": ["dune build --root . -j4"],
+      "dependencies": {
+          "@reason-native/rely": "2.2.0"
+      },
       "install": [
           "esy-installer libvim.install",
           "esy-installer libvim-example.install"
