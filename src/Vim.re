@@ -5,6 +5,46 @@ module BufferUpdate = BufferUpdate;
 module Cursor = Cursor;
 module Mode = Mode;
 
+type fn =  unit => unit;
+
+let queuedFunctions: ref(list(fn)) = ref([]);
+
+let queue = (f) => queuedFunctions := [f, ...queuedFunctions^];
+
+let flushQueue = () => {
+    List.iter((f) => f(), queuedFunctions^);
+    queuedFunctions := [];
+};
+
+let checkAndUpdateState = (f) => {
+    let prevMode = Mode.getCurrent();
+    let prevPosition = Cursor.getPosition();
+    print_endline ("Previous position: " ++ Position.show(prevPosition));
+    print_endline ("Previous mode: " ++ Mode.show(prevMode));
+
+    f();
+
+    let newPosition = Cursor.getPosition();
+    let newMode = Mode.getCurrent();
+    print_endline ("New mode: " ++ Mode.show(newMode));
+    print_endline ("New position: " ++ Position.show(newPosition));
+
+    Buffer.checkCurrentBufferForUpdate();
+
+    if (newMode != prevMode) {
+        Event.dispatch(newMode, Listeners.modeChanged);
+    }
+
+    if (newPosition != prevPosition) {
+        Event.dispatch(newPosition, Listeners.cursorMoved);
+    }
+
+    Gc.full_major();
+    print_endline("--- Done with input ---");
+
+    flushQueue();
+}
+
 let _onAutocommand = (autoCommand: Types.autocmd, buffer: Buffer.t) => {
     print_endline ("start autocmd handler...");
     let n = switch(Buffer.getFilename(buffer)) {
@@ -32,31 +72,10 @@ let _onAutocommand = (autoCommand: Types.autocmd, buffer: Buffer.t) => {
     print_endline ("end autocmd handler...");
 };
 
-let _onBufferChanged = (buffer: Buffer.t, startLine: int, endLine: int, xtra: int) => {
+let _onBufferChanged = (buffer: Buffer.t, startLine: int, endLine: int, extra: int) => {
+    let update = BufferUpdate.create(buffer, startLine, endLine, extra);
 
-    let idx: ref(int) = ref(startLine);
-
-    let max = endLine + xtra;
-    let count = max - startLine;
-
-    let lines = Array.make(count, "");
-
-
-    while (idx^ < max) {
-        let i = idx^;
-        print_endline ("Getting line: " ++ string_of_int(i));
-        let line = Native.vimBufferGetLine(buffer, i)
-        print_endline ("Got line: " ++ string_of_int(i));
-        print_endline ("Line: " ++ line);
-        Array.set(lines, i - startLine, line);
-        incr(idx);
-    }
-
-    let bufferId = Buffer.getId(buffer);
-    Printf.printf("Buffer changed - id: %d startLine: %d endLine: %d xtra: %d\n", bufferId, startLine, endLine, xtra);
-    print_endline ("---- lines changed: ");
-    Array.iter(print_endline, lines);
-    print_endline ("----");
+    queue(() => Event.dispatch(update, Listeners.bufferUpdate));
 }
 
 let init = () => {
@@ -69,28 +88,13 @@ let init = () => {
 };
 
 let input = v => {
-    let prevMode = Mode.getCurrent();
-    let prevPosition = Cursor.getPosition();
-    print_endline ("Previous position: " ++ Position.show(prevPosition));
-    print_endline ("Previous mode: " ++ Mode.show(prevMode));
-
-    Native.vimInput(v);
-
-    let newPosition = Cursor.getPosition();
-    let newMode = Mode.getCurrent();
-    print_endline ("New mode: " ++ Mode.show(newMode));
-    print_endline ("New position: " ++ Position.show(newPosition));
-
-    if (newMode != prevMode) {
-        Event.dispatch(newMode, Listeners.modeChanged);
-    }
-
-    if (newPosition != prevPosition) {
-        Event.dispatch(newPosition, Listeners.cursorMoved);
-    }
-
-    Gc.full_major();
-    print_endline("--- Done with input ---");
+    checkAndUpdateState(() => {
+        Native.vimInput(v);
+    });
 };
 
-let command = v => Native.vimCommand(v);
+let command = v => {
+    checkAndUpdateState(() => {
+        Native.vimCommand(v);
+    });
+};
