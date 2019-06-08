@@ -160,6 +160,50 @@ libvim_vimBufferGetFilename(value v) {
 }
 
 CAMLprim value
+libvim_vimBufferGetModified(value v) {
+    buf_T *buf = (buf_T *)v;
+
+    if (vimBufferGetModified(buf) == TRUE) {
+        return Val_true;
+    } else {
+        return Val_false;
+    }
+}
+
+CAMLprim value
+libvim_vimBufferGetChangedTick(value v) {
+    buf_T *buf = (buf_T *)v;
+
+    long tick = vimBufferGetLastChangedTick(buf);
+    return Long_val(tick);
+}
+
+CAMLprim value
+libvim_vimBufferGetFiletype(value v) {
+    CAMLparam1(v);
+    CAMLlocal1(ret);
+    buf_T *buf = (buf_T *)v;
+
+    if (buf == NULL) {
+        ret = Val_none;
+    } else {
+        char_u* ftype = vimBufferGetFiletype(buf);
+        if (ftype == NULL) {
+            ret = Val_none;
+        } else {
+            ret = Val_some(caml_copy_string(ftype));
+        }
+    }
+
+    CAMLreturn(ret);
+}
+
+CAMLprim value
+libvim_vimBufferGetCurrent(value unit) {
+    return (value)vimBufferGetCurrent();
+}
+
+CAMLprim value
 libvim_vimBufferSetCurrent(value v) {
     buf_T *buf = (buf_T *)v;
 

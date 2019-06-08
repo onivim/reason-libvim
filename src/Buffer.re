@@ -18,6 +18,10 @@ let getById = (id: int) => {
     Native.vimBufferGetById(id);
 };
 
+let getCurrent = () => {
+    Native.vimBufferGetCurrent();
+};
+
 let setCurrent = (buffer: t) => {
     Native.vimBufferSetCurrent(buffer);
 };

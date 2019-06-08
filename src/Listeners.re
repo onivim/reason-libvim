@@ -1,10 +1,12 @@
 open Types;
 
-type modeChangedListener = mode => unit;
+type autocmdListener = (autocmd, Native.buffer) => unit;
 type bufferListener = Native.buffer => unit;
 type bufferUpdateListener = BufferUpdate.t => unit;
 type cursorMovedListener = Position.t => unit;
+type modeChangedListener = mode => unit;
 
+let autocmd: ref(list(autocmdListener)) = ref([]);
 let bufferEnter: ref(list(bufferListener)) = ref([]);
 let bufferUpdate: ref(list(bufferUpdateListener)) = ref([]);
 let bufferLeave: ref(list(bufferListener)) = ref([]);

@@ -1,4 +1,6 @@
+module AutoCommands = AutoCommands;
 module Buffer = Buffer;
+module BufferMetadata = BufferMetadata;
 module BufferUpdate = BufferUpdate;
 module Cursor = Cursor;
 module Mode = Mode;
@@ -23,6 +25,8 @@ let _onAutocommand = (autoCommand: Types.autocmd, buffer: Buffer.t) => {
     /* | BufEnter => Printf.printf("[AutoCommand] Buffer enter: %d name: %s\n", Buffer.getId(buffer), n); */
     /* | _ => (); */
     /* } */
+
+    Event.dispatch2(autoCommand, buffer, Listeners.autocmd);
 
     Gc.full_major();
     print_endline ("end autocmd handler...");
