@@ -37,7 +37,7 @@ void onBufferChanged (bufferUpdate_T bu) {
     free(pArgs);
 }
 
-void onAutocommand (int event, buf_T *buf) {
+void onAutocommand (event_T event, buf_T *buf) {
     printf("RAW AUTOCOMMAND: %d\n", event);
     static value* lv_onAutocmd = NULL;
 
@@ -104,7 +104,9 @@ libvim_vimGetMode(value unit) {
 CAMLprim value
 libvim_vimBufferGetId(value v) {
     buf_T *buf = (buf_T *)v;
+    printf("vimBufferGetId...\n");
     int id = vimBufferGetId(buf);
+    printf("vimBufferGetId...DONE\n");
     return Val_int(id);
 }
 
@@ -121,36 +123,44 @@ libvim_vimBufferOpen(value v) {
 CAMLprim value
 libvim_vimBufferGetById(value v) {
     CAMLparam1(v);
+    CAMLlocal1(ret);
     buf_T *buf = vimBufferGetById(Int_val(v));
 
     if (!buf) {
-        CAMLreturn(Val_none);
+        ret = Val_none;
     } else {
         value b = (value)buf;
-        CAMLreturn(Val_some(b));
+        ret = Val_some(b);
     }
+
+    CAMLreturn(ret);
 }
 
 CAMLprim value
 libvim_vimBufferGetFilename(value v) {
     CAMLparam1(v);
+    CAMLlocal1(ret);
     buf_T *buf = (buf_T *)v;
 
-    if (!buf) {
-        CAMLreturn(Val_none);
+    if (buf == NULL) {
+        printf("libvim_vimBufferGetFilename - buffer is NULL");
+        ret = Val_none;
     } else {
         char_u* fname = vimBufferGetFilename(buf);
-        if (!fname) {
-            CAMLreturn(Val_none);
+        if (fname == NULL) {
+            printf("libvim_vimBufferGetFilename - fname is NULL");
+            ret = Val_none;
         } else {
-            CAMLreturn(caml_copy_string(fname));
+            printf("libvim_vimBufferGetFilename - fname is %s\n", fname);
+            ret = Val_some(caml_copy_string(fname));
         }
     }
+
+    CAMLreturn(ret);
 }
 
 CAMLprim value
 libvim_vimBufferSetCurrent(value v) {
-    CAMLparam1(v);
     buf_T *buf = (buf_T *)v;
 
     vimBufferSetCurrent(buf);

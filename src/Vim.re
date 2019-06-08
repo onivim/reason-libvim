@@ -10,18 +10,21 @@ let _onAutocommand = (autoCommand: Types.autocmd, buffer: Buffer.t) => {
     | None => "[none]"
     };
 
+    print_endline ("Name: " ++ n);
     print_endline ("AUTOCOMMAND: " ++ string_of_int(Obj.magic(autoCommand)));
+    print_endline ("BUFFER: " ++ string_of_int(Obj.magic(buffer)));
     
-    switch (autoCommand) {
-    | BufNew => {
-        print_endline ("buf new start...");
-        Printf.printf("[AutoCommand] Buffer new: %d name: %s\n", Buffer.getId(buffer), n);
-        print_endline ("buf new end...");
-    }
-    | BufEnter => Printf.printf("[AutoCommand] Buffer enter: %d name: %s\n", Buffer.getId(buffer), n);
-    | _ => ();
-    }
+    /* switch (autoCommand) { */
+    /* | BufNew => { */
+    /*     print_endline ("buf new start..."); */
+    /*     Printf.printf("[AutoCommand] Buffer new: %d name: %s\n", Buffer.getId(buffer), "derp"); */
+    /*     print_endline ("buf new end..."); */
+    /* } */
+    /* | BufEnter => Printf.printf("[AutoCommand] Buffer enter: %d name: %s\n", Buffer.getId(buffer), n); */
+    /* | _ => (); */
+    /* } */
 
+    Gc.full_major();
     print_endline ("end autocmd handler...");
 };
 
@@ -61,6 +64,7 @@ let input = v => {
         Event.dispatch(newPosition, Listeners.cursorMoved);
     }
 
+    Gc.full_major();
     print_endline("--- Done with input ---");
 };
 

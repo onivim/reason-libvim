@@ -1,7 +1,9 @@
 type t = Native.buffer;
 
 let openFile = (filePath: string) => {
+    print_endline("Start open....\n");
     Native.vimBufferOpen(filePath);
+    print_endline("End open....\n");
 }
 
 let getFilename = (buffer: t) => {
