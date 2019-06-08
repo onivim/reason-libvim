@@ -204,6 +204,26 @@ libvim_vimBufferGetCurrent(value unit) {
 }
 
 CAMLprim value
+libvim_vimBufferGetLineCount(value v) {
+    buf_T *buf = (buf_T *)v;
+    return (value)vimBufferGetLineCount(buf);
+}
+
+CAMLprim value
+libvim_vimBufferGetLine(value vBuf, value vLine) {
+    CAMLparam2(vBuf, vLine);
+    CAMLlocal1(ret);
+    buf_T *buf = (buf_T *)vBuf;
+    int line = Int_val(vLine);
+    printf("RAW - reading line %d for buffer %d\n", line, buf);
+
+    char_u *c = vimBufferGetLine(buf, line);
+    printf("RAW - got line: %s\n", c);
+    ret = caml_copy_string(c);
+    CAMLreturn(ret);
+}
+
+CAMLprim value
 libvim_vimBufferSetCurrent(value v) {
     buf_T *buf = (buf_T *)v;
 

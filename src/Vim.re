@@ -34,8 +34,29 @@ let _onAutocommand = (autoCommand: Types.autocmd, buffer: Buffer.t) => {
 
 let _onBufferChanged = (buffer: Buffer.t, startLine: int, endLine: int, xtra: int) => {
 
+    let idx: ref(int) = ref(startLine);
+
+    let max = endLine + xtra;
+    let count = max - startLine;
+
+    let lines = Array.make(count, "");
+
+
+    while (idx^ < max) {
+        let i = idx^;
+        print_endline ("Getting line: " ++ string_of_int(i));
+        let line = Native.vimBufferGetLine(buffer, i)
+        print_endline ("Got line: " ++ string_of_int(i));
+        print_endline ("Line: " ++ line);
+        Array.set(lines, i - startLine, line);
+        incr(idx);
+    }
+
     let bufferId = Buffer.getId(buffer);
     Printf.printf("Buffer changed - id: %d startLine: %d endLine: %d xtra: %d\n", bufferId, startLine, endLine, xtra);
+    print_endline ("---- lines changed: ");
+    Array.iter(print_endline, lines);
+    print_endline ("----");
 }
 
 let init = () => {
