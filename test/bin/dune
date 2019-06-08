@@ -3,5 +3,5 @@
     (public_name LibvimUnitTestRunner)
     (package libvim-test)
     (libraries
-        libvim-test
+        LibvimTest
             ))
