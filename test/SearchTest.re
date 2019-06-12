@@ -39,7 +39,7 @@ describe("Search", ({describe, _}) =>
       let bracket = Search.getMatchingPair();
       switch (bracket) {
       | None => expect.int(1).toBe(1)
-      | Some(_) => expect.int(0).toBe(1);
+      | Some(_) => expect.int(0).toBe(1)
       };
     });
   })
