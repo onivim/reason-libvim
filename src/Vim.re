@@ -41,7 +41,7 @@ let checkAndUpdateState = f => {
 
   if (!VisualRange.equals(prevRange, newRange)) {
     Event.dispatch(newRange, Listeners.visualRangeChanged);
-  }
+  };
 
   flushQueue();
 };

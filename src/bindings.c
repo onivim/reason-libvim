@@ -214,12 +214,10 @@ CAMLprim value libvim_vimVisualGetRange(value unit) {
   CAMLparam0();
   CAMLlocal1(ret);
 
-
   pos_T start;
   pos_T end;
 
   vimVisualGetRange(&start, &end);
-
 
   ret = caml_alloc(4, 0);
   Store_field(ret, 0, Val_int(start.lnum));

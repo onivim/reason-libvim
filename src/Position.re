@@ -10,5 +10,5 @@ let show = (v: t) => {
 };
 
 let equals = (a: t, b: t) => {
-    a.line == b.line && a.column == b.column;
-}
+  a.line == b.line && a.column == b.column;
+};

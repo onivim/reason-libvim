@@ -1,7 +1,8 @@
 let getRange = () => {
- let (startLine, startColumn, endLine, endColumn) = Native.vimVisualGetRange();
+  let (startLine, startColumn, endLine, endColumn) =
+    Native.vimVisualGetRange();
 
- VisualRange.create(~startLine, ~startColumn, ~endLine, ~endColumn, ());
+  VisualRange.create(~startLine, ~startColumn, ~endLine, ~endColumn, ());
 };
 
 let onRangeChanged = f => {

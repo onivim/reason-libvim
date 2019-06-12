@@ -4,7 +4,7 @@ open Vim;
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 
 describe("VisualRange", ({describe, _}) => {
-  describe("getRange", ({test, _}) => {
+  describe("getRange", ({test, _}) =>
     test("simple range", ({expect}) => {
       let _ = resetBuffer();
 
@@ -32,21 +32,22 @@ describe("VisualRange", ({describe, _}) => {
       expect.int(range.startPos.column).toBe(0);
       expect.int(range.endPos.line).toBe(2);
       expect.int(range.endPos.column).toBe(4);
-    });
-  });
+    })
+  );
 
-  describe("onRangeChanged", ({test, _}) => {
+  describe("onRangeChanged", ({test, _}) =>
     test("dispatches on change", ({expect}) => {
       let _ = resetBuffer();
 
       let rangeChanges: ref(list(VisualRange.t)) = ref([]);
-      let dispose = Visual.onRangeChanged((range) => {
-        rangeChanges := [range, ...rangeChanges^];
-      });
+      let dispose =
+        Visual.onRangeChanged(range =>
+          rangeChanges := [range, ...rangeChanges^]
+        );
 
       input("V");
- 
-      expect.int(List.length(rangeChanges^)).toBe(1); 
+
+      expect.int(List.length(rangeChanges^)).toBe(1);
       let r = List.hd(rangeChanges^);
       expect.int(r.startPos.line).toBe(1);
       expect.int(r.startPos.column).toBe(0);
@@ -55,7 +56,7 @@ describe("VisualRange", ({describe, _}) => {
 
       input("j");
 
-      expect.int(List.length(rangeChanges^)).toBe(2); 
+      expect.int(List.length(rangeChanges^)).toBe(2);
       let r = List.hd(rangeChanges^);
       expect.int(r.startPos.line).toBe(1);
       expect.int(r.startPos.column).toBe(0);
@@ -63,6 +64,6 @@ describe("VisualRange", ({describe, _}) => {
       expect.int(r.endPos.column).toBe(0);
 
       dispose();
-});
-  });
+    })
+  );
 });
