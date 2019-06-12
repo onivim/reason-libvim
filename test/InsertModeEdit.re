@@ -1,13 +1,18 @@
 open TestFramework;
 open Vim;
 
-describe("Edit", ({describe, _}) =>
-  describe("insert mode", ({test, _}) => {
-    test("insert mode should flip modified flag", ({expect}) => {
+let resetBuffer = () => {
       let buffer = Buffer.openFile("test/testfile.txt");
       input("<esc>");
       input("<esc>");
       command("e!");
+        buffer;
+};
+
+describe("Edit", ({describe, _}) =>
+  describe("insert mode", ({test, _}) => {
+    test("insert mode should flip modified flag", ({expect}) => {
+        let buffer = resetBuffer();
 
       expect.bool(Buffer.isModified(buffer)).toBe(false);
 
@@ -24,10 +29,7 @@ describe("Edit", ({describe, _}) =>
       expect.bool(Buffer.isModified(buffer)).toBe(true);
     });
     test("getLine reflects inserted text", ({expect}) => {
-      let buffer = Buffer.openFile("test/testfile.txt");
-      input("<esc>");
-      input("<esc>");
-      command("e!");
+        let buffer = resetBuffer();
 
       input("I");
       let line = Buffer.getLine(buffer, 1);
@@ -50,6 +52,26 @@ describe("Edit", ({describe, _}) =>
       input("<cr>");
       let line = Buffer.getLine(buffer, 1);
       expect.string(line).toEqual("abc");
+    });
+    test("changed tick should be updated after each input", ({expect}) => {
+      let buffer = resetBuffer();
+
+      let startChangedTick = Buffer.getVersion(buffer);
+      input("I");
+      let newChangedTick = Buffer.getVersion(buffer);
+      expect.int(newChangedTick).toBe(startChangedTick);
+
+      input("a");
+      let newChangedTick = Buffer.getVersion(buffer);
+      expect.int(newChangedTick).toBe(startChangedTick + 1);
+
+      input("b");
+      let newChangedTick = Buffer.getVersion(buffer);
+      expect.int(newChangedTick).toBe(startChangedTick + 2);
+
+      input("c");
+      let newChangedTick = Buffer.getVersion(buffer);
+      expect.int(newChangedTick).toBe(startChangedTick + 3);
     });
   })
 );

@@ -158,7 +158,7 @@ CAMLprim value libvim_vimBufferGetChangedTick(value v) {
   buf_T *buf = (buf_T *)v;
 
   long tick = vimBufferGetLastChangedTick(buf);
-  return Long_val(tick);
+  return Val_long(tick);
 }
 
 CAMLprim value libvim_vimBufferGetFiletype(value v) {

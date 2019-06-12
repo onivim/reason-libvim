@@ -47,6 +47,10 @@ let getFilename = (buffer: t) => {
   Native.vimBufferGetFilename(buffer);
 };
 
+let getVersion = (buffer: t) => {
+  Native.vimBufferGetChangedTick(buffer);
+};
+
 let isModified = (buffer: t) => {
   Native.vimBufferGetModified(buffer);
 };
