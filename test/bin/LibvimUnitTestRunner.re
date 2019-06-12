@@ -1,0 +1,1 @@
+LibvimTest.TestFramework.cli();

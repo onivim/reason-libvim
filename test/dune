@@ -1,0 +1,7 @@
+(library
+    (name LibvimTest)
+    (public_name libvim-test)
+    (flags (:standard (-w -39)))
+    (ocamlopt_flags -linkall -g)
+    (libraries rely.lib libvim)
+)

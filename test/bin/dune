@@ -1,0 +1,7 @@
+(executable
+    (name LibvimUnitTestRunner)
+    (public_name LibvimUnitTestRunner)
+    (package libvim-test)
+    (libraries
+        LibvimTest
+            ))

@@ -10,9 +10,11 @@ steps:
     displayName: 'esy install'
   - script: esy build
     displayName: 'esy build'
-  - script: esy b dune runtest
-    displayName: 'esy b dune runtest'
   - script: esy @example install
     displayName: 'example: esy install'
   - script: esy @example run
     displayName: 'example: esy run'
+  - script: esy @test install
+    displayName: 'test: esy install'
+  - script: esy @test run
+    displayName: 'test: esy run'
