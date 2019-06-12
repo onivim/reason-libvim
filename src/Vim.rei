@@ -4,6 +4,8 @@ module BufferMetadata = BufferMetadata;
 module BufferUpdate = BufferUpdate;
 module Cursor = Cursor;
 module Mode = Mode;
+module Visual = Visual;
+module VisualRange = VisualRange;
 
 let init: unit => unit;
 
