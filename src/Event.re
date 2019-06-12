@@ -13,7 +13,7 @@ let add = (f: handler('a), handlers: ref(list(handler('a)))) => {
   handlers := [f, ...handlers^];
 
   () => {
-    List.filter(g => g !== f, handlers^);
+    handlers := List.filter(g => g !== f, handlers^);
   };
 };
 
@@ -21,6 +21,6 @@ let add2 = (f: handler2('a, 'b), handlers: ref(list(handler2('a, 'b)))) => {
   handlers := [f, ...handlers^];
 
   () => {
-    List.filter(g => g !== f, handlers^);
+    handlers := List.filter(g => g !== f, handlers^);
   };
 };
