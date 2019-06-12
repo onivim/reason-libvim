@@ -24,7 +24,8 @@ external vimBufferSetCurrent: buffer => unit = "libvim_vimBufferSetCurrent";
 external vimCursorGetLine: unit => int = "libvim_vimCursorGetLine";
 external vimCursorGetColumn: unit => int = "libvim_vimCursorGetColumn";
 
-external vimSearchGetMatchingPair: unit => option((int, int)) = "libvim_vimSearchGetMatchingPair";
+external vimSearchGetMatchingPair: unit => option((int, int)) =
+  "libvim_vimSearchGetMatchingPair";
 
 external vimVisualGetRange: unit => (int, int, int, int) =
   "libvim_vimVisualGetRange";

@@ -9,4 +9,4 @@
 (install
  (section bin)
  (package libvim-test)
- (files testfile.txt))
+ (files testfile.txt brackets.txt))
