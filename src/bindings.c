@@ -224,7 +224,6 @@ CAMLprim value libvim_vimCommandLineGetText(value unit) {
   CAMLlocal1(ret);
 
   char_u *c = vimCommandLineGetText();
-  printf("vimCommandLineGetText: %s\n", c);
   if (c == NULL) {
     ret = Val_none;
   } else {
@@ -239,6 +238,27 @@ CAMLprim value libvim_vimCommandLineGetPosition(value unit) {
 
   int pos = vimCommandLineGetPosition();
   CAMLreturn(Val_int(pos));
+}
+
+CAMLprim value libvim_vimCommandLineGetType(value unit) {
+  CAMLparam0();
+  int type = vimCommandLineGetType();
+
+  int ret;
+  switch (type) {
+    case ':':
+        ret = 0;
+        break;
+    case '/':
+        ret = 1;
+        break;
+    case '?':
+        ret = 2;
+        break;
+    default:
+        ret = 3;
+  }
+  CAMLreturn(Val_int(ret));
 }
 
 CAMLprim value libvim_vimCursorGetLine(value unit) {
