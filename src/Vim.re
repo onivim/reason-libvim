@@ -4,6 +4,7 @@ module BufferMetadata = BufferMetadata;
 module BufferUpdate = BufferUpdate;
 module Cursor = Cursor;
 module Mode = Mode;
+module Position = Position;
 
 type fn = unit => unit;
 
