@@ -22,15 +22,11 @@ let flushQueue = () => {
 };
 
 let checkAndUpdateState = f => {
-  print_endline ("-- checking previous state.");
   let prevMode = Mode.getCurrent();
   let prevPosition = Cursor.getPosition();
   let prevRange = Visual.getRange();
-  print_endline ("-- got previous state.");
 
-  print_endline ("-- running input.");
   f();
-  print_endline ("-- running input. DONE!");
 
   let newPosition = Cursor.getPosition();
   let newMode = Mode.getCurrent();

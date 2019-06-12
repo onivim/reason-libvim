@@ -7,7 +7,8 @@ describe("CommandLine", ({describe, _}) => {
 
   describe("ex", ({test, _}) => {
    test("substitution command", ({expect}) => {
-      let buffer = reset();
+      let _ = reset();
+      /* let buffer = reset(); */
       input(":");
       input("%");
       input("s");
@@ -40,7 +41,7 @@ describe("CommandLine", ({describe, _}) => {
       let _ = reset();
       input(":");
       expect.bool(CommandLine.getType() == CommandLine.Ex).toBe(true);
-      input("<c-c>");
+      input("<esc>");
 
       input("/");
       expect.bool(CommandLine.getType() == CommandLine.SearchForward).toBe(

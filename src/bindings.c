@@ -56,9 +56,7 @@ CAMLprim value libvim_vimInit(value unit) {
 CAMLprim value libvim_vimInput(value v) {
   char_u *s;
   s = (char_u *)String_val(v);
-  printf("--- running vimInput\n");
   vimInput(s);
-  printf("--- running vimInput - DONE\n");
   return Val_unit;
 }
 
@@ -265,7 +263,6 @@ CAMLprim value libvim_vimCommandLineGetText(value unit) {
 
 CAMLprim value libvim_vimCommandLineGetType(value unit) {
   CAMLparam0();
-  printf("\nlibvim_vimCommandLineGetType....\n");
   int type = vimCommandLineGetType();
 
   int ret;
@@ -282,7 +279,6 @@ CAMLprim value libvim_vimCommandLineGetType(value unit) {
   default:
     ret = 3;
   }
-  printf("\nlibvim_vimCommandLineGetType.... done\n");
   CAMLreturn(Val_int(ret));
 }
 
