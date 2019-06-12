@@ -6,6 +6,8 @@ module Cursor = Cursor;
 module Mode = Mode;
 module Position = Position;
 module Search = Search;
+module Visual = Visual;
+module VisualRange = VisualRange;
 
 let init: unit => unit;
 

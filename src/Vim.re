@@ -6,6 +6,8 @@ module Cursor = Cursor;
 module Mode = Mode;
 module Position = Position;
 module Search = Search;
+module Visual = Visual;
+module VisualRange = VisualRange;
 
 type fn = unit => unit;
 
@@ -21,11 +23,13 @@ let flushQueue = () => {
 let checkAndUpdateState = f => {
   let prevMode = Mode.getCurrent();
   let prevPosition = Cursor.getPosition();
+  let prevRange = Visual.getRange();
 
   f();
 
   let newPosition = Cursor.getPosition();
   let newMode = Mode.getCurrent();
+  let newRange = Visual.getRange();
 
   Buffer.checkCurrentBufferForUpdate();
 
@@ -33,19 +37,19 @@ let checkAndUpdateState = f => {
     Event.dispatch(newMode, Listeners.modeChanged);
   };
 
-  if (newPosition != prevPosition) {
+  if (!Position.equals(prevPosition, newPosition)) {
     Event.dispatch(newPosition, Listeners.cursorMoved);
   };
 
-  Gc.full_major();
+  if (!VisualRange.equals(prevRange, newRange)) {
+    Event.dispatch(newRange, Listeners.visualRangeChanged);
+  };
 
   flushQueue();
 };
 
 let _onAutocommand = (autoCommand: Types.autocmd, buffer: Buffer.t) => {
   Event.dispatch2(autoCommand, buffer, Listeners.autocmd);
-
-  Gc.full_major();
 };
 
 let _onBufferChanged =
