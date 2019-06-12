@@ -1,5 +1,3 @@
-open Types;
-
 type buffer;
 
 external vimInit: unit => unit = "libvim_vimInit";

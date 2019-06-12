@@ -36,10 +36,11 @@ let checkCurrentBufferForUpdate = () => {
 
 let openFile = (filePath: string) => {
   print_endline("Start open....\n");
-  Native.vimBufferOpen(filePath);
+  let ret = Native.vimBufferOpen(filePath);
   print_endline("End open....\n");
 
   checkCurrentBufferForUpdate();
+  ret;
 };
 
 let getFilename = (buffer: t) => {

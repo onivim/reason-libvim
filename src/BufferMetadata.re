@@ -23,4 +23,4 @@ let create =
   version,
 };
 
-let pp = (v: t) => "";
+let pp = (_: t) => "";
