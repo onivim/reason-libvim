@@ -1,7 +1,7 @@
 let getText = () => {
-    Native.vimCommandLineGetText();
+  Native.vimCommandLineGetText();
 };
 
 let getPosition = () => {
-    Native.vimCommandLineGetPosition();
-}
+  Native.vimCommandLineGetPosition();
+};
