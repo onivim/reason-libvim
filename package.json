@@ -16,8 +16,7 @@
   "resolutions": {
     "@esy-ocaml/esy-installer": "0.0.1",
     "@opam/cmdliner": "1.0.2",
-    "@opam/dune": "1.7.0",
-    "libvim": "link:../libvim1/src"
+    "@opam/dune": "1.7.0"
   },
   "dependencies": {
     "@opam/dune": "*",
