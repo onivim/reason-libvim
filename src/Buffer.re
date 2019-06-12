@@ -10,7 +10,7 @@ let knownBuffers = ref(IntSet.empty);
 
 let haveSeenBuffer = (buffer: t) => {
   let id = Native.vimBufferGetId(buffer);
-  switch (IntMap.find_opt(id, knownBuffers^)) {
+  switch (IntSet.find_opt(id, knownBuffers^)) {
   | None => false
   | Some(_) => true
   };
