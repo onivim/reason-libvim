@@ -220,24 +220,24 @@ CAMLprim value libvim_vimBufferSetCurrent(value v) {
 }
 
 CAMLprim value libvim_vimCommandLineGetCompletions(value unit) {
-    CAMLparam0();
-    CAMLlocal1(ret);
+  CAMLparam0();
+  CAMLlocal1(ret);
 
-    char** completions;
-    int count;
+  char **completions;
+  int count;
 
-    vimCommandLineGetCompletions(&completions, &count);
+  vimCommandLineGetCompletions(&completions, &count);
 
-    ret = caml_alloc(count, 0);
-    for (int i = 0; i < count; i++) {
-        Store_field(ret, i, caml_copy_string(completions[i]));
-    }
+  ret = caml_alloc(count, 0);
+  for (int i = 0; i < count; i++) {
+    Store_field(ret, i, caml_copy_string(completions[i]));
+  }
 
-    if (completions != NULL) {
-        vim_free(completions);
-    }
+  if (completions != NULL) {
+    vim_free(completions);
+  }
 
-    CAMLreturn(ret);
+  CAMLreturn(ret);
 }
 
 CAMLprim value libvim_vimCommandLineGetPosition(value unit) {
@@ -261,24 +261,23 @@ CAMLprim value libvim_vimCommandLineGetText(value unit) {
   CAMLreturn(ret);
 }
 
-
 CAMLprim value libvim_vimCommandLineGetType(value unit) {
   CAMLparam0();
   int type = vimCommandLineGetType();
 
   int ret;
   switch (type) {
-    case ':':
-        ret = 0;
-        break;
-    case '/':
-        ret = 1;
-        break;
-    case '?':
-        ret = 2;
-        break;
-    default:
-        ret = 3;
+  case ':':
+    ret = 0;
+    break;
+  case '/':
+    ret = 1;
+    break;
+  case '?':
+    ret = 2;
+    break;
+  default:
+    ret = 3;
   }
   CAMLreturn(Val_int(ret));
 }
