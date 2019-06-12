@@ -209,3 +209,21 @@ CAMLprim value libvim_vimCursorGetColumn(value unit) {
   int column = vimCursorGetColumn();
   return Val_int(column);
 }
+
+CAMLprim value libvim_vimVisualGetRange(value unit) {
+  CAMLparam0();
+  CAMLlocal1(ret);
+
+  pos_T start;
+  pos_T end;
+
+  vimVisualGetRange(&start, &end);
+
+  ret = caml_alloc(4, 0);
+  Store_field(ret, 0, Val_int(start.lnum));
+  Store_field(ret, 1, Val_int(start.col));
+  Store_field(ret, 2, Val_int(end.lnum));
+  Store_field(ret, 3, Val_int(end.col));
+
+  CAMLreturn(ret);
+}

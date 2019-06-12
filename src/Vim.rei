@@ -5,6 +5,8 @@ module BufferUpdate = BufferUpdate;
 module Cursor = Cursor;
 module Mode = Mode;
 module Position = Position;
+module Visual = Visual;
+module VisualRange = VisualRange;
 
 let init: unit => unit;
 
