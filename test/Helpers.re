@@ -1,6 +1,6 @@
 open Vim;
 
-let resetBuffer = (filePath) => {
+let resetBuffer = filePath => {
   input("<esc>");
   input("<esc>");
   command("e!");
