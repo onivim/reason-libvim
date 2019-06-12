@@ -36,7 +36,7 @@ let checkAndUpdateState = f => {
     Event.dispatch(newMode, Listeners.modeChanged);
   };
 
-  if (Position.equals(prevPosition, newPosition)) {
+  if (!Position.equals(prevPosition, newPosition)) {
     Event.dispatch(newPosition, Listeners.cursorMoved);
   };
 
