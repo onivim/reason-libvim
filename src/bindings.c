@@ -172,6 +172,24 @@ CAMLprim value libvim_vimBufferGetFiletype(value v) {
   CAMLreturn(ret);
 }
 
+CAMLprim value libvim_vimSearchGetMatchingPair(value unit) {
+    CAMLparam0();
+    CAMLlocal2(ret, v);
+
+    pos_T *result = vimSearchGetMatchingPair(0);
+    if (result == NULL) {
+        ret = Val_none;
+    } else {
+        v = caml_alloc(2, 0);
+        Store_field(v, 0, Val_int(result->lnum));
+        Store_field(v, 1, Val_int(result->col));
+        vim_free(result);
+        ret = Val_some(v);
+    }
+
+    CAMLreturn(ret);
+}
+
 CAMLprim value libvim_vimBufferGetCurrent(value unit) {
   return (value)vimBufferGetCurrent();
 }
