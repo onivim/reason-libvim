@@ -208,6 +208,7 @@ CAMLprim value libvim_vimBufferGetLine(value vBuf, value vLine) {
 
   char_u *c = vimBufferGetLine(buf, line);
   ret = caml_copy_string(c);
+
   CAMLreturn(ret);
 }
 
@@ -216,6 +217,28 @@ CAMLprim value libvim_vimBufferSetCurrent(value v) {
 
   vimBufferSetCurrent(buf);
   return Val_unit;
+}
+
+CAMLprim value libvim_vimCommandLineGetText(value unit) {
+    CAMLparam0();
+    CAMLlocal1(ret);
+
+    char_u *c = vimCommandLineGetText();
+    printf("vimCommandLineGetText: %s\n", c);
+  if (c == NULL) {
+    ret = Val_none;
+  } else {
+      ret = Val_some(caml_copy_string(c));
+  }
+
+  CAMLreturn(ret);
+}
+
+CAMLprim value libvim_vimCommandLineGetPosition(value unit) {
+    CAMLparam0();
+
+    int pos = vimCommandLineGetPosition();
+    CAMLreturn(Val_int(pos));
 }
 
 CAMLprim value libvim_vimCursorGetLine(value unit) {
