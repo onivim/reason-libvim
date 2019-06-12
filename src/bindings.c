@@ -70,7 +70,6 @@ CAMLprim value libvim_vimCommand(value v) {
 CAMLprim value libvim_vimGetMode(value unit) {
   int mode = vimGetMode();
 
-
   int val = 0;
 
   if ((mode & INSERT) == INSERT) {
