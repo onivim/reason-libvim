@@ -1,7 +1,7 @@
 open TestFramework;
 open Vim;
 
-describe("Edit", ({describe, _}) => {
+describe("Edit", ({describe, _}) =>
   describe("insert mode", ({test, _}) => {
     test("insert mode should flip modified flag", ({expect}) => {
       let buffer = Buffer.openFile("test/testfile.txt");
@@ -10,7 +10,7 @@ describe("Edit", ({describe, _}) => {
       command("e!");
 
       expect.bool(Buffer.isModified(buffer)).toBe(false);
-      
+
       input("I");
       let line = Buffer.getLine(buffer, 1);
       expect.string(line).toEqual("This is the first line of a test file");
@@ -28,7 +28,7 @@ describe("Edit", ({describe, _}) => {
       input("<esc>");
       input("<esc>");
       command("e!");
-      
+
       input("I");
       let line = Buffer.getLine(buffer, 1);
       expect.string(line).toEqual("This is the first line of a test file");
@@ -43,11 +43,13 @@ describe("Edit", ({describe, _}) => {
 
       input("c");
       let line = Buffer.getLine(buffer, 1);
-      expect.string(line).toEqual("abcThis is the first line of a test file");
+      expect.string(line).toEqual(
+        "abcThis is the first line of a test file",
+      );
 
       input("<cr>");
       let line = Buffer.getLine(buffer, 1);
       expect.string(line).toEqual("abc");
     });
-  });
-});
+  })
+);
