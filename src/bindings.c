@@ -17,7 +17,6 @@ static value Val_some(value v) {
 }
 
 void onBufferChanged(bufferUpdate_T bu) {
-  printf("RAW ONBUFFERCHANGED\n");
   static value *lv_onBufferChanged = NULL;
 
   if (lv_onBufferChanged == NULL) {
@@ -36,7 +35,6 @@ void onBufferChanged(bufferUpdate_T bu) {
 }
 
 void onAutocommand(event_T event, buf_T *buf) {
-  printf("RAW AUTOCOMMAND: %d\n", event);
   static value *lv_onAutocmd = NULL;
 
   if (lv_onAutocmd == NULL) {
@@ -59,9 +57,6 @@ CAMLprim value libvim_vimInput(value v) {
   char_u *s;
   s = (char_u *)String_val(v);
   vimInput(s);
-
-  printf("Raw line: %d\n", vimCursorGetLine());
-  printf("Raw column: %d\n", vimCursorGetColumn());
   return Val_unit;
 }
 
@@ -192,7 +187,6 @@ CAMLprim value libvim_vimBufferGetCurrent(value unit) {
 CAMLprim value libvim_vimBufferGetLineCount(value v) {
   buf_T *buf = (buf_T *)v;
   size_t count = vimBufferGetLineCount(buf);
-  printf("vimBufferGetLineCount - RAW: %l\n", count);
   return Val_long(count);
 }
 
