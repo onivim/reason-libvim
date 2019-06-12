@@ -2,17 +2,17 @@ open TestFramework;
 open Vim;
 
 let resetBuffer = () => {
-      let buffer = Buffer.openFile("test/testfile.txt");
-      input("<esc>");
-      input("<esc>");
-      command("e!");
-        buffer;
+  let buffer = Buffer.openFile("test/testfile.txt");
+  input("<esc>");
+  input("<esc>");
+  command("e!");
+  buffer;
 };
 
 describe("Edit", ({describe, _}) =>
   describe("insert mode", ({test, _}) => {
     test("insert mode should flip modified flag", ({expect}) => {
-        let buffer = resetBuffer();
+      let buffer = resetBuffer();
 
       expect.bool(Buffer.isModified(buffer)).toBe(false);
 
@@ -29,7 +29,7 @@ describe("Edit", ({describe, _}) =>
       expect.bool(Buffer.isModified(buffer)).toBe(true);
     });
     test("getLine reflects inserted text", ({expect}) => {
-        let buffer = resetBuffer();
+      let buffer = resetBuffer();
 
       input("I");
       let line = Buffer.getLine(buffer, 1);
