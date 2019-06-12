@@ -219,6 +219,34 @@ CAMLprim value libvim_vimBufferSetCurrent(value v) {
   return Val_unit;
 }
 
+CAMLprim value libvim_vimCommandLineGetCompletions(value unit) {
+    CAMLparam0();
+    CAMLlocal1(ret);
+
+    char** completions;
+    int count;
+
+    vimCommandLineGetCompletions(&completions, &count);
+
+    ret = caml_alloc(count, 0);
+    for (int i = 0; i < count; i++) {
+        Store_field(ret, i, caml_copy_string(completions[i]));
+    }
+
+    if (completions != NULL) {
+        vim_free(completions);
+    }
+
+    CAMLreturn(ret);
+}
+
+CAMLprim value libvim_vimCommandLineGetPosition(value unit) {
+  CAMLparam0();
+
+  int pos = vimCommandLineGetPosition();
+  CAMLreturn(Val_int(pos));
+}
+
 CAMLprim value libvim_vimCommandLineGetText(value unit) {
   CAMLparam0();
   CAMLlocal1(ret);
@@ -233,12 +261,6 @@ CAMLprim value libvim_vimCommandLineGetText(value unit) {
   CAMLreturn(ret);
 }
 
-CAMLprim value libvim_vimCommandLineGetPosition(value unit) {
-  CAMLparam0();
-
-  int pos = vimCommandLineGetPosition();
-  CAMLreturn(Val_int(pos));
-}
 
 CAMLprim value libvim_vimCommandLineGetType(value unit) {
   CAMLparam0();

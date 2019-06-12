@@ -21,12 +21,13 @@ external vimBufferGetChangedTick: buffer => int =
   "libvim_vimBufferGetChangedTick";
 external vimBufferSetCurrent: buffer => unit = "libvim_vimBufferSetCurrent";
 
+external vimCommandLineGetCompletions: unit => array(string) =
+  "libvim_vimCommandLineGetCompletions";
 external vimCommandLineGetPosition: unit => int =
   "libvim_vimCommandLineGetPosition";
 external vimCommandLineGetText: unit => option(string) =
   "libvim_vimCommandLineGetText";
-external vimCommandLineGetType: unit => int =
-  "libvim_vimCommandLineGetType";
+external vimCommandLineGetType: unit => int = "libvim_vimCommandLineGetType";
 
 external vimCursorGetLine: unit => int = "libvim_vimCursorGetLine";
 external vimCursorGetColumn: unit => int = "libvim_vimCursorGetColumn";
