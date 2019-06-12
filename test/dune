@@ -5,3 +5,8 @@
     (ocamlopt_flags -linkall -g)
     (libraries rely.lib libvim)
 )
+
+(install
+ (section bin)
+ (package libvim-test)
+ (files testfile.txt))

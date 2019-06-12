@@ -47,6 +47,14 @@ let getFilename = (buffer: t) => {
   Native.vimBufferGetFilename(buffer);
 };
 
+let getLineCount = (buffer: t) => {
+  Native.vimBufferGetLineCount(buffer);
+};
+
+let getLine = (buffer: t, line: int) => {
+  Native.vimBufferGetLine(buffer, line);
+};
+
 let getId = (buffer: t) => {
   Native.vimBufferGetId(buffer);
 };
