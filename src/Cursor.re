@@ -13,6 +13,6 @@ let getPosition = () => {
   );
 };
 
-let onCursorMoved = f => {
+let onMoved = f => {
   Event.add(f, Listeners.cursorMoved);
 };
