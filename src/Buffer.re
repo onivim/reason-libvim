@@ -1,7 +1,7 @@
 type t = Native.buffer;
 
-module IntMap =
-  Map.Make({
+module IntSet =
+  Set.Make({
     let compare = Pervasives.compare;
     type t = int;
   });
