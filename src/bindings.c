@@ -102,7 +102,7 @@ CAMLprim value libvim_vimBufferOpen(value v) {
   CAMLparam1(v);
   char_u *s;
   s = (char_u *)String_val(v);
-  buf_T *buf = vimBufferOpen(s, 0, 1);
+  buf_T *buf = vimBufferOpen(s, 1, 0);
   value vbuf = (value)buf;
   CAMLreturn(vbuf);
 }
