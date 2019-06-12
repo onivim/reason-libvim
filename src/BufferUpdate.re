@@ -24,15 +24,6 @@ let createInitial = (buffer: Native.buffer) => {
     incr(idx);
   };
 
-  Printf.printf(
-    "INITIAL BUFFER UPDATE - LINES: %d VERSION: %d\n",
-    count,
-    version,
-  );
-  print_endline("---- lines changed: ");
-  Array.iter(print_endline, lines);
-  print_endline("----");
-
   {id, startLine, endLine, lines, version: version + 1};
 };
 
@@ -52,18 +43,6 @@ let create = (~buffer: Native.buffer, ~startLine, ~endLine, ~extra: int) => {
     lines[i - startLine] = line;
     incr(idx);
   };
-
-  Printf.printf(
-    "Buffer changed - id: %d startLine: %d endLine: %d xtra: %d\n version: %d\n",
-    id,
-    startLine,
-    endLine,
-    extra,
-    version,
-  );
-  print_endline("---- lines changed: ");
-  /* Array.iter(print_endline, lines); */
-  print_endline("----");
 
   {id, startLine, endLine, lines, version: version + 1};
 };

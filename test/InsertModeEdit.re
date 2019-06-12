@@ -1,13 +1,7 @@
 open TestFramework;
 open Vim;
 
-let resetBuffer = () => {
-  let buffer = Buffer.openFile("test/testfile.txt");
-  input("<esc>");
-  input("<esc>");
-  command("e!");
-  buffer;
-};
+let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 
 describe("Edit", ({describe, _}) =>
   describe("insert mode", ({test, _}) => {

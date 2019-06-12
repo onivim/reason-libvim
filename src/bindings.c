@@ -70,9 +70,6 @@ CAMLprim value libvim_vimCommand(value v) {
 CAMLprim value libvim_vimGetMode(value unit) {
   int mode = vimGetMode();
 
-  printf("RAW MODE: %d\n", mode);
-  printf("get_real_state: %d\n", get_real_state());
-
   int val = 0;
 
   if ((mode & INSERT) == INSERT) {
@@ -92,9 +89,7 @@ CAMLprim value libvim_vimGetMode(value unit) {
 
 CAMLprim value libvim_vimBufferGetId(value v) {
   buf_T *buf = (buf_T *)v;
-  printf("vimBufferGetId...\n");
   int id = vimBufferGetId(buf);
-  printf("vimBufferGetId...DONE\n");
   return Val_int(id);
 }
 
@@ -128,15 +123,12 @@ CAMLprim value libvim_vimBufferGetFilename(value v) {
   buf_T *buf = (buf_T *)v;
 
   if (buf == NULL) {
-    printf("libvim_vimBufferGetFilename - buffer is NULL");
     ret = Val_none;
   } else {
     char_u *fname = vimBufferGetFilename(buf);
     if (fname == NULL) {
-      printf("libvim_vimBufferGetFilename - fname is NULL");
       ret = Val_none;
     } else {
-      printf("libvim_vimBufferGetFilename - fname is %s\n", fname);
       ret = Val_some(caml_copy_string(fname));
     }
   }

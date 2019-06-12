@@ -22,11 +22,8 @@ let markBufferAsSeen = (buffer: t) => {
 };
 
 let checkCurrentBufferForUpdate = () => {
-  print_endline("!!!CHECKING CURRENT BUFFER...");
-
   let buffer = Native.vimBufferGetCurrent();
   if (!haveSeenBuffer(buffer)) {
-    print_endline("SENDING FIRST TIME UPDATE!");
     let update = BufferUpdate.createInitial(buffer);
     markBufferAsSeen(buffer);
     Event.dispatch(buffer, Listeners.bufferEnter);
@@ -35,9 +32,7 @@ let checkCurrentBufferForUpdate = () => {
 };
 
 let openFile = (filePath: string) => {
-  print_endline("Start open....\n");
   let ret = Native.vimBufferOpen(filePath);
-  print_endline("End open....\n");
 
   checkCurrentBufferForUpdate();
   ret;
