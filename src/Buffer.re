@@ -9,64 +9,64 @@ module IntMap =
 let knownBuffers = ref(IntSet.empty);
 
 let haveSeenBuffer = (buffer: t) => {
-    let id = Native.vimBufferGetId(buffer);
-    switch (IntMap.find_opt(id, knownBuffers^)) {
-    | None => false
-    | Some(_) => true
-    }
+  let id = Native.vimBufferGetId(buffer);
+  switch (IntMap.find_opt(id, knownBuffers^)) {
+  | None => false
+  | Some(_) => true
+  };
 };
 
 let markBufferAsSeen = (buffer: t) => {
-    let id = Native.vimBufferGetId(buffer);
-    knownBuffers := IntSet.add(id, knownBuffers^);
-}
+  let id = Native.vimBufferGetId(buffer);
+  knownBuffers := IntSet.add(id, knownBuffers^);
+};
 
 let checkCurrentBufferForUpdate = () => {
-    print_endline ("!!!CHECKING CURRENT BUFFER...");
+  print_endline("!!!CHECKING CURRENT BUFFER...");
 
-    let buffer = Native.vimBufferGetCurrent();
-    if (!haveSeenBuffer(buffer)) {
-        print_endline ("SENDING FIRST TIME UPDATE!");
-        let update = BufferUpdate.createInitial(buffer);
-        markBufferAsSeen(buffer);
-        Event.dispatch(buffer, Listeners.bufferEnter);
-        Event.dispatch(update, Listeners.bufferUpdate);
-    }
+  let buffer = Native.vimBufferGetCurrent();
+  if (!haveSeenBuffer(buffer)) {
+    print_endline("SENDING FIRST TIME UPDATE!");
+    let update = BufferUpdate.createInitial(buffer);
+    markBufferAsSeen(buffer);
+    Event.dispatch(buffer, Listeners.bufferEnter);
+    Event.dispatch(update, Listeners.bufferUpdate);
+  };
 };
 
 let openFile = (filePath: string) => {
-    print_endline("Start open....\n");
-    Native.vimBufferOpen(filePath);
-    print_endline("End open....\n");
+  print_endline("Start open....\n");
+  Native.vimBufferOpen(filePath);
+  print_endline("End open....\n");
 
-    checkCurrentBufferForUpdate();
-}
+  checkCurrentBufferForUpdate();
+};
 
 let getFilename = (buffer: t) => {
-    Native.vimBufferGetFilename(buffer);
-}
+  Native.vimBufferGetFilename(buffer);
+};
 
 let getId = (buffer: t) => {
-    Native.vimBufferGetId(buffer);
-}
+  Native.vimBufferGetId(buffer);
+};
 
 let getById = (id: int) => {
-    Native.vimBufferGetById(id);
+  Native.vimBufferGetById(id);
 };
 
 let getCurrent = () => {
-    Native.vimBufferGetCurrent();
+  Native.vimBufferGetCurrent();
 };
 
 let setCurrent = (buffer: t) => {
-    Native.vimBufferSetCurrent(buffer);
-    checkCurrentBufferForUpdate();
+  Native.vimBufferSetCurrent(buffer);
+  checkCurrentBufferForUpdate();
 };
 
 let onEnter = (f: Listeners.bufferListener) => {
-    Event.add(f, Listeners.bufferEnter);
+  Event.add(f, Listeners.bufferEnter);
 };
 
 let onUpdate = (f: Listeners.bufferUpdateListener) => {
-    Event.add(f, Listeners.bufferUpdate);
+  Event.add(f, Listeners.bufferUpdate);
 };

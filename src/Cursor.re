@@ -1,18 +1,18 @@
 let getLine = () => {
-    Native.vimCursorGetLine();
+  Native.vimCursorGetLine();
 };
 
 let getColumn = () => {
-    Native.vimCursorGetColumn();
+  Native.vimCursorGetColumn();
 };
 
 let getPosition = () => {
-    Position.create(
-        ~line=Native.vimCursorGetLine(),
-        ~column=Native.vimCursorGetColumn(),
-    );
+  Position.create(
+    ~line=Native.vimCursorGetLine(),
+    ~column=Native.vimCursorGetColumn(),
+  );
 };
 
-let onCursorMoved = (f) => {
-    Event.add(f, Listeners.cursorMoved);
+let onCursorMoved = f => {
+  Event.add(f, Listeners.cursorMoved);
 };
