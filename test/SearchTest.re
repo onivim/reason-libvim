@@ -20,7 +20,7 @@ describe("Search", ({describe, _}) => {
       let highlights = Search.getHighlights();
       expect.int(Array.length(highlights)).toBe(3);
 
-      let secondHighlight = Array.get(highlights, 1);
+      let secondHighlight = highlights[1];
       expect.int(secondHighlight.startPos.line).toBe(2);
       expect.int(secondHighlight.startPos.column).toBe(30);
       expect.int(secondHighlight.endPos.line).toBe(2);
