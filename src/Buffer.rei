@@ -25,7 +25,7 @@ let isModified: t => bool;
 /**
 [getLineCount(buffer)] returns the number of lines in the buffer.
 */
-let getLineCount:  t => int;
+let getLineCount: t => int;
 
 /**
 [getline(buffer, line)] returns the text content at the one-based line number [line] for buffer [buffer].
