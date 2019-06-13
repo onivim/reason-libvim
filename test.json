@@ -6,6 +6,7 @@
   "override": {
       "build": ["dune build --root . -j4"],
       "dependencies": {
+	  "@opam/odoc": "*",
           "@reason-native/rely": "2.2.0"
       },
       "install": [

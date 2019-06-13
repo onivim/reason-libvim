@@ -1,0 +1,15 @@
+{
+  "source": "./package.json",
+  "scripts": {
+    "run": "esy '@doc' http-server ./_build/default/_doc/_html",
+    "update": "esy '@doc' cp -r './_build/default/_doc/_html/.' './docs'"
+  },
+  "override": {
+      "build": ["dune build @doc --root . -j4"],
+      "dependencies": {
+	  "@opam/odoc": "*",
+          "@reason-native/rely": "2.2.0",
+	  "http-server": "*"
+	}
+  }
+}

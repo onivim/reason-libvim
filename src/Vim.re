@@ -31,7 +31,7 @@ let checkAndUpdateState = f => {
   let newMode = Mode.getCurrent();
   let newRange = Visual.getRange();
 
-  Buffer.checkCurrentBufferForUpdate();
+  BufferInternal.checkCurrentBufferForUpdate();
 
   if (newMode != prevMode) {
     Event.dispatch(newMode, Listeners.modeChanged);
