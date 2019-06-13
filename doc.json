@@ -1,7 +1,8 @@
 {
   "source": "./package.json",
   "scripts": {
-    "run": "esy '@doc' x http-server #{self.target_dir}/default/_doc/_html"
+    "run": "esy '@doc' http-server _build/default/_doc/_html",
+    "update": "esy '@doc' cp -r './_build/default/_doc/_html/libvim/.' './docs'"
   },
   "override": {
       "build": ["dune build @doc --root . -j4"],
