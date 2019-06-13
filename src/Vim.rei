@@ -38,4 +38,3 @@ module Position = Position;
 module Range = Range;
 module Search = Search;
 module Visual = Visual;
-
