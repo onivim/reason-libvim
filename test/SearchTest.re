@@ -1,9 +1,47 @@
 open TestFramework;
 open Vim;
+open Range;
 
 let resetBrackets = () => Helpers.resetBuffer("test/brackets.txt");
+let reset = () => Helpers.resetBuffer("test/testfile.txt");
 
-describe("Search", ({describe, _}) =>
+describe("Search", ({describe, _}) => {
+  describe("getSearchHighlights", ({test, _}) => {
+    test("gets highlights", ({expect}) => {
+      let _ = reset();
+
+      input("/");
+      input("e");
+
+      let highlights = Search.getHighlights();
+      expect.int(Array.length(highlights)).toBe(13);
+
+      input("s");
+      let highlights = Search.getHighlights();
+      expect.int(Array.length(highlights)).toBe(3);
+
+      let secondHighlight = Array.get(highlights, 1);
+      expect.int(secondHighlight.startPos.line).toBe(2);
+      expect.int(secondHighlight.startPos.column).toBe(30);
+      expect.int(secondHighlight.endPos.line).toBe(2);
+      expect.int(secondHighlight.endPos.column).toBe(32);
+    });
+
+    test("gets highlights", ({expect}) => {
+      let _ = reset();
+
+      input("/");
+      input("e");
+
+      let highlights = Search.getHighlightsInRange(1, 1);
+      expect.int(Array.length(highlights)).toBe(4);
+
+      input("s");
+      let highlights = Search.getHighlightsInRange(1, 1);
+      expect.int(Array.length(highlights)).toBe(1);
+    });
+  });
+
   describe("getMatchingPair", ({test, _}) => {
     test("get matching bracket for initial character", ({expect}) => {
       let _ = resetBrackets();
@@ -42,5 +80,5 @@ describe("Search", ({describe, _}) =>
       | Some(_) => expect.int(0).toBe(1)
       };
     });
-  })
-);
+  });
+});

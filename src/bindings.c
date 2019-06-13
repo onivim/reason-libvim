@@ -21,10 +21,10 @@ static value Val_highlight(searchHighlight_T hl) {
     CAMLlocal1(ret);
 
     ret = caml_alloc(4, 0);
-    Store_field(ret, 0, hl.start.lnum);
-    Store_field(ret, 1, hl.start.col);
-    Store_field(ret, 2, hl.end.lnum);
-    Store_field(ret, 3, hl.end.col);
+    Store_field(ret, 0, Val_int(hl.start.lnum));
+    Store_field(ret, 1, Val_int(hl.start.col));
+    Store_field(ret, 2, Val_int(hl.end.lnum));
+    Store_field(ret, 3, Val_int(hl.end.col));
 
     CAMLreturn(ret);
 }
