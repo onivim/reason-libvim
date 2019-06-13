@@ -16,6 +16,19 @@ static value Val_some(value v) {
   CAMLreturn(some);
 }
 
+static value Val_highlight(searchHighlight_T hl) {
+    CAMLparam0();
+    CAMLlocal1(ret);
+
+    ret = caml_alloc(4, 0);
+    Store_field(ret, 0, hl.start.lnum);
+    Store_field(ret, 1, hl.start.col);
+    Store_field(ret, 2, hl.end.lnum);
+    Store_field(ret, 3, hl.end.col);
+
+    CAMLreturn(ret);
+}
+
 void onBufferChanged(bufferUpdate_T bu) {
   static value *lv_onBufferChanged = NULL;
 
@@ -169,6 +182,28 @@ CAMLprim value libvim_vimBufferGetFiletype(value v) {
     }
   }
 
+  CAMLreturn(ret);
+}
+
+CAMLprim value libvim_vimSearchGetHighlights(value startLine, value endLine) {
+  CAMLparam2(startLine, endLine);
+  CAMLlocal1(ret);
+
+  int start = Int_val(startLine);
+  int end = Int_val(endLine);
+
+  int num_highlights;
+  searchHighlight_T *highlights;
+
+  vimSearchGetHighlights(start, end, &num_highlights, &highlights);
+
+  ret = caml_alloc(num_highlights, 0);
+
+  for (int i = 0; i < num_highlights; i++) {
+      Store_field(ret, i, Val_highlight(highlights[i]));
+  }
+
+  vim_free(highlights);
   CAMLreturn(ret);
 }
 

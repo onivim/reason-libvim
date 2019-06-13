@@ -5,7 +5,7 @@ type bufferListener = Native.buffer => unit;
 type bufferUpdateListener = BufferUpdate.t => unit;
 type cursorMovedListener = Position.t => unit;
 type modeChangedListener = mode => unit;
-type visualRangeChangedListener = VisualRange.t => unit;
+type visualRangeChangedListener = Range.t => unit;
 
 let autocmd: ref(list(autocmdListener)) = ref([]);
 let bufferEnter: ref(list(bufferListener)) = ref([]);
