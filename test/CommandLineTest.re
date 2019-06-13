@@ -7,7 +7,6 @@ describe("CommandLine", ({describe, _}) => {
   describe("ex", ({test, _}) => {
     test("substitution command", ({expect}) => {
       let _ = reset();
-      /* let buffer = reset(); */
       input(":");
       input("%");
       input("s");
