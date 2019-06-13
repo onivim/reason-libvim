@@ -4,9 +4,8 @@ open Vim;
 let reset = () => Helpers.resetBuffer("test/testfile.txt");
 
 describe("CommandLine", ({describe, _}) => {
-
   describe("ex", ({test, _}) => {
-   test("substitution command", ({expect}) => {
+    test("substitution command", ({expect}) => {
       let _ = reset();
       /* let buffer = reset(); */
       input(":");
@@ -24,19 +23,19 @@ describe("CommandLine", ({describe, _}) => {
 
       let line = Buffer.getLine(buffer, 3);
       expect.string(line).toEqual("Dhis is the third line of a test file");
-   });
+    });
 
-   test("move to line", ({expect}) => {
+    test("move to line", ({expect}) => {
       let _ = reset();
       input(":");
       input("3");
       input("<cr>");
 
       expect.int(Cursor.getLine()).toBe(3);
-   });
+    });
   });
 
-  describe("getType", ({test, _}) => {
+  describe("getType", ({test, _}) =>
     test("simple command line", ({expect}) => {
       let _ = reset();
       input(":");
@@ -55,7 +54,7 @@ describe("CommandLine", ({describe, _}) => {
       );
       input("<esc>");
     })
-  });
+  );
 
   describe("getText", ({test, _}) =>
     test("simple command line", ({expect}) => {
