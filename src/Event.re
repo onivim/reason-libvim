@@ -1,5 +1,6 @@
 type handler('a) = 'a => unit;
 type handler2('a, 'b) = ('a, 'b) => unit;
+type unsubscribe = unit => unit;
 
 let dispatch = (v: 'a, handlers: ref(list(handler('a)))) => {
   List.iter(f => f(v), handlers^);
