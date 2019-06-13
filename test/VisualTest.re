@@ -3,7 +3,7 @@ open Vim;
 
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 
-describe("VisualRange", ({describe, _}) => {
+describe("Visual", ({describe, _}) => {
   describe("getRange", ({test, _}) =>
     test("simple range", ({expect}) => {
       let _ = resetBuffer();
@@ -39,7 +39,7 @@ describe("VisualRange", ({describe, _}) => {
     test("dispatches on change", ({expect}) => {
       let _ = resetBuffer();
 
-      let rangeChanges: ref(list(VisualRange.t)) = ref([]);
+      let rangeChanges: ref(list(Range.t)) = ref([]);
       let dispose =
         Visual.onRangeChanged(range =>
           rangeChanges := [range, ...rangeChanges^]

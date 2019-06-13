@@ -5,9 +5,9 @@ module BufferUpdate = BufferUpdate;
 module Cursor = Cursor;
 module Mode = Mode;
 module Position = Position;
+module Range = Range;
 module Search = Search;
 module Visual = Visual;
-module VisualRange = VisualRange;
 
 type fn = unit => unit;
 
@@ -41,7 +41,7 @@ let checkAndUpdateState = f => {
     Event.dispatch(newPosition, Listeners.cursorMoved);
   };
 
-  if (!VisualRange.equals(prevRange, newRange)) {
+  if (!Range.equals(prevRange, newRange)) {
     Event.dispatch(newRange, Listeners.visualRangeChanged);
   };
 
