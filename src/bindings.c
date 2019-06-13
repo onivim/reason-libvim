@@ -17,16 +17,16 @@ static value Val_some(value v) {
 }
 
 static value Val_highlight(searchHighlight_T hl) {
-    CAMLparam0();
-    CAMLlocal1(ret);
+  CAMLparam0();
+  CAMLlocal1(ret);
 
-    ret = caml_alloc(4, 0);
-    Store_field(ret, 0, Val_int(hl.start.lnum));
-    Store_field(ret, 1, Val_int(hl.start.col));
-    Store_field(ret, 2, Val_int(hl.end.lnum));
-    Store_field(ret, 3, Val_int(hl.end.col));
+  ret = caml_alloc(4, 0);
+  Store_field(ret, 0, Val_int(hl.start.lnum));
+  Store_field(ret, 1, Val_int(hl.start.col));
+  Store_field(ret, 2, Val_int(hl.end.lnum));
+  Store_field(ret, 3, Val_int(hl.end.col));
 
-    CAMLreturn(ret);
+  CAMLreturn(ret);
 }
 
 void onBufferChanged(bufferUpdate_T bu) {
@@ -200,7 +200,7 @@ CAMLprim value libvim_vimSearchGetHighlights(value startLine, value endLine) {
   ret = caml_alloc(num_highlights, 0);
 
   for (int i = 0; i < num_highlights; i++) {
-      Store_field(ret, i, Val_highlight(highlights[i]));
+    Store_field(ret, i, Val_highlight(highlights[i]));
   }
 
   vim_free(highlights);
