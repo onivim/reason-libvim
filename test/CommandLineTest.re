@@ -4,6 +4,27 @@ open Vim;
 let reset = () => Helpers.resetBuffer("test/testfile.txt");
 
 describe("CommandLine", ({describe, _}) => {
+  describe("getType", ({test, _}) =>
+    test("simple command line", ({expect}) => {
+      let _ = reset();
+      input(":");
+      expect.bool(CommandLine.getType() == CommandLine.Ex).toBe(true);
+      input("<esc>");
+
+      input("/");
+      expect.bool(CommandLine.getType() == CommandLine.SearchForward).toBe(
+        true,
+      );
+      input("<esc>");
+
+      input("?");
+      expect.bool(CommandLine.getType() == CommandLine.SearchReverse).toBe(
+        true,
+      );
+      input("<esc>");
+    })
+  );
+
   describe("ex", ({test, _}) => {
     test("substitution command", ({expect}) => {
       let buffer = reset();
@@ -34,26 +55,6 @@ describe("CommandLine", ({describe, _}) => {
     });
   });
 
-  describe("getType", ({test, _}) =>
-    test("simple command line", ({expect}) => {
-      let _ = reset();
-      input(":");
-      expect.bool(CommandLine.getType() == CommandLine.Ex).toBe(true);
-      input("<esc>");
-
-      input("/");
-      expect.bool(CommandLine.getType() == CommandLine.SearchForward).toBe(
-        true,
-      );
-      input("<esc>");
-
-      input("?");
-      expect.bool(CommandLine.getType() == CommandLine.SearchReverse).toBe(
-        true,
-      );
-      input("<esc>");
-    })
-  );
 
   describe("getText", ({test, _}) =>
     test("simple command line", ({expect}) => {
