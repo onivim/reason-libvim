@@ -35,6 +35,9 @@ external vimCursorGetColumn: unit => int = "libvim_vimCursorGetColumn";
 external vimSearchGetMatchingPair: unit => option((int, int)) =
   "libvim_vimSearchGetMatchingPair";
 
+external vimSearchGetHighlights: (int, int) => array((int, int, int, int)) =
+  "libvim_vimSearchGetHighlights";
+
 external vimVisualGetRange: unit => (int, int, int, int) =
   "libvim_vimVisualGetRange";
 

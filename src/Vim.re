@@ -6,9 +6,9 @@ module CommandLine = CommandLine;
 module Cursor = Cursor;
 module Mode = Mode;
 module Position = Position;
+module Range = Range;
 module Search = Search;
 module Visual = Visual;
-module VisualRange = VisualRange;
 
 type fn = unit => unit;
 
@@ -32,7 +32,7 @@ let checkAndUpdateState = f => {
   let newMode = Mode.getCurrent();
   let newRange = Visual.getRange();
 
-  Buffer.checkCurrentBufferForUpdate();
+  BufferInternal.checkCurrentBufferForUpdate();
 
   if (newMode != prevMode) {
     Event.dispatch(newMode, Listeners.modeChanged);
@@ -42,7 +42,7 @@ let checkAndUpdateState = f => {
     Event.dispatch(newPosition, Listeners.cursorMoved);
   };
 
-  if (!VisualRange.equals(prevRange, newRange)) {
+  if (!Range.equals(prevRange, newRange)) {
     Event.dispatch(newRange, Listeners.visualRangeChanged);
   };
 
