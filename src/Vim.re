@@ -57,7 +57,9 @@ let checkAndUpdateState = f => {
     Event.dispatch(newPosition, Listeners.cursorMoved);
   };
 
-  if (!Range.equals(prevRange, newRange)) {
+  if (!Range.equals(prevRange, newRange)
+      || newMode == Visual
+      && prevMode != Visual) {
     Event.dispatch(newRange, Listeners.visualRangeChanged);
   };
 

@@ -18,6 +18,12 @@ type cmdline = {
   position: int,
 };
 
+type visualType =
+  | Character
+  | Line
+  | Block
+  | None;
+
 /**
  * NOTE: This type must be kept in sync with the `auto_event` enum in `vim.h`!
  *
