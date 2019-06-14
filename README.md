@@ -1,6 +1,7 @@
 # reason-libvim
+[![Build Status](https://dev.azure.com/onivim/oni2/_apis/build/status/onivim.reason-libvim?branchName=master)](https://dev.azure.com/onivim/oni2/_build/latest?definitionId=5&branchName=master)
 
-Reason API for libvim - an abstraction of Vim as an API.
+Reason API for [libvim](https://github.com/onivim/libvim) - an abstraction of Vim as an API.
 
 ## Usage
 
