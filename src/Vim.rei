@@ -38,4 +38,5 @@ module Mode = Mode;
 module Position = Position;
 module Range = Range;
 module Search = Search;
+module Types = Types;
 module Visual = Visual;

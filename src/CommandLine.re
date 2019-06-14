@@ -1,20 +1,12 @@
-open Types;
-
 type t = Types.cmdline;
 
-let getCompletions = () => Native.vimCommandLineGetCompletions();
+let getCompletions = Native.vimCommandLineGetCompletions;
 
-let getText = () => Native.vimCommandLineGetText();
+let getText = Native.vimCommandLineGetText;
 
-let getPosition = () => Native.vimCommandLineGetPosition();
+let getPosition = Native.vimCommandLineGetPosition;
 
-let getType = () =>
-  switch (Native.vimCommandLineGetType()) {
-  | 0 => Ex
-  | 1 => SearchForward
-  | 2 => SearchReverse
-  | _ => Unknown
-  };
+let getType = Native.vimCommandLineGetType;
 
 let onEnter = (f) => Event.add(f, Listeners.commandLineEnter);
 let onLeave = (f) => Event.add(f, Listeners.commandLineLeave);
