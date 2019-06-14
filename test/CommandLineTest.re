@@ -26,6 +26,87 @@ describe("CommandLine", ({describe, _}) => {
   /*   }) */
   /* ); */
 
+  describe("listeners", ({test, _}) => {
+    test("enter / leave listeners", ({expect}) => {
+      open Vim.Types;
+      let _ = reset();
+      let enterEvents: ref(list(CommandLine.t)) = ref([]);
+      let getEnterCount = () => List.length(enterEvents^);
+      let leaveCount = ref(0);
+
+      let expectCommandLineType = m =>
+        expect.bool(m == List.hd(enterEvents^).cmdType).toBe(true);
+      let expectCommandLineText = v =>
+        expect.bool(String.equal(v, List.hd(enterEvents^).text)).toBe(
+          true,
+        );
+
+      let dispose1 =
+        CommandLine.onEnter(c => enterEvents := [c, ...enterEvents^]);
+      let dispose2 = CommandLine.onLeave(_ => incr(leaveCount));
+
+      input(":");
+      expect.int(getEnterCount()).toBe(1);
+      expect.int(leaveCount^).toBe(0);
+      expectCommandLineType(Ex);
+      expectCommandLineText("");
+      input("a");
+      expect.int(getEnterCount()).toBe(1);
+      expect.int(leaveCount^).toBe(0);
+      input("<esc>");
+      expect.int(getEnterCount()).toBe(1);
+      expect.int(leaveCount^).toBe(1);
+
+      input("/");
+      expectCommandLineType(SearchForward);
+      expectCommandLineText("");
+      expect.int(getEnterCount()).toBe(2);
+      expect.int(leaveCount^).toBe(1);
+      input("b");
+      expect.int(getEnterCount()).toBe(2);
+      expect.int(leaveCount^).toBe(1);
+      input("<esc>");
+      expect.int(getEnterCount()).toBe(2);
+      expect.int(leaveCount^).toBe(2);
+
+      dispose1();
+      dispose2();
+    });
+
+    test("update listener", ({expect}) => {
+      open Vim.Types;
+      let _ = reset();
+
+      let updateEvents: ref(list(CommandLine.t)) = ref([]);
+
+      let getUpdateCount = () => List.length(updateEvents^);
+      let expectCommandLineText = v =>
+        expect.bool(String.equal(v, List.hd(updateEvents^).text)).toBe(
+          true,
+        );
+      let expectCommandLinePosition = v =>
+        expect.bool(v == List.hd(updateEvents^).position).toBe(true);
+
+      let dispose1 =
+        CommandLine.onUpdate(c => updateEvents := [c, ...updateEvents^]);
+
+      input(":");
+      input("a");
+      expect.int(getUpdateCount()).toBe(1);
+      expectCommandLineText("a");
+      expectCommandLinePosition(1);
+      input("b");
+      expectCommandLineText("ab");
+      expectCommandLinePosition(2);
+      input("<c-h>");
+      expectCommandLineText("a");
+      expectCommandLinePosition(1);
+
+      input("<esc>");
+      dispose1();
+    });
+  });
+
   describe("ex", ({test, _}) => {
     test("substitution command", ({expect}) => {
       let buffer = reset();

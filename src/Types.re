@@ -6,6 +6,18 @@ type mode =
   | Visual
   | Operator;
 
+type cmdlineType =
+  | Ex
+  | SearchForward
+  | SearchReverse
+  | Unknown;
+
+type cmdline = {
+  cmdType: cmdlineType,
+  text: string,
+  position: int,
+};
+
 /**
  * NOTE: This type must be kept in sync with the `auto_event` enum in `vim.h`!
  *
