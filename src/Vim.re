@@ -2,6 +2,7 @@ module AutoCommands = AutoCommands;
 module Buffer = Buffer;
 module BufferMetadata = BufferMetadata;
 module BufferUpdate = BufferUpdate;
+module CommandLine = CommandLine;
 module Cursor = Cursor;
 module Mode = Mode;
 module Position = Position;
