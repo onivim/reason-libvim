@@ -56,7 +56,6 @@ describe("CommandLine", ({describe, _}) => {
     });
   });
 
-
   describe("getText", ({test, _}) =>
     test("simple command line", ({expect}) => {
       let _ = reset();
