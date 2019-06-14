@@ -1,8 +1,6 @@
-type t =
-  | Ex
-  | SearchForward
-  | SearchReverse
-  | Unknown;
+open Types;
+
+type t = Types.cmdline;
 
 let getCompletions = () => Native.vimCommandLineGetCompletions();
 
@@ -17,3 +15,7 @@ let getType = () =>
   | 2 => SearchReverse
   | _ => Unknown
   };
+
+let onEnter = (f) => Event.add(f, Listeners.commandLineEnter);
+let onLeave = (f) => Event.add(f, Listeners.commandLineLeave);
+let onUpdate = (f) => Event.add(f, Listeners.commandLineUpdate);

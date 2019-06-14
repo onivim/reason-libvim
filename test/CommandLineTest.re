@@ -26,6 +26,40 @@ describe("CommandLine", ({describe, _}) => {
   /*   }) */
   /* ); */
 
+  describe("listeners", ({test, _}) => {
+    test("enter / leave listeners", ({expect}) => {
+        let enterCount = ref(0);
+        let leaveCount = ref(0);
+
+        let dispose1 = CommandLine.onEnter((_) => incr(enterCount));
+        let dispose2 = CommandLine.onLeave((_) => incr(leaveCount));
+
+
+        input(":");
+        expect.int(enterCount^).toBe(1);
+        expect.int(leaveCount^).toBe(0);
+        input("a");
+        expect.int(enterCount^).toBe(1);
+        expect.int(leaveCount^).toBe(0);
+        input("<esc>");
+        expect.int(enterCount^).toBe(1);
+        expect.int(leaveCount^).toBe(1);
+
+        input("/");
+        expect.int(enterCount^).toBe(2);
+        expect.int(leaveCount^).toBe(1);
+        input("b");
+        expect.int(enterCount^).toBe(2);
+        expect.int(leaveCount^).toBe(1);
+        input("<esc>");
+        expect.int(enterCount^).toBe(2);
+        expect.int(leaveCount^).toBe(2);
+
+        dispose1();
+        dispose2();
+    });
+  });
+
   describe("ex", ({test, _}) => {
     test("substitution command", ({expect}) => {
       let buffer = reset();
