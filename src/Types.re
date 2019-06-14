@@ -13,9 +13,9 @@ type cmdlineType =
   | Unknown;
 
 type cmdline = {
-   cmdType: cmdlineType, 
-   text: string,
-   position: int,
+  cmdType: cmdlineType,
+  text: string,
+  position: int,
 };
 
 /**

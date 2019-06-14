@@ -11,7 +11,6 @@ module Search = Search;
 module Types = Types;
 module Visual = Visual;
 
-
 type fn = unit => unit;
 
 let queuedFunctions: ref(list(fn)) = ref([]);
@@ -38,15 +37,21 @@ let checkAndUpdateState = f => {
 
   if (newMode != prevMode) {
     Event.dispatch(newMode, Listeners.modeChanged);
-    
+
     if (newMode == CommandLine) {
-        Event.dispatch(CommandLineInternal.getState(), Listeners.commandLineEnter);
+      Event.dispatch(
+        CommandLineInternal.getState(),
+        Listeners.commandLineEnter,
+      );
     } else if (prevMode == CommandLine) {
-        Event.dispatch((), Listeners.commandLineLeave);
-    }
-  } else if(newMode == CommandLine) {
-        Event.dispatch(CommandLineInternal.getState(), Listeners.commandLineUpdate);
-  }
+      Event.dispatch((), Listeners.commandLineLeave);
+    };
+  } else if (newMode == CommandLine) {
+    Event.dispatch(
+      CommandLineInternal.getState(),
+      Listeners.commandLineUpdate,
+    );
+  };
 
   if (!Position.equals(prevPosition, newPosition)) {
     Event.dispatch(newPosition, Listeners.cursorMoved);
