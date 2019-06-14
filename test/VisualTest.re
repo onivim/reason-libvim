@@ -35,6 +35,27 @@ describe("Visual", ({describe, _}) => {
     })
   );
 
+  describe("getType", ({test, _}) =>
+    test("simple range", ({expect}) => {
+      let _ = resetBuffer();
+
+      input("v");
+      let vt = Visual.getType();
+      expect.bool(vt == Character).toBe(true);
+      input("<esc>");
+
+      input("V");
+      let vt = Visual.getType();
+      expect.bool(vt == Line).toBe(true);
+      input("<esc>");
+
+      input("<C-v>");
+      let vt = Visual.getType();
+      expect.bool(vt == Block).toBe(true);
+      input("<esc>");
+    })
+  );
+
   describe("onRangeChanged", ({test, _}) =>
     test("dispatches on change", ({expect}) => {
       let _ = resetBuffer();

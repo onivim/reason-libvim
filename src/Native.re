@@ -42,5 +42,8 @@ external vimSearchGetHighlights: (int, int) => array((int, int, int, int)) =
 external vimVisualGetRange: unit => (int, int, int, int) =
   "libvim_vimVisualGetRange";
 
+external vimVisualGetType: unit => Types.visualType =
+  "libvim_vimVisualGetType";
+
 type bufferUpdateCallback = (buffer, int, int, int) => unit;
 /* external vimSetBufferUpdateCallback: bufferUpdateCallback => unit; */
