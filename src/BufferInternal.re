@@ -10,13 +10,11 @@ let knownBuffers = ref(IntSet.empty);
 
 let haveSeenBuffer = (buffer: t) => {
   let id = Native.vimBufferGetId(buffer);
-  Printf.printf ("-- Checking haveSeenBuffer: %d\n", id)
   let ret = switch (IntSet.find_opt(id, knownBuffers^)) {
   | None => false
   | Some(_) => true
   };
-  Printf.printf ("-- Checking haveSeenBuffer: %d - %b\n", id, ret)
-  ret; 
+  ret;
 };
 
 let markBufferAsSeen = (buffer: t) => {
@@ -29,7 +27,6 @@ let checkCurrentBufferForUpdate = () => {
   if (!haveSeenBuffer(buffer)) {
     let update = BufferUpdate.createInitial(buffer);
     markBufferAsSeen(buffer);
-    print_endline ("Dispatching buffer enter and buffer update");
     Event.dispatch(buffer, Listeners.bufferEnter);
     Event.dispatch(update, Listeners.bufferUpdate);
   };
