@@ -6,7 +6,7 @@ type bufferUpdateListener = BufferUpdate.t => unit;
 type commandLineUpdateListener = Types.cmdline => unit;
 type cursorMovedListener = Position.t => unit;
 type modeChangedListener = mode => unit;
-type visualRangeChangedListener = Range.t => unit;
+type visualRangeChangedListener = VisualRange.t => unit;
 type noopListener = unit => unit;
 
 let autocmd: ref(list(autocmdListener)) = ref([]);

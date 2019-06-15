@@ -39,6 +39,9 @@ describe("Visual", ({describe, _}) => {
     test("simple range", ({expect}) => {
       let _ = resetBuffer();
 
+      let vt = Visual.getType();
+      expect.bool(vt == None).toBe(true);
+
       input("v");
       let vt = Visual.getType();
       expect.bool(vt == Character).toBe(true);
@@ -53,6 +56,9 @@ describe("Visual", ({describe, _}) => {
       let vt = Visual.getType();
       expect.bool(vt == Block).toBe(true);
       input("<esc>");
+
+      let vt = Visual.getType();
+      expect.bool(vt == None).toBe(true);
     })
   );
 
@@ -62,9 +68,11 @@ describe("Visual", ({describe, _}) => {
 
       let rangeChanges: ref(list(Range.t)) = ref([]);
       let dispose =
-        Visual.onRangeChanged(range =>
-          rangeChanges := [range, ...rangeChanges^]
-        );
+        Visual.onRangeChanged(vr => {
+          open Vim.VisualRange;
+          let {range, _} = vr;
+          rangeChanges := [range, ...rangeChanges^];
+        });
 
       input("V");
 

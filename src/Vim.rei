@@ -40,3 +40,4 @@ module Range = Range;
 module Search = Search;
 module Types = Types;
 module Visual = Visual;
+module VisualRange = VisualRange;
