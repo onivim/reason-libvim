@@ -90,6 +90,7 @@ let init = () => {
   Native.vimInit();
 
   Event.dispatch(Mode.getCurrent(), Listeners.modeChanged);
+  BufferInternal.checkCurrentBufferForUpdate();
 };
 
 let input = v => {
