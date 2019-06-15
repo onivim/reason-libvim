@@ -349,6 +349,14 @@ CAMLprim value libvim_vimVisualGetType(value unit) {
   int ret;
   char v = vimVisualGetType();
 
+  printf(" ----libvim_vimVisualGetType --");
+  printf("- vimVisualIsActive: %d\n", vimVisualIsActive());
+  printf("- vimVisualGetType: %d\n", vimVisualIsActive());
+
+  if (vimVisualIsActive() == FALSE) {
+    ret = 3;
+  } else {
+
   switch (v) {
   case 'v':
     ret = 0;
@@ -363,6 +371,7 @@ CAMLprim value libvim_vimVisualGetType(value unit) {
     ret = 3;
     break;
   };
+  }
 
   return Val_int(ret);
 }

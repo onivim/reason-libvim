@@ -10,6 +10,7 @@ module Range = Range;
 module Search = Search;
 module Types = Types;
 module Visual = Visual;
+module VisualRange = VisualRange;
 
 type fn = unit => unit;
 
@@ -26,12 +27,14 @@ let checkAndUpdateState = f => {
   let prevMode = Mode.getCurrent();
   let prevPosition = Cursor.getPosition();
   let prevRange = Visual.getRange();
+  let prevVisualMode = Visual.getType();
 
   f();
 
   let newPosition = Cursor.getPosition();
   let newMode = Mode.getCurrent();
   let newRange = Visual.getRange();
+  let newVisualMode = Visual.getType();
 
   BufferInternal.checkCurrentBufferForUpdate();
 
@@ -58,9 +61,10 @@ let checkAndUpdateState = f => {
   };
 
   if (!Range.equals(prevRange, newRange)
-      || newMode == Visual
-      && prevMode != Visual) {
-    Event.dispatch(newRange, Listeners.visualRangeChanged);
+      || (newMode == Visual && prevMode != Visual)
+      || (prevVisualMode != newVisualMode)) {
+    let vr = VisualRange.create(~range=newRange, ~visualType=newVisualMode, ());
+    Event.dispatch(vr, Listeners.visualRangeChanged);
   };
 
   flushQueue();
