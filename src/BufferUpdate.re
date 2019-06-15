@@ -8,7 +8,7 @@ type t = {
 
 let createInitial = (buffer: Native.buffer) => {
   let id = Native.vimBufferGetId(buffer);
-  let version = Native.vimBufferGetChangedTick(buffer);
+  let version = Native.vimBufferGetChangedTick(buffer) - 1;
   let startLine = 1;
   let endLine = Native.vimBufferGetLineCount(buffer) + 1;
 
@@ -24,7 +24,7 @@ let createInitial = (buffer: Native.buffer) => {
     incr(idx);
   };
 
-  {id, startLine, endLine, lines, version: version + 1};
+  {id, startLine, endLine, lines, version};
 };
 
 let create = (~buffer: Native.buffer, ~startLine, ~endLine, ~extra: int) => {
@@ -44,5 +44,5 @@ let create = (~buffer: Native.buffer, ~startLine, ~endLine, ~extra: int) => {
     incr(idx);
   };
 
-  {id, startLine, endLine, lines, version: version + 1};
+  {id, startLine, endLine, lines, version};
 };
