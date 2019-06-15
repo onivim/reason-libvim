@@ -1,6 +1,6 @@
 type t = {
   range: Range.t,
-  visualType: Types.visualType
+  visualType: Types.visualType,
 };
 
-let create = (~range, ~visualType, ()) => { range, visualType };
+let create = (~range, ~visualType, ()) => {range, visualType};

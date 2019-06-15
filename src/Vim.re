@@ -61,9 +61,11 @@ let checkAndUpdateState = f => {
   };
 
   if (!Range.equals(prevRange, newRange)
-      || (newMode == Visual && prevMode != Visual)
-      || (prevVisualMode != newVisualMode)) {
-    let vr = VisualRange.create(~range=newRange, ~visualType=newVisualMode, ());
+      || newMode == Visual
+      && prevMode != Visual
+      || prevVisualMode != newVisualMode) {
+    let vr =
+      VisualRange.create(~range=newRange, ~visualType=newVisualMode, ());
     Event.dispatch(vr, Listeners.visualRangeChanged);
   };
 

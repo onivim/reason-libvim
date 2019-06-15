@@ -71,7 +71,7 @@ describe("Visual", ({describe, _}) => {
         Visual.onRangeChanged(vr => {
           open Vim.VisualRange;
           let {range, _} = vr;
-          rangeChanges := [range, ...rangeChanges^]
+          rangeChanges := [range, ...rangeChanges^];
         });
 
       input("V");

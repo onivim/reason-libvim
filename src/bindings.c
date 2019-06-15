@@ -357,20 +357,20 @@ CAMLprim value libvim_vimVisualGetType(value unit) {
     ret = 3;
   } else {
 
-  switch (v) {
-  case 'v':
-    ret = 0;
-    break;
-  case 'V':
-    ret = 1;
-    break;
-  case Ctrl_V:
-    ret = 2;
-    break;
-  default:
-    ret = 3;
-    break;
-  };
+    switch (v) {
+    case 'v':
+      ret = 0;
+      break;
+    case 'V':
+      ret = 1;
+      break;
+    case Ctrl_V:
+      ret = 2;
+      break;
+    default:
+      ret = 3;
+      break;
+    };
   }
 
   return Val_int(ret);
