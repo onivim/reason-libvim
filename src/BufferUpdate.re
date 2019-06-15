@@ -24,7 +24,7 @@ let createInitial = (buffer: Native.buffer) => {
     incr(idx);
   };
 
-  {id, startLine, endLine, lines, version };
+  {id, startLine, endLine, lines, version};
 };
 
 let create = (~buffer: Native.buffer, ~startLine, ~endLine, ~extra: int) => {
@@ -44,5 +44,5 @@ let create = (~buffer: Native.buffer, ~startLine, ~endLine, ~extra: int) => {
     incr(idx);
   };
 
-  {id, startLine, endLine, lines, version };
+  {id, startLine, endLine, lines, version};
 };

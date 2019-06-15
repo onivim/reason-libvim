@@ -10,10 +10,11 @@ let knownBuffers = ref(IntSet.empty);
 
 let haveSeenBuffer = (buffer: t) => {
   let id = Native.vimBufferGetId(buffer);
-  let ret = switch (IntSet.find_opt(id, knownBuffers^)) {
-  | None => false
-  | Some(_) => true
-  };
+  let ret =
+    switch (IntSet.find_opt(id, knownBuffers^)) {
+    | None => false
+    | Some(_) => true
+    };
   ret;
 };
 
