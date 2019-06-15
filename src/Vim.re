@@ -62,11 +62,16 @@ let checkAndUpdateState = f => {
 
   if (!Range.equals(prevRange, newRange)
       || newMode == Visual
+<<<<<<< HEAD
       && prevMode != Visual
       || prevVisualMode != newVisualMode) {
     let vr =
       VisualRange.create(~range=newRange, ~visualType=newVisualMode, ());
     Event.dispatch(vr, Listeners.visualRangeChanged);
+=======
+      && prevMode != Visual) {
+    Event.dispatch(newRange, Listeners.visualRangeChanged);
+>>>>>>> master
   };
 
   flushQueue();
