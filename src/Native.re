@@ -45,5 +45,11 @@ external vimVisualGetRange: unit => (int, int, int, int) =
 external vimVisualGetType: unit => Types.visualType =
   "libvim_vimVisualGetType";
 
+external vimWindowGetWidth: unit => int = "libvim_vimWindowGetWidth";
+external vimWindowGetHeight: unit => int = "libvim_vimWindowGetHeight";
+external vimWindowGetTopLine: unit => int = "libvim_vimWindowGetTopLine";
+external vimWindowSetWidth: int => unit = "libvim_vimWindowSetWidth";
+external vimWindowSetHeight: int => unit = "libvim_vimWindowSetHeight";
+
 type bufferUpdateCallback = (buffer, int, int, int) => unit;
 /* external vimSetBufferUpdateCallback: bufferUpdateCallback => unit; */

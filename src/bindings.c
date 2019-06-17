@@ -345,6 +345,33 @@ CAMLprim value libvim_vimVisualGetRange(value unit) {
   CAMLreturn(ret);
 }
 
+CAMLprim value libvim_vimWindowGetWidth(value unit) {
+  int width = vimWindowGetWidth();
+  return Val_int(width);
+}
+
+CAMLprim value libvim_vimWindowGetHeight(value unit) {
+  int height = vimWindowGetHeight();
+  return Val_int(height);
+}
+
+CAMLprim value libvim_vimWindowGetTopLine(value unit) {
+  int topline = vimWindowGetTopLine();
+  return Val_int(topline);
+}
+
+CAMLprim value libvim_vimWindowSetWidth(value width) {
+  int w = Int_val(width);
+  vimWindowSetWidth(w);
+  return Val_unit;
+}
+
+CAMLprim value libvim_vimWindowSetHeight(value height) {
+  int h = Int_val(height);
+  vimWindowSetHeight(h);
+  return Val_unit;
+}
+
 CAMLprim value libvim_vimVisualGetType(value unit) {
   int ret;
   char v = vimVisualGetType();
