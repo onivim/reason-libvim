@@ -1,5 +1,5 @@
 {
-  "checksum": "cddcf559f568e132f5e53165c919ad6a",
+  "checksum": "3ec31443a50e5fa8b547fa15533be9ad",
   "root": "reason-libvim@link-dev:./package.json",
   "node": {
     "wordwrap@0.0.3@d41d8cd9": {
@@ -87,7 +87,7 @@
       "overrides": [ "doc.json" ],
       "dependencies": [
         "refmterr@3.1.10@d41d8cd9", "ocaml@4.7.1004@d41d8cd9",
-        "libvim@8.10869.6@d41d8cd9", "http-server@0.11.1@d41d8cd9",
+        "libvim@8.10869.7@d41d8cd9", "http-server@0.11.1@d41d8cd9",
         "@reason-native/rely@2.2.0@d41d8cd9",
         "@opam/odoc@opam:1.4.0@816970ee", "@opam/dune@opam:1.7.0@81948d64",
         "@esy-ocaml/reason@3.4.0@d41d8cd9"
@@ -267,14 +267,14 @@
       "dependencies": [],
       "devDependencies": []
     },
-    "libvim@8.10869.6@d41d8cd9": {
-      "id": "libvim@8.10869.6@d41d8cd9",
+    "libvim@8.10869.7@d41d8cd9": {
+      "id": "libvim@8.10869.7@d41d8cd9",
       "name": "libvim",
-      "version": "8.10869.6",
+      "version": "8.10869.7",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://registry.npmjs.org/libvim/-/libvim-8.10869.6.tgz#sha1:c5e6768345c290cc558fcdaa395c397a9d046a02"
+          "archive:https://registry.npmjs.org/libvim/-/libvim-8.10869.7.tgz#sha1:d3c3714b96ab7c8f8254501c7e53575e595093ab"
         ]
       },
       "overrides": [],
@@ -523,7 +523,7 @@
         "@opam/topkg@opam:1.0.0@61f4ccf9",
         "@opam/ocamlfind@opam:1.8.0@f744a0c5",
         "@opam/ocamlbuild@opam:0.14.0@427a2331",
-        "@opam/cmdliner@opam:1.0.3@96d31520",
+        "@opam/cmdliner@opam:1.0.4@93208aac",
         "@esy-ocaml/substs@0.0.1@d41d8cd9"
       ],
       "devDependencies": [
@@ -747,7 +747,7 @@
         "ocaml@4.7.1004@d41d8cd9", "@opam/tyxml@opam:4.3.0@15e44054",
         "@opam/result@opam:1.4@7add0d71", "@opam/fpath@opam:0.7.2@45477b93",
         "@opam/dune@opam:1.7.0@81948d64", "@opam/cppo@opam:1.6.6@25eb99ce",
-        "@opam/cmdliner@opam:1.0.3@96d31520",
+        "@opam/cmdliner@opam:1.0.4@93208aac",
         "@opam/astring@opam:0.8.3@4e5e17d5",
         "@esy-ocaml/substs@0.0.1@d41d8cd9"
       ],
@@ -1018,20 +1018,20 @@
       "dependencies": [ "@esy-ocaml/substs@0.0.1@d41d8cd9" ],
       "devDependencies": []
     },
-    "@opam/cmdliner@opam:1.0.3@96d31520": {
-      "id": "@opam/cmdliner@opam:1.0.3@96d31520",
+    "@opam/cmdliner@opam:1.0.4@93208aac": {
+      "id": "@opam/cmdliner@opam:1.0.4@93208aac",
       "name": "@opam/cmdliner",
-      "version": "opam:1.0.3",
+      "version": "opam:1.0.4",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://opam.ocaml.org/cache/md5/36/3674ad01d4445424105d33818c78fba8#md5:3674ad01d4445424105d33818c78fba8",
-          "archive:http://erratique.ch/software/cmdliner/releases/cmdliner-1.0.3.tbz#md5:3674ad01d4445424105d33818c78fba8"
+          "archive:https://opam.ocaml.org/cache/md5/fe/fe2213d0bc63b1e10a2d0aa66d2fc8d9#md5:fe2213d0bc63b1e10a2d0aa66d2fc8d9",
+          "archive:http://erratique.ch/software/cmdliner/releases/cmdliner-1.0.4.tbz#md5:fe2213d0bc63b1e10a2d0aa66d2fc8d9"
         ],
         "opam": {
           "name": "cmdliner",
-          "version": "1.0.3",
-          "path": "doc.esy.lock/opam/cmdliner.1.0.3"
+          "version": "1.0.4",
+          "path": "doc.esy.lock/opam/cmdliner.1.0.4"
         }
       },
       "overrides": [],
