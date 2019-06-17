@@ -28,6 +28,7 @@ let checkAndUpdateState = f => {
   let prevMode = Mode.getCurrent();
   let prevPosition = Cursor.getPosition();
   let prevRange = Visual.getRange();
+  let prevTopLine = Window.getTopLine();
   let prevVisualMode = Visual.getType();
 
   f();
@@ -35,6 +36,7 @@ let checkAndUpdateState = f => {
   let newPosition = Cursor.getPosition();
   let newMode = Mode.getCurrent();
   let newRange = Visual.getRange();
+  let newTopLine = Window.getTopLine();
   let newVisualMode = Visual.getType();
 
   BufferInternal.checkCurrentBufferForUpdate();
@@ -59,6 +61,10 @@ let checkAndUpdateState = f => {
 
   if (!Position.equals(prevPosition, newPosition)) {
     Event.dispatch(newPosition, Listeners.cursorMoved);
+  };
+
+  if (prevTopLine != newTopLine) {
+    Event.dispatch(newTopLine, Listeners.topLineChanged);
   };
 
   if (!Range.equals(prevRange, newRange)
