@@ -6,6 +6,7 @@ type bufferUpdateListener = BufferUpdate.t => unit;
 type commandLineUpdateListener = Types.cmdline => unit;
 type cursorMovedListener = Position.t => unit;
 type modeChangedListener = mode => unit;
+type topLineChangedListener = int => unit;
 type visualRangeChangedListener = VisualRange.t => unit;
 type noopListener = unit => unit;
 
@@ -18,4 +19,5 @@ let commandLineUpdate: ref(list(commandLineUpdateListener)) = ref([]);
 let commandLineLeave: ref(list(noopListener)) = ref([]);
 let cursorMoved: ref(list(cursorMovedListener)) = ref([]);
 let modeChanged: ref(list(modeChangedListener)) = ref([]);
+let topLineChanged: ref(list(topLineChangedListener)) = ref([]);
 let visualRangeChanged: ref(list(visualRangeChangedListener)) = ref([]);
