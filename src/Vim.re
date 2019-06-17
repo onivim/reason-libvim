@@ -11,6 +11,7 @@ module Search = Search;
 module Types = Types;
 module Visual = Visual;
 module VisualRange = VisualRange;
+module Window = Window;
 
 type fn = unit => unit;
 
