@@ -85,7 +85,11 @@ let _onAutocommand = (autoCommand: Types.autocmd, buffer: Buffer.t) => {
 
 let _onBufferChanged =
     (buffer: Buffer.t, startLine: int, endLine: int, extra: int) => {
-  let update = BufferUpdate.create(~buffer, ~startLine, ~endLine, ~extra);
+  let update = BufferUpdate.createIncremental(~buffer, ~startLine, ~endLine, ~extra);
+
+  prerr_endline("_onBufferChanged: " ++ string_of_int(Buffer.getVersion(buffer)));
+
+  BufferInternal.notifyUpdate(buffer);
 
   queue(() => Event.dispatch(update, Listeners.bufferUpdate));
 };
