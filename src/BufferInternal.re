@@ -42,10 +42,6 @@ let checkCurrentBufferForUpdate = () => {
     let newVersion = Native.vimBufferGetChangedTick(buffer);
 
     if (newVersion > lastVersion) {
-      prerr_endline(
-        "GOT NEW VERSION - dispatching full update. New version: "
-        ++ string_of_int(newVersion),
-      );
       doFullUpdate(buffer);
     };
   };

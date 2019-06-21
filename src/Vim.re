@@ -88,10 +88,6 @@ let _onBufferChanged =
   let update =
     BufferUpdate.createIncremental(~buffer, ~startLine, ~endLine, ~extra);
 
-  prerr_endline(
-    "_onBufferChanged: " ++ string_of_int(Buffer.getVersion(buffer)),
-  );
-
   BufferInternal.notifyUpdate(buffer);
 
   queue(() => Event.dispatch(update, Listeners.bufferUpdate));

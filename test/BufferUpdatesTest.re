@@ -35,8 +35,6 @@ describe("Buffer.onUpdate", ({describe, _}) => {
     test("add line", ({expect}) => {
       let _ = resetBuffer();
 
-      prerr_endline("=== ADD LINE TEST ==");
-
       let updates: ref(list(BufferUpdate.t)) = ref([]);
       let dispose = Buffer.onUpdate(upd => updates := [upd, ...updates^]);
 
@@ -54,7 +52,6 @@ describe("Buffer.onUpdate", ({describe, _}) => {
       expect.string(bu.lines[0]).toEqual(
         "This is the second line of a test file",
       );
-      prerr_endline("=== ADD LINE TEST COMPLETE ==");
 
       dispose();
     });
