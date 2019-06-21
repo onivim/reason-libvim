@@ -327,6 +327,28 @@ CAMLprim value libvim_vimCursorGetColumn(value unit) {
   return Val_int(column);
 }
 
+CAMLprim value libvim_vimOptionSetTabSize(value ts) {
+  int tabSize = Int_val(ts);
+  vimOptionSetTabSize(tabSize);
+  return Val_unit;
+}
+
+CAMLprim value libvim_vimOptionSetInsertSpaces(value is) {
+  int insertSpaces = Bool_val(is);
+  vimOptionSetInsertSpaces(insertSpaces);
+  return Val_unit;
+}
+
+CAMLprim value libvim_vimOptionGetInsertSpaces(value unit) {
+  int insertSpaces = vimOptionGetInsertSpaces();
+  return Val_bool(insertSpaces);
+}
+
+CAMLprim value libvim_vimOptionGetTabSize(value unit) {
+  int tabSize = vimOptionGetTabSize();
+  return Val_int(tabSize);
+}
+
 CAMLprim value libvim_vimVisualGetRange(value unit) {
   CAMLparam0();
   CAMLlocal1(ret);
