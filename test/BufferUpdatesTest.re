@@ -4,6 +4,34 @@ open Vim;
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 
 describe("Buffer.onUpdate", ({describe, _}) => {
+
+  describe("reloading", ({test, _}) => {
+    test("make changes, and reload", ({expect}) => {
+      let buffer = resetBuffer();
+        
+      input("I");
+      input("a");
+      input("b");
+      input("c");
+
+      let lastChangedTick = Buffer.getVersion(buffer);
+
+      let updates: ref(list(BufferUpdate.t)) = ref([]);
+      let dispose = Buffer.onUpdate(upd => updates := [upd, ...updates^]);
+
+      input("<esc>");
+      input(":");
+      input("e");
+      input("!");
+      input("<cr>");
+
+      expect.bool(Buffer.getVersion(buffer) > lastChangedTick).toBe(true);
+      expect.int(List.length(updates^)).toBe(1);
+
+      dispose();
+    });
+  });
+
   describe("normal mode", ({test, _}) => {
     test("add line", ({expect}) => {
       let _ = resetBuffer();
