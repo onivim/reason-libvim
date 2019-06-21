@@ -340,8 +340,13 @@ CAMLprim value libvim_vimCursorSetPosition(value l, value c) {
   return Val_unit;
 }
 
-CAMLprim value libvim_vimOptionSetInsertSpaces(value is) {
-  int insertSpaces = Bool_val(is);
+CAMLprim value libvim_vimOptionSetTabSize(value ts) {
+  int tabSize = Int_val(ts);
+  vimOptionSetTabSize(tabSize);
+}
+
+CAMLprim value libvim_vimOptionSetInsertSpaces(value v) {
+  int insertSpaces = Bool_val(v);
   vimOptionSetInsertSpaces(insertSpaces);
   return Val_unit;
 }
