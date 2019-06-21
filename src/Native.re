@@ -34,8 +34,10 @@ external vimCursorGetLine: unit => int = "libvim_vimCursorGetLine";
 external vimCursorGetColumn: unit => int = "libvim_vimCursorGetColumn";
 
 external vimOptionSetTabSize: int => unit = "libvim_vimOptionSetTabSize";
-external vimOptionSetInsertSpaces: bool => unit = "libvim_vimOptionSetInsertSpaces";
-external vimOptionGetInsertSpaces: unit => bool = "libvim_vimOptionGetInsertSpaces";
+external vimOptionSetInsertSpaces: bool => unit =
+  "libvim_vimOptionSetInsertSpaces";
+external vimOptionGetInsertSpaces: unit => bool =
+  "libvim_vimOptionGetInsertSpaces";
 external vimOptionGetTabSize: unit => int = "libvim_vimOptionGetTabSize";
 
 external vimSearchGetMatchingPair: unit => option((int, int)) =
