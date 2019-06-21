@@ -7,6 +7,7 @@ module IntMap =
   });
 
 let knownBuffers: ref(IntMap.t(int)) = ref(IntMap.empty);
+let currentBuffer: ref(option(Native.buffer)) = ref(None);
 
 let notifyUpdate = (buffer: t) => {
   let id = Native.vimBufferGetId(buffer);
@@ -32,6 +33,8 @@ let doFullUpdate = (buffer: t) => {
 let checkCurrentBufferForUpdate = () => {
   let buffer = Native.vimBufferGetCurrent();
   let id = Native.vimBufferGetId(buffer);
+
+  
   switch (IntMap.find_opt(id, knownBuffers^)) {
   | None =>
     let update = BufferUpdate.createInitial(buffer);
@@ -44,5 +47,18 @@ let checkCurrentBufferForUpdate = () => {
     if (newVersion > lastVersion) {
       doFullUpdate(buffer);
     };
+
+    /* Check if the current buffer changed */
+    switch (currentBuffer^) {
+    | Some(v) =>
+            if (v != buffer) {
+                Event.dispatch(v, Listeners.bufferLeave);
+                Event.dispatch(buffer, Listeners.bufferEnter);
+                currentBuffer := Some(buffer);
+            }
+    | None =>
+        Event.dispatch(buffer, Listeners.bufferEnter);
+        currentBuffer := Some(buffer);
+    }
   };
 };
