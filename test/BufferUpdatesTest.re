@@ -4,11 +4,10 @@ open Vim;
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 
 describe("Buffer.onUpdate", ({describe, _}) => {
-
-  describe("reloading", ({test, _}) => {
+  describe("reloading", ({test, _}) =>
     test("make changes, and reload", ({expect}) => {
       let buffer = resetBuffer();
-        
+
       input("I");
       input("a");
       input("b");
@@ -29,14 +28,14 @@ describe("Buffer.onUpdate", ({describe, _}) => {
       expect.int(List.length(updates^)).toBe(1);
 
       dispose();
-    });
-  });
+    })
+  );
 
   describe("normal mode", ({test, _}) => {
     test("add line", ({expect}) => {
       let _ = resetBuffer();
 
-      prerr_endline ("=== ADD LINE TEST ==");
+      prerr_endline("=== ADD LINE TEST ==");
 
       let updates: ref(list(BufferUpdate.t)) = ref([]);
       let dispose = Buffer.onUpdate(upd => updates := [upd, ...updates^]);
@@ -55,7 +54,7 @@ describe("Buffer.onUpdate", ({describe, _}) => {
       expect.string(bu.lines[0]).toEqual(
         "This is the second line of a test file",
       );
-      prerr_endline ("=== ADD LINE TEST COMPLETE ==");
+      prerr_endline("=== ADD LINE TEST COMPLETE ==");
 
       dispose();
     });

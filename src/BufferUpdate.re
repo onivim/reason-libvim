@@ -23,17 +23,18 @@ let getAllLines = (buffer: Native.buffer) => {
   };
 
   lines;
-}
+};
 
 let createInitial = (buffer: Native.buffer) => {
   let id = Native.vimBufferGetId(buffer);
   let version = Native.vimBufferGetChangedTick(buffer) - 1;
   let lines = getAllLines(buffer);
 
-  {id, startLine: 1, endLine: -1, lines, version};
+  {id, startLine: 1, endLine: (-1), lines, version};
 };
 
-let createIncremental = (~buffer: Native.buffer, ~startLine, ~endLine, ~extra: int) => {
+let createIncremental =
+    (~buffer: Native.buffer, ~startLine, ~endLine, ~extra: int) => {
   let id = Native.vimBufferGetId(buffer);
   let version = Native.vimBufferGetChangedTick(buffer);
   let idx: ref(int) = ref(startLine);
@@ -53,11 +54,11 @@ let createIncremental = (~buffer: Native.buffer, ~startLine, ~endLine, ~extra: i
   {id, startLine, endLine, lines, version};
 };
 
-let createFull = (buffer: Native.buffer ) => {
+let createFull = (buffer: Native.buffer) => {
   let id = Native.vimBufferGetId(buffer);
   let version = Native.vimBufferGetChangedTick(buffer);
 
   let lines = getAllLines(buffer);
 
-  {id, startLine: 1, endLine: -1, lines, version};
+  {id, startLine: 1, endLine: (-1), lines, version};
 };

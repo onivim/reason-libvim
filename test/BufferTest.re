@@ -18,7 +18,8 @@ describe("Buffer", ({describe, _}) => {
     })
   );
   describe("onEnter", ({test, _}) => {
-    test("editing a new file should trigger a buffer enter event", ({expect}) => {
+    test(
+      "editing a new file should trigger a buffer enter event", ({expect}) => {
       let _ = resetBuffer();
 
       let updates: ref(list(Buffer.t)) = ref([]);
@@ -31,7 +32,9 @@ describe("Buffer", ({describe, _}) => {
       dispose();
     });
 
-    test("editing a new file via ':e' should trigger a buffer enter event", ({expect}) => {
+    test(
+      "editing a new file via ':e' should trigger a buffer enter event",
+      ({expect}) => {
       let _ = resetBuffer();
 
       let updates: ref(list(Buffer.t)) = ref([]);
