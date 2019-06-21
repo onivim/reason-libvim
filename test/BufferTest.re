@@ -45,5 +45,27 @@ describe("Buffer", ({describe, _}) => {
       expect.int(List.length(updates^)).toBe(1);
       dispose();
     });
+
+    test(
+      "jumping to a previous file via '<c-o>' should trigger buffer enter",
+      ({expect}) => {
+      let _ = resetBuffer();
+
+      let buf1 = Buffer.openFile("test/lines_100.txt");
+
+      let buf2 = Buffer.openFile("test/some_random_file.txt");
+
+      let updates: ref(list(Buffer.t)) = ref([]);
+      let dispose = Buffer.onEnter(upd => updates := [upd, ...updates^]);
+
+      expect.bool(Buffer.getCurrent() == buf2).toBe(true);
+
+      input("<c-o>");
+      expect.bool(Buffer.getCurrent() == buf1).toBe(true);
+      expect.int(List.length(updates^)).toBe(1);
+      expect.bool(List.hd(updates^) == buf1).toBe(true);
+
+      dispose();
+    });
   });
 });
