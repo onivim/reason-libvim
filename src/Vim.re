@@ -5,6 +5,7 @@ module BufferUpdate = BufferUpdate;
 module CommandLine = CommandLine;
 module Cursor = Cursor;
 module Mode = Mode;
+module Options = Options;
 module Position = Position;
 module Range = Range;
 module Search = Search;
