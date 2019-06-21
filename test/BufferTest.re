@@ -65,6 +65,11 @@ describe("Buffer", ({describe, _}) => {
       expect.int(List.length(updates^)).toBe(1);
       expect.bool(List.hd(updates^) == buf1).toBe(true);
 
+      input("<c-i>");
+      expect.bool(Buffer.getCurrent() == buf2).toBe(true);
+      expect.int(List.length(updates^)).toBe(2);
+      expect.bool(List.hd(updates^) == buf2).toBe(true);
+
       dispose();
     });
   });
