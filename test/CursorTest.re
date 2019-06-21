@@ -4,17 +4,17 @@ open Vim;
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 
 describe("Cursor", ({describe, _}) => {
-  describe("setPosition", ({test, _}) => {
+  describe("setPosition", ({test, _}) =>
     test("cursor position gets updated", ({expect}) => {
-        Cursor.setPosition(1, 1);
-        expect.int(Cursor.getLine()).toBe(1);
-        expect.int(Cursor.getColumn()).toBe(1);
+      Cursor.setPosition(1, 1);
+      expect.int(Cursor.getLine()).toBe(1);
+      expect.int(Cursor.getColumn()).toBe(1);
 
-        Cursor.setPosition(3, 4);
-        expect.int(Cursor.getLine()).toBe(3);
-        expect.int(Cursor.getColumn()).toBe(4);
-    });
-  });
+      Cursor.setPosition(3, 4);
+      expect.int(Cursor.getLine()).toBe(3);
+      expect.int(Cursor.getColumn()).toBe(4);
+    })
+  );
   describe("normal mode", ({test, _}) => {
     test("j / k", ({expect}) => {
       let _ = resetBuffer();
@@ -73,5 +73,5 @@ describe("Cursor", ({describe, _}) => {
 
       dispose();
     });
-  })
+  });
 });
