@@ -34,7 +34,6 @@ let checkCurrentBufferForUpdate = () => {
   let buffer = Native.vimBufferGetCurrent();
   let id = Native.vimBufferGetId(buffer);
 
-  
   switch (IntMap.find_opt(id, knownBuffers^)) {
   | None =>
     let update = BufferUpdate.createInitial(buffer);
@@ -51,14 +50,14 @@ let checkCurrentBufferForUpdate = () => {
     /* Check if the current buffer changed */
     switch (currentBuffer^) {
     | Some(v) =>
-            if (v != buffer) {
-                Event.dispatch(v, Listeners.bufferLeave);
-                Event.dispatch(buffer, Listeners.bufferEnter);
-                currentBuffer := Some(buffer);
-            }
-    | None =>
+      if (v != buffer) {
+        Event.dispatch(v, Listeners.bufferLeave);
         Event.dispatch(buffer, Listeners.bufferEnter);
         currentBuffer := Some(buffer);
-    }
+      }
+    | None =>
+      Event.dispatch(buffer, Listeners.bufferEnter);
+      currentBuffer := Some(buffer);
+    };
   };
 };
