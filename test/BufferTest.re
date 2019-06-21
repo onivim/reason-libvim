@@ -1,6 +1,8 @@
 open TestFramework;
 open Vim;
 
+let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
+
 describe("Buffer", ({describe, _}) => {
   describe("getLine", ({test, _}) =>
     test("single file", ({expect}) => {
@@ -15,4 +17,33 @@ describe("Buffer", ({describe, _}) => {
       expect.int(Buffer.getLineCount(buffer)).toBe(3);
     })
   );
+  describe("onEnter", ({test, _}) => {
+    test(
+      "editing a new file should trigger a buffer enter event", ({expect}) => {
+      let _ = resetBuffer();
+
+      let updates: ref(list(Buffer.t)) = ref([]);
+      let dispose = Buffer.onEnter(upd => updates := [upd, ...updates^]);
+
+      let _ = Buffer.openFile("test/lines_100.txt");
+
+      expect.int(List.length(updates^)).toBe(1);
+
+      dispose();
+    });
+
+    test(
+      "editing a new file via ':e' should trigger a buffer enter event",
+      ({expect}) => {
+      let _ = resetBuffer();
+
+      let updates: ref(list(Buffer.t)) = ref([]);
+      let dispose = Buffer.onEnter(upd => updates := [upd, ...updates^]);
+
+      let _ = Buffer.openFile("test/some_random_file.txt");
+
+      expect.int(List.length(updates^)).toBe(1);
+      dispose();
+    });
+  });
 });
