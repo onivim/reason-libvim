@@ -341,12 +341,12 @@ CAMLprim value libvim_vimOptionSetInsertSpaces(value is) {
 
 CAMLprim value libvim_vimOptionGetInsertSpaces(value unit) {
     int insertSpaces = vimOptionGetInsertSpaces();
-    return Bool_val(insertSpaces);
+    return Val_bool(insertSpaces);
 }
 
 CAMLprim value libvim_vimOptionGetTabSize(value unit) {
     int tabSize = vimOptionGetTabSize();
-    return Int_val(tabSize);
+    return Val_int(tabSize);
 }
 
 CAMLprim value libvim_vimVisualGetRange(value unit) {

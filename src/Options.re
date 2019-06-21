@@ -1,7 +1,7 @@
 type t = Native.buffer;
 
-let setTabSize = Native.setTabSize;
-let setInsertSpaces = Native.setInsertSpaces;
+let setTabSize = Native.vimOptionSetTabSize;
+let setInsertSpaces = Native.vimOptionSetInsertSpaces;
 
-let getTabSize = Native.getTabSize;
-let getInsertSpaces = Native.getInsertSpaces;
+let getTabSize = Native.vimOptionGetTabSize;
+let getInsertSpaces = Native.vimOptionGetInsertSpaces;
