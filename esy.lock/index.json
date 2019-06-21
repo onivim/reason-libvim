@@ -1,5 +1,5 @@
 {
-  "checksum": "fc97ac6c70c79372e2250530a6f1914f",
+  "checksum": "28125352883dc30ac1e5973dfcef8471",
   "root": "reason-libvim@link-dev:./package.json",
   "node": {
     "refmterr@3.1.10@d41d8cd9": {
@@ -31,7 +31,7 @@
       "overrides": [],
       "dependencies": [
         "refmterr@3.1.10@d41d8cd9", "ocaml@4.7.1004@d41d8cd9",
-        "libvim@8.10869.7@d41d8cd9", "@opam/dune@opam:1.7.0@81948d64",
+        "libvim@8.10869.10@d41d8cd9", "@opam/dune@opam:1.7.0@81948d64",
         "@esy-ocaml/reason@3.4.0@d41d8cd9"
       ],
       "devDependencies": [ "ocaml@4.7.1004@d41d8cd9" ]
@@ -50,14 +50,14 @@
       "dependencies": [],
       "devDependencies": []
     },
-    "libvim@8.10869.7@d41d8cd9": {
-      "id": "libvim@8.10869.7@d41d8cd9",
+    "libvim@8.10869.10@d41d8cd9": {
+      "id": "libvim@8.10869.10@d41d8cd9",
       "name": "libvim",
-      "version": "8.10869.7",
+      "version": "8.10869.10",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://registry.npmjs.org/libvim/-/libvim-8.10869.7.tgz#sha1:d3c3714b96ab7c8f8254501c7e53575e595093ab"
+          "archive:https://registry.npmjs.org/libvim/-/libvim-8.10869.10.tgz#sha1:5628e27a87052169dbfdfa265e26e9b1869dcfc6"
         ]
       },
       "overrides": [],
@@ -265,20 +265,20 @@
       ],
       "devDependencies": [ "ocaml@4.7.1004@d41d8cd9" ]
     },
-    "@opam/menhir@opam:20181113@0c8257a8": {
-      "id": "@opam/menhir@opam:20181113@0c8257a8",
+    "@opam/menhir@opam:20190620@a914c43f": {
+      "id": "@opam/menhir@opam:20190620@a914c43f",
       "name": "@opam/menhir",
-      "version": "opam:20181113",
+      "version": "opam:20190620",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://opam.ocaml.org/cache/md5/69/69ce441a06ea131cd43e7b44c4303f3c#md5:69ce441a06ea131cd43e7b44c4303f3c",
-          "archive:https://gitlab.inria.fr/fpottier/menhir/repository/20181113/archive.tar.gz#md5:69ce441a06ea131cd43e7b44c4303f3c"
+          "archive:https://opam.ocaml.org/cache/md5/f7/f77d327a6203dfa031a9b94466b0c560#md5:f77d327a6203dfa031a9b94466b0c560",
+          "archive:https://gitlab.inria.fr/fpottier/menhir/repository/20190620/archive.tar.gz#md5:f77d327a6203dfa031a9b94466b0c560"
         ],
         "opam": {
           "name": "menhir",
-          "version": "20181113",
-          "path": "esy.lock/opam/menhir.20181113"
+          "version": "20190620",
+          "path": "esy.lock/opam/menhir.20190620"
         }
       },
       "overrides": [],
@@ -428,7 +428,7 @@
         "@opam/ocamlfind@opam:1.8.0@f744a0c5",
         "@opam/ocaml-migrate-parsetree@opam:1.3.1@266527bd",
         "@opam/merlin-extend@opam:0.3@0af73a50",
-        "@opam/menhir@opam:20181113@0c8257a8",
+        "@opam/menhir@opam:20190620@a914c43f",
         "@opam/dune@opam:1.7.0@81948d64"
       ],
       "devDependencies": []
