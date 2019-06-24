@@ -1,6 +1,6 @@
 {
   "name": "reason-libvim",
-  "version": "8.10869.10001",
+  "version": "8.10869.11001",
   "description": "Reason adapter for libvim",
   "license": "MIT",
   "scripts": {
@@ -15,14 +15,15 @@
   },
   "resolutions": {
     "@esy-ocaml/esy-installer": "0.0.1",
-    "@opam/dune": "1.7.0"
+    "@opam/dune": "1.7.0",
+    "@opam/merlin-extend": "0.3"
   },
   "dependencies": {
     "@opam/dune": "*",
     "@esy-ocaml/reason": "*",
     "refmterr": "*",
     "ocaml": "4.7.1004",
-    "libvim": "8.10869.10"
+    "libvim": "8.10869.11"
   },
   "devDependencies": {
     "ocaml": "4.7.1004"
