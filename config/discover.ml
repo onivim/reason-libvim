@@ -48,7 +48,6 @@ let flags =
         @ cclib("-lgdi32")
     | Linux -> []
         @ ccopt(libPath)
-        @ ccopt("-fsanitize=address")
         @ cclib("-lvim")
         @ cclib("-lICE")
         @ cclib("-lX11")
