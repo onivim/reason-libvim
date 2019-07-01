@@ -1,6 +1,6 @@
 {
   "name": "reason-libvim",
-  "version": "8.10869.11001",
+  "version": "8.10869.12001",
   "description": "Reason adapter for libvim",
   "license": "MIT",
   "scripts": {
