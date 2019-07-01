@@ -2,6 +2,12 @@
     (name LibvimUnitTestRunner)
     (public_name LibvimUnitTestRunner)
     (package libvim-test)
+    (flags (:include flags_with_sanitize.sexp))
     (libraries
         LibvimTest
             ))
+
+(rule
+    (targets flags_with_sanitize.sexp)
+    (deps (:discover ../../config/discover.exe))
+    (action (run %{discover})))

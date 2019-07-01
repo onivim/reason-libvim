@@ -63,6 +63,12 @@ let flags =
         @ cclib("-framework AppKit")
 ;;
 
+let flags_with_sanitize =
+    match get_os with
+    | Linux -> flags @ ccopt("-fsanitize=address")
+    | _ -> flags
+;;
+
 let cxx_flags =
     match get_os with
     | Windows -> c_flags @ ["-fno-exceptions"; "-fno-rtti"; "-lstdc++"]
@@ -72,3 +78,4 @@ let cxx_flags =
 Configurator.V1.Flags.write_sexp "c_flags.sexp" c_flags;
 Configurator.V1.Flags.write_sexp "cxx_flags.sexp" cxx_flags;
 Configurator.V1.Flags.write_sexp "flags.sexp" flags;
+Configurator.V1.Flags.write_sexp "flags_with_sanitize.sexp" flags_with_sanitize;
