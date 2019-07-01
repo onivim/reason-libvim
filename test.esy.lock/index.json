@@ -1,5 +1,5 @@
 {
-  "checksum": "6a8cf498e858c80f35633796642be631",
+  "checksum": "1031f74e8860bbd9de30402263f66acd",
   "root": "reason-libvim@link-dev:./package.json",
   "node": {
     "refmterr@3.1.10@d41d8cd9": {
@@ -31,8 +31,8 @@
       "overrides": [ "test.json" ],
       "dependencies": [
         "refmterr@3.1.10@d41d8cd9", "ocaml@4.7.1004@d41d8cd9",
-        "libvim@8.10869.11@d41d8cd9", "@reason-native/rely@2.2.0@d41d8cd9",
-        "@opam/odoc@opam:1.4.0@816970ee", "@opam/dune@opam:1.7.0@81948d64",
+        "libvim@8.10869.12@d41d8cd9", "@reason-native/rely@2.2.0@d41d8cd9",
+        "@opam/odoc@opam:1.4.1@1423b616", "@opam/dune@opam:1.7.0@81948d64",
         "@esy-ocaml/reason@3.4.0@d41d8cd9"
       ],
       "devDependencies": [ "ocaml@4.7.1004@d41d8cd9" ]
@@ -51,14 +51,14 @@
       "dependencies": [],
       "devDependencies": []
     },
-    "libvim@8.10869.11@d41d8cd9": {
-      "id": "libvim@8.10869.11@d41d8cd9",
+    "libvim@8.10869.12@d41d8cd9": {
+      "id": "libvim@8.10869.12@d41d8cd9",
       "name": "libvim",
-      "version": "8.10869.11",
+      "version": "8.10869.12",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://registry.npmjs.org/libvim/-/libvim-8.10869.11.tgz#sha1:cf91c98443b4b8d554f2417fa0e4bd813728cb0f"
+          "archive:https://registry.npmjs.org/libvim/-/libvim-8.10869.12.tgz#sha1:d8a3ec83ed31748305ca4c4c8f104d06591b909f"
         ]
       },
       "overrides": [],
@@ -345,20 +345,20 @@
       ],
       "devDependencies": [ "ocaml@4.7.1004@d41d8cd9" ]
     },
-    "@opam/odoc@opam:1.4.0@816970ee": {
-      "id": "@opam/odoc@opam:1.4.0@816970ee",
+    "@opam/odoc@opam:1.4.1@1423b616": {
+      "id": "@opam/odoc@opam:1.4.1@1423b616",
       "name": "@opam/odoc",
-      "version": "opam:1.4.0",
+      "version": "opam:1.4.1",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://opam.ocaml.org/cache/md5/8f/8fec61a88813b2295a16298fc6daedf1#md5:8fec61a88813b2295a16298fc6daedf1",
-          "archive:https://github.com/ocaml/odoc/archive/1.4.0.tar.gz#md5:8fec61a88813b2295a16298fc6daedf1"
+          "archive:https://opam.ocaml.org/cache/md5/b2/b27f9de7993d7bb87cbcc3586b19360c#md5:b27f9de7993d7bb87cbcc3586b19360c",
+          "archive:https://github.com/ocaml/odoc/archive/1.4.1.tar.gz#md5:b27f9de7993d7bb87cbcc3586b19360c"
         ],
         "opam": {
           "name": "odoc",
-          "version": "1.4.0",
-          "path": "test.esy.lock/opam/odoc.1.4.0"
+          "version": "1.4.1",
+          "path": "test.esy.lock/opam/odoc.1.4.1"
         }
       },
       "overrides": [],
@@ -483,20 +483,20 @@
       ],
       "devDependencies": [ "ocaml@4.7.1004@d41d8cd9" ]
     },
-    "@opam/menhir@opam:20190620@a914c43f": {
-      "id": "@opam/menhir@opam:20190620@a914c43f",
+    "@opam/menhir@opam:20190626@bbeb8953": {
+      "id": "@opam/menhir@opam:20190626@bbeb8953",
       "name": "@opam/menhir",
-      "version": "opam:20190620",
+      "version": "opam:20190626",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://opam.ocaml.org/cache/md5/f7/f77d327a6203dfa031a9b94466b0c560#md5:f77d327a6203dfa031a9b94466b0c560",
-          "archive:https://gitlab.inria.fr/fpottier/menhir/repository/20190620/archive.tar.gz#md5:f77d327a6203dfa031a9b94466b0c560"
+          "archive:https://opam.ocaml.org/cache/md5/78/783961f8d124449a1a335cc8e50f013f#md5:783961f8d124449a1a335cc8e50f013f",
+          "archive:https://gitlab.inria.fr/fpottier/menhir/repository/20190626/archive.tar.gz#md5:783961f8d124449a1a335cc8e50f013f"
         ],
         "opam": {
           "name": "menhir",
-          "version": "20190620",
-          "path": "test.esy.lock/opam/menhir.20190620"
+          "version": "20190626",
+          "path": "test.esy.lock/opam/menhir.20190626"
         }
       },
       "overrides": [],
@@ -773,7 +773,7 @@
         "@opam/ocamlfind@opam:1.8.0@f744a0c5",
         "@opam/ocaml-migrate-parsetree@opam:1.3.1@266527bd",
         "@opam/merlin-extend@opam:0.3@0af73a50",
-        "@opam/menhir@opam:20190620@a914c43f",
+        "@opam/menhir@opam:20190626@bbeb8953",
         "@opam/dune@opam:1.7.0@81948d64"
       ],
       "devDependencies": []

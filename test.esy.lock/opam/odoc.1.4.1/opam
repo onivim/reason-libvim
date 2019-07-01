@@ -39,6 +39,6 @@ build: [
 ]
 
 url {
-  src: "https://github.com/ocaml/odoc/archive/1.4.0.tar.gz"
-  checksum: "md5=8fec61a88813b2295a16298fc6daedf1"
+  src: "https://github.com/ocaml/odoc/archive/1.4.1.tar.gz"
+  checksum: "md5=b27f9de7993d7bb87cbcc3586b19360c"
 }
