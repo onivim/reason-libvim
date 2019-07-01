@@ -6,6 +6,19 @@ type t = {
   version: int,
 };
 
+let show = (v: t) => {
+  Printf.sprintf(
+    "id: %d startLine: %d endLine: %d version: %d lines:\n",
+    v.id,
+    v.startLine,
+    v.endLine,
+    v.version,
+  )
+  ++ "----"
+  ++ Array.fold_left((s, prev) => prev ++ s ++ "\n", "", v.lines)
+  ++ "----";
+};
+
 let getAllLines = (buffer: Native.buffer) => {
   let startLine = 1;
   let endLine = Native.vimBufferGetLineCount(buffer) + 1;

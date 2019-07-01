@@ -90,6 +90,37 @@ describe("Buffer.onUpdate", ({describe, _}) => {
 
       dispose();
     });
+    test("join", ({expect}) => {
+      let _ = resetBuffer();
+
+      let updates: ref(list(BufferUpdate.t)) = ref([]);
+      let dispose =
+        Buffer.onUpdate(upd => {
+          print_endline(BufferUpdate.show(upd));
+          updates := [upd, ...updates^];
+        });
+
+      input("J");
+      expect.int(List.length(updates^)).toBe(2);
+
+      /* Fix up ordering of calls - the order of the list gets inverted
+            because we put the latest element in front
+         */
+      updates := List.rev(updates^);
+
+      /* First update - actually modifies the line */
+      let firstUpdate = List.nth(updates^, 0);
+      /* Second update - deletes the extra line */
+      let secondUpdate = List.nth(updates^, 1);
+
+      /* Verify updates came in correct order */
+      expect.bool(firstUpdate.version < secondUpdate.version).toBe(true);
+
+      expect.int(Array.length(firstUpdate.lines)).toBe(1);
+      expect.int(Array.length(secondUpdate.lines)).toBe(0);
+
+      dispose();
+    });
   });
   describe("insert mode", ({test, _}) =>
     test("single file", ({expect}) => {
