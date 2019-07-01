@@ -2,6 +2,7 @@
     (name LibvimUnitTestRunner)
     (public_name LibvimUnitTestRunner)
     (package libvim-test)
+    (flags -ccopt -fsanitize=address)
     (libraries
         LibvimTest
             ))
