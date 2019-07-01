@@ -21,7 +21,8 @@ let queuedFunctions: ref(list(fn)) = ref([]);
 let queue = f => queuedFunctions := [f, ...queuedFunctions^];
 
 let flushQueue = () => {
-  List.iter(f => f(), queuedFunctions^);
+  queuedFunctions^ |> List.rev |> List.iter(f => f());
+
   queuedFunctions := [];
 };
 
