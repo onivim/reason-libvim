@@ -9,16 +9,19 @@ describe("Quit", ({test, _}) => {
 
     let updates = ref([]);
 
-    let dispose = onQuit((quitType, forced) => updates := [(quitType, forced), ...updates^]);
+    let dispose =
+      onQuit((quitType, forced) =>
+        updates := [(quitType, forced), ...updates^]
+      );
 
     command("q");
-    let (qt, forced)  = List.hd(updates^);
+    let (qt, forced) = List.hd(updates^);
 
     expect.int(List.length(updates^)).toBe(1);
-  
+
     switch (qt) {
-    | QuitOne(buf) => expect.bool(buf == b).toBe(true);
-    | _ => expect.string("Should've been QuitOne").toEqual("");
+    | QuitOne(buf) => expect.bool(buf == b).toBe(true)
+    | _ => expect.string("Should've been QuitOne").toEqual("")
     };
 
     expect.bool(forced).toBe(false);
@@ -30,16 +33,19 @@ describe("Quit", ({test, _}) => {
 
     let updates = ref([]);
 
-    let dispose = onQuit((quitType, forced) => updates := [(quitType, forced), ...updates^]);
+    let dispose =
+      onQuit((quitType, forced) =>
+        updates := [(quitType, forced), ...updates^]
+      );
 
     command("q!");
-    let (qt, forced)  = List.hd(updates^);
+    let (qt, forced) = List.hd(updates^);
 
     expect.int(List.length(updates^)).toBe(1);
-  
+
     switch (qt) {
-    | QuitOne(buf) => expect.bool(buf == b).toBe(true);
-    | _ => expect.string("Should've been QuitOne").toEqual("");
+    | QuitOne(buf) => expect.bool(buf == b).toBe(true)
+    | _ => expect.string("Should've been QuitOne").toEqual("")
     };
 
     expect.bool(forced).toBe(true);
@@ -51,20 +57,23 @@ describe("Quit", ({test, _}) => {
 
     let updates = ref([]);
 
-    let dispose = onQuit((quitType, forced) => updates := [(quitType, forced), ...updates^]);
+    let dispose =
+      onQuit((quitType, forced) =>
+        updates := [(quitType, forced), ...updates^]
+      );
 
     command("qall");
-    let (qt, forced)  = List.hd(updates^);
+    let (qt, forced) = List.hd(updates^);
 
     expect.int(List.length(updates^)).toBe(1);
-  
+
     switch (qt) {
-    | QuitAll => expect.bool(true).toBe(true);
-    | _ => expect.string("Should've been QuitAll").toEqual("");
+    | QuitAll => expect.bool(true).toBe(true)
+    | _ => expect.string("Should've been QuitAll").toEqual("")
     };
 
     expect.bool(forced).toBe(false);
 
     dispose();
-  })
+  });
 });

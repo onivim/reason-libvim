@@ -44,8 +44,7 @@ let onDirectoryChanged:
 by [command(":q")] or [ZZ].
 */
 
-let onQuit:
-  Listeners.quitListener => Event.unsubscribe;
+let onQuit: Listeners.quitListener => Event.unsubscribe;
 
 module AutoCommands = AutoCommands;
 module Buffer = Buffer;

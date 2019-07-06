@@ -7,7 +7,7 @@ type commandLineUpdateListener = Types.cmdline => unit;
 type directoryChangedListener = string => unit;
 type cursorMovedListener = Position.t => unit;
 type modeChangedListener = mode => unit;
-type quitListener = (Types.quitType, bool) => unit; 
+type quitListener = (Types.quitType, bool) => unit;
 type topLineChangedListener = int => unit;
 type visualRangeChangedListener = VisualRange.t => unit;
 type noopListener = unit => unit;

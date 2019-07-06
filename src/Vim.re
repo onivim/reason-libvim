@@ -99,7 +99,7 @@ let _onDirectoryChanged = _ => {
   queue(() => Event.dispatch(Sys.getcwd(), Listeners.directoryChanged));
 };
 
-let _onQuit = (q, f)  => {
+let _onQuit = (q, f) => {
   queue(() => Event.dispatch2(q, f, Listeners.quit));
 };
 

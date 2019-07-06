@@ -27,8 +27,8 @@ type visualType =
   | None;
 
 type quitType =
-| QuitAll
-| QuitOne(buffer);
+  | QuitAll
+  | QuitOne(buffer);
 
 /**
  * NOTE: This type must be kept in sync with the `auto_event` enum in `vim.h`!
