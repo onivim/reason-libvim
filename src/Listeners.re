@@ -11,7 +11,6 @@ type topLineChangedListener = int => unit;
 type visualRangeChangedListener = VisualRange.t => unit;
 type noopListener = unit => unit;
 
-
 let autocmd: ref(list(autocmdListener)) = ref([]);
 let bufferEnter: ref(list(bufferListener)) = ref([]);
 let bufferUpdate: ref(list(bufferUpdateListener)) = ref([]);

@@ -95,7 +95,7 @@ let _onBufferChanged =
   queue(() => Event.dispatch(update, Listeners.bufferUpdate));
 };
 
-let _onDirectoryChanged = (_) => {
+let _onDirectoryChanged = _ => {
   queue(() => Event.dispatch(Sys.getcwd(), Listeners.directoryChanged));
 };
 
@@ -119,5 +119,5 @@ let command = v => {
 };
 
 let onDirectoryChanged = f => {
-  Event.add(f, Listeners.directoryChanged); 
+  Event.add(f, Listeners.directoryChanged);
 };

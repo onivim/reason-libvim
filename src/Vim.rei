@@ -34,7 +34,8 @@ let command: string => unit;
 [f] is called whenever the active directory is changed, for example,
 via a [command("cd some-new-directory")].
 */
-let onDirectoryChanged: Listeners.directoryChangedListener => Event.unsubscribe;
+let onDirectoryChanged:
+  Listeners.directoryChangedListener => Event.unsubscribe;
 
 module AutoCommands = AutoCommands;
 module Buffer = Buffer;
