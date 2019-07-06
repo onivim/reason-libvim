@@ -95,8 +95,8 @@ let _onBufferChanged =
   queue(() => Event.dispatch(update, Listeners.bufferUpdate));
 };
 
-let _onDirectoryChanged = (path: string) => {
-  queue(() => Event.dispatch(path, Listeners.directoryChanged));
+let _onDirectoryChanged = (_) => {
+  queue(() => Event.dispatch(Sys.getcwd(), Listeners.directoryChanged));
 };
 
 let init = () => {

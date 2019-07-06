@@ -57,9 +57,20 @@ void onAutocommand(event_T event, buf_T *buf) {
   caml_callback2(*lv_onAutocmd, Val_int(event), (value)buf);
 }
 
+void onDirectoryChanged(char_u *path) {
+  static value *lv_onDirectoryChanged = NULL;
+
+  if (lv_onDirectoryChanged == NULL) {
+    lv_onDirectoryChanged = caml_named_value("lv_onDirectoryChanged");
+  }
+
+  caml_callback(*lv_onDirectoryChanged, caml_copy_string(path));
+}
+
 CAMLprim value libvim_vimInit(value unit) {
   vimSetBufferUpdateCallback(&onBufferChanged);
   vimSetAutoCommandCallback(&onAutocommand);
+  vimSetDirectoryChangedCallback(&onDirectoryChanged);
 
   char *args[0];
   vimInit(0, args);

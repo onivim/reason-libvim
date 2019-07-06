@@ -10,8 +10,11 @@ describe("DirectoryChanged", ({test, _}) => {
       let updates: ref(list(string)) = ref([]);
       let dispose = onDirectoryChanged(upd => updates := [upd, ...updates^]);
 
-      command("cd /");
+      command("cd test");
       expect.int(List.length(updates^)).toBe(1);
+
+      command("cd ..");
+      expect.int(List.length(updates^)).toBe(2);
 
       dispose();
     });
