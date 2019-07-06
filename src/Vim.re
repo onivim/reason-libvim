@@ -128,5 +128,5 @@ let onDirectoryChanged = f => {
 };
 
 let onQuit = f => {
-  Event.add(f, Listeners.quit);
+  Event.add2(f, Listeners.quit);
 };
