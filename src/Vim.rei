@@ -37,6 +37,13 @@ via a [command("cd some-new-directory")].
 let onDirectoryChanged:
   Listeners.directoryChangedListener => Event.unsubscribe;
 
+/**
+[onMessage(f)] registers a message listener [f].
+
+[f] is called whenever a message is emitted from Vim.
+*/
+let onMessage: Listeners.messageListener => Event.unsubscribe;
+
 module AutoCommands = AutoCommands;
 module Buffer = Buffer;
 module BufferMetadata = BufferMetadata;

@@ -24,6 +24,11 @@ type visualType =
   | Block
   | None;
 
+type msgPriority =
+| Info
+| Warning
+| Error;
+
 /**
  * NOTE: This type must be kept in sync with the `auto_event` enum in `vim.h`!
  *
