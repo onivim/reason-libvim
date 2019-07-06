@@ -24,6 +24,10 @@ type visualType =
   | Block
   | None;
 
+type quitType =
+| QuitAll
+| QuitOne(Native.buffer);
+
 /**
  * NOTE: This type must be kept in sync with the `auto_event` enum in `vim.h`!
  *

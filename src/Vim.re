@@ -99,10 +99,15 @@ let _onDirectoryChanged = _ => {
   queue(() => Event.dispatch(Sys.getcwd(), Listeners.directoryChanged));
 };
 
+let _onQuit = (q, f)  => {
+  queue(() => Event.dispatch2(q, f, Listeners.quit));
+};
+
 let init = () => {
   Callback.register("lv_onBufferChanged", _onBufferChanged);
   Callback.register("lv_onAutocommand", _onAutocommand);
   Callback.register("lv_onDirectoryChanged", _onDirectoryChanged);
+  Callback.register("lv_onQuit", _onQuit);
 
   Native.vimInit();
 
@@ -120,4 +125,8 @@ let command = v => {
 
 let onDirectoryChanged = f => {
   Event.add(f, Listeners.directoryChanged);
+};
+
+let onQuit = f => {
+  Event.add(f, Listeners.quit);
 };
