@@ -37,6 +37,15 @@ via a [command("cd some-new-directory")].
 let onDirectoryChanged:
   Listeners.directoryChangedListener => Event.unsubscribe;
 
+/**
+[onQuit(f)] registers a quit listener [f].
+
+[f] is called whenever a quit is requested, for example,
+by [command(":q")] or [ZZ].
+*/
+
+let onQuit: Listeners.quitListener => Event.unsubscribe;
+
 module AutoCommands = AutoCommands;
 module Buffer = Buffer;
 module BufferMetadata = BufferMetadata;

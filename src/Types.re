@@ -1,3 +1,5 @@
+type buffer;
+
 type mode =
   | Normal
   | Insert
@@ -23,6 +25,10 @@ type visualType =
   | Line
   | Block
   | None;
+
+type quitType =
+  | QuitAll
+  | QuitOne(buffer);
 
 /**
  * NOTE: This type must be kept in sync with the `auto_event` enum in `vim.h`!
