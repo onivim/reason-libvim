@@ -6,7 +6,7 @@ type bufferUpdateListener = BufferUpdate.t => unit;
 type commandLineUpdateListener = Types.cmdline => unit;
 type directoryChangedListener = string => unit;
 type cursorMovedListener = Position.t => unit;
-type messageListener = (Types.priority, string, string) => unit;
+type messageListener = (Types.msgPriority, string, string) => unit;
 type modeChangedListener = mode => unit;
 type topLineChangedListener = int => unit;
 type visualRangeChangedListener = VisualRange.t => unit;
