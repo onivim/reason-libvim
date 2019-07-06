@@ -27,9 +27,9 @@ type visualType =
   | None;
 
 type msgPriority =
-| Info
-| Warning
-| Error;
+  | Info
+  | Warning
+  | Error;
 
 type quitType =
   | QuitAll

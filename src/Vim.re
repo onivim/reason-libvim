@@ -99,7 +99,7 @@ let _onDirectoryChanged = _ => {
   queue(() => Event.dispatch(Sys.getcwd(), Listeners.directoryChanged));
 };
 
-let _onMessage = (priority, title, contents)  => {
+let _onMessage = (priority, title, contents) => {
   queue(() => Event.dispatch3(priority, title, contents, Listeners.message));
 };
 
