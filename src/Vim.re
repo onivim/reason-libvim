@@ -103,11 +103,16 @@ let _onMessage = (priority, title, contents)  => {
   queue(() => Event.dispatch3(priority, title, contents, Listeners.message));
 };
 
+let _onQuit = (q, f) => {
+  queue(() => Event.dispatch2(q, f, Listeners.quit));
+};
+
 let init = () => {
   Callback.register("lv_onBufferChanged", _onBufferChanged);
   Callback.register("lv_onAutocommand", _onAutocommand);
   Callback.register("lv_onDirectoryChanged", _onDirectoryChanged);
   Callback.register("lv_onMessage", _onMessage);
+  Callback.register("lv_onQuit", _onQuit);
 
   Native.vimInit();
 
@@ -129,4 +134,8 @@ let onDirectoryChanged = f => {
 
 let onMessage = f => {
   Event.add3(f, Listeners.message);
+};
+
+let onQuit = f => {
+  Event.add2(f, Listeners.quit);
 };

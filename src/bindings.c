@@ -5,6 +5,7 @@
 #include <caml/callback.h>
 #include <caml/memory.h>
 #include <caml/mlvalues.h>
+#include <caml/threads.h>
 
 #define Val_none Val_int(0)
 
@@ -58,19 +59,49 @@ void onAutocommand(event_T event, buf_T *buf) {
 }
 
 void onDirectoryChanged(char_u *path) {
+  CAMLparam0();
+  CAMLlocal1(pathString);
   static value *lv_onDirectoryChanged = NULL;
 
   if (lv_onDirectoryChanged == NULL) {
     lv_onDirectoryChanged = caml_named_value("lv_onDirectoryChanged");
   }
 
-  caml_callback(*lv_onDirectoryChanged, caml_copy_string(path));
+  caml_acquire_runtime_system();
+  pathString = caml_copy_string(path);
+  caml_callback(*lv_onDirectoryChanged, pathString);
+  caml_release_runtime_system();
+  CAMLreturn0;
+}
+
+void onQuit(buf_T *buf, int isForced) {
+  CAMLparam0();
+  CAMLlocal1(quitResult);
+
+  static value *lv_onQuit = NULL;
+
+  if (lv_onQuit == NULL) {
+    lv_onQuit = caml_named_value("lv_onQuit");
+  }
+
+  caml_acquire_runtime_system();
+  if (buf == NULL) {
+    quitResult = Val_none;
+  } else {
+    quitResult = Val_some((value)buf);
+  }
+  caml_callback2(*lv_onQuit, quitResult,
+                 isForced == TRUE ? Val_true : Val_false);
+  caml_release_runtime_system();
+
+  CAMLreturn0;
 }
 
 CAMLprim value libvim_vimInit(value unit) {
   vimSetBufferUpdateCallback(&onBufferChanged);
   vimSetAutoCommandCallback(&onAutocommand);
   vimSetDirectoryChangedCallback(&onDirectoryChanged);
+  vimSetQuitCallback(&onQuit);
 
   char *args[0];
   vimInit(0, args);

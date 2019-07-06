@@ -1,3 +1,5 @@
+type buffer;
+
 type mode =
   | Normal
   | Insert
@@ -28,6 +30,10 @@ type msgPriority =
 | Info
 | Warning
 | Error;
+
+type quitType =
+  | QuitAll
+  | QuitOne(buffer);
 
 /**
  * NOTE: This type must be kept in sync with the `auto_event` enum in `vim.h`!

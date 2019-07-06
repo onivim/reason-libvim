@@ -1,4 +1,4 @@
-type buffer;
+type buffer = Types.buffer;
 
 external vimInit: unit => unit = "libvim_vimInit";
 external vimInput: string => unit = "libvim_vimInput";
