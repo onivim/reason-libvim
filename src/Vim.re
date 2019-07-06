@@ -95,9 +95,14 @@ let _onBufferChanged =
   queue(() => Event.dispatch(update, Listeners.bufferUpdate));
 };
 
+let _onDirectoryChanged = (path: string) => {
+  queue(() => Event.dispatch(path, Listeners.directoryChanged));
+};
+
 let init = () => {
   Callback.register("lv_onBufferChanged", _onBufferChanged);
   Callback.register("lv_onAutocommand", _onAutocommand);
+  Callback.register("lv_onDirectoryChanged", _onDirectoryChanged);
 
   Native.vimInit();
 
@@ -111,4 +116,8 @@ let input = v => {
 
 let command = v => {
   checkAndUpdateState(() => Native.vimCommand(v));
+};
+
+let onDirectoryChanged = f => {
+  Event.add(f, Listeners.directoryChanged); 
 };

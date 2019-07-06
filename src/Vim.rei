@@ -28,6 +28,14 @@ The command [cmd] is processed synchronously.
 */
 let command: string => unit;
 
+/**
+[onDirectoryChanged(f)] registers a directory changed listener [f].
+
+[f] is called whenever the active directory is changed, for example,
+via a [command("cd some-new-directory")].
+*/
+let onDirectoryChanged: Listeners.directoryChangedListener => Event.unsubscribe;
+
 module AutoCommands = AutoCommands;
 module Buffer = Buffer;
 module BufferMetadata = BufferMetadata;
