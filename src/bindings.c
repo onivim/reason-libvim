@@ -86,11 +86,12 @@ void onQuit(buf_T *buf, int isForced) {
 
   caml_acquire_runtime_system();
   if (buf == NULL) {
-    quitResult = Val_none; 
+    quitResult = Val_none;
   } else {
     quitResult = Val_some((value)buf);
   }
-  caml_callback2(*lv_onQuit, quitResult, isForced == TRUE ? Val_true : Val_false);
+  caml_callback2(*lv_onQuit, quitResult,
+                 isForced == TRUE ? Val_true : Val_false);
   caml_release_runtime_system();
 
   CAMLreturn0;
