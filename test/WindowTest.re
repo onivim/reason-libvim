@@ -4,7 +4,7 @@ open Vim;
 let resetBuffer = () => Helpers.resetBuffer("test/lines_100.txt");
 
 describe("Window", ({describe, _}) => {
-  describe("get / set metrics", ({test, _}) =>
+  describe("get / set metrics", ({test, _}) => {
     test("simple test", ({expect}) => {
       let _ = resetBuffer();
 
@@ -14,8 +14,22 @@ describe("Window", ({describe, _}) => {
       expect.int(Window.getWidth()).toBe(50);
       expect.int(Window.getHeight()).toBe(51);
     })
-  );
+  });
+  
+  describe("setTopLeft", ({test, _}) => {
+    test("simple test", ({expect}) => {
+      let _ = resetBuffer();
 
+      Window.setWidth(3);
+      Window.setHeight(3);
+      Cursor.setPosition(2, 4);
+      Window.setTopLeft(2, 3);
+
+      expect.int(Window.getTopLine()).toBe(2);
+      expect.int(Window.getLeftColumn()).toBe(3);
+    })
+  });
+  
   describe("onTopLineChanged", ({test, _}) =>
     test("dispatches on change", ({expect}) => {
       let _ = resetBuffer();
