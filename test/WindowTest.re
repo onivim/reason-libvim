@@ -59,9 +59,12 @@ describe("Window", ({describe, _}) => {
   describe("onMovement", ({test, _}) => {
     test("simple movement", ({expect}) => {
       let _ = resetBuffer();
-      
+
       let movements = ref([]);
-      let dispose = Window.onMovement((movementType, count) => movements := [(movementType, count), ...movements^]);
+      let dispose =
+        Window.onMovement((movementType, count) =>
+          movements := [(movementType, count), ...movements^]
+        );
 
       input("<c-w>");
       input("j");
@@ -72,15 +75,18 @@ describe("Window", ({describe, _}) => {
 
       expect.bool(movementType == Types.OneDown).toBe(true);
       expect.int(count).toBe(1);
-      
+
       dispose();
     });
-    
+
     test("movement with count", ({expect}) => {
       let _ = resetBuffer();
-      
+
       let movements = ref([]);
-      let dispose = Window.onMovement((movementType, count) => movements := [(movementType, count), ...movements^]);
+      let dispose =
+        Window.onMovement((movementType, count) =>
+          movements := [(movementType, count), ...movements^]
+        );
 
       input("5");
       input("<c-w>");
@@ -92,7 +98,7 @@ describe("Window", ({describe, _}) => {
 
       expect.bool(movementType == Types.OneLeft).toBe(true);
       expect.int(count).toBe(5);
-      
+
       dispose();
     });
   });
@@ -101,8 +107,11 @@ describe("Window", ({describe, _}) => {
       let _ = resetBuffer();
 
       let splits = ref([]);
-      let dispose = Window.onSplit((splitType, name) => splits := [(splitType, name), ...splits^]);
-      
+      let dispose =
+        Window.onSplit((splitType, name) =>
+          splits := [(splitType, name), ...splits^]
+        );
+
       command("vsp test.txt");
 
       expect.int(List.length(splits^)).toBe(1);
@@ -111,16 +120,19 @@ describe("Window", ({describe, _}) => {
 
       expect.bool(splitType == Types.Vertical).toBe(true);
       expect.string(name).toEqual("test.txt");
-      
+
       dispose();
     });
-    
+
     test("sp creates split", ({expect}) => {
       let _ = resetBuffer();
 
       let splits = ref([]);
-      let dispose = Window.onSplit((splitType, name) => splits := [(splitType, name), ...splits^]);
-      
+      let dispose =
+        Window.onSplit((splitType, name) =>
+          splits := [(splitType, name), ...splits^]
+        );
+
       command("sp test2.txt");
 
       expect.int(List.length(splits^)).toBe(1);
@@ -129,7 +141,7 @@ describe("Window", ({describe, _}) => {
 
       expect.bool(splitType == Types.Horizontal).toBe(true);
       expect.string(name).toEqual("test2.txt");
-      
+
       dispose();
     });
   });
