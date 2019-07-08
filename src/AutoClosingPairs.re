@@ -1,0 +1,2 @@
+
+let setPairs = Native.vimAutoClosingPairsSet;

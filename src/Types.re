@@ -1,5 +1,12 @@
 type buffer;
 
+type autoClosingPair = {
+  open: char,
+  closing: char,
+};
+
+type autoClosingPairs = array(autoClosingPair);
+
 type mode =
   | Normal
   | Insert

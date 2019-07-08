@@ -6,6 +6,8 @@ external vimCommand: string => unit = "libvim_vimCommand";
 
 external vimGetMode: unit => Types.mode = "libvim_vimGetMode";
 
+external vimAutoClosingPairsSet: Types.autoClosingPairs = "libvim_vimAutoClosingPairsSet";
+
 external vimBufferOpen: string => buffer = "libvim_vimBufferOpen";
 external vimBufferGetId: buffer => int = "libvim_vimBufferGetId";
 external vimBufferGetById: int => option(buffer) = "libvim_vimBufferGetById";
@@ -35,6 +37,8 @@ external vimCursorGetColumn: unit => int = "libvim_vimCursorGetColumn";
 external vimCursorSetPosition: (int, int) => unit =
   "libvim_vimCursorSetPosition";
 
+external vimOptionSetAutoClosingPairs: bool => unit = "libvim_vimOptionSetAutoClosingPairs";
+external vimOptionGetAutoClosingPairs: unit => bool = "libvim_vimOptionGetAutoClosingPairs";
 external vimOptionSetTabSize: int => unit = "libvim_vimOptionSetTabSize";
 external vimOptionSetInsertSpaces: bool => unit =
   "libvim_vimOptionSetInsertSpaces";
