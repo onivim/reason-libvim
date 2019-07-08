@@ -97,6 +97,21 @@ void onQuit(buf_T *buf, int isForced) {
   CAMLreturn0;
 }
 
+void onWindowMovement(windowMovement_T movementType, int count) {
+  CAMLparam0();
+  
+  static value *lv_onWindowMovement = NULL;
+
+  if (lv_onWindowMovement == NULL) {
+    lv_onWindowMovement = caml_named_value("lv_onWindowMovement");
+  }
+  
+  caml_acquire_runtime_system();
+  caml_callback2(*lv_onWindowMovement, Val_int(movementType), Val_int(count));
+  caml_release_runtime_system();
+  CAMLreturn0;
+}
+
 void onWindowSplit(windowSplit_T splitType, char_u* path) {
   CAMLparam0();
   CAMLlocal1(pathString);
@@ -119,6 +134,7 @@ CAMLprim value libvim_vimInit(value unit) {
   vimSetAutoCommandCallback(&onAutocommand);
   vimSetDirectoryChangedCallback(&onDirectoryChanged);
   vimSetQuitCallback(&onQuit);
+  vimSetWindowMovementCallback(&onWindowMovement);
   vimSetWindowSplitCallback(&onWindowSplit);
 
   char *args[0];
