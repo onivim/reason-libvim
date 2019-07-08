@@ -30,6 +30,23 @@ type quitType =
   | QuitAll
   | QuitOne(buffer);
 
+type windowSplitType =
+| Horizontal
+| Vertical
+| TabPage;
+
+type windowMovementType =
+| OneLeft
+| OneRight
+| OneUp
+| OneDown
+| FullLeft
+| FullRight
+| FullUp
+| FullDown
+| TopLeft
+| BottomRight;
+
 /**
  * NOTE: This type must be kept in sync with the `auto_event` enum in `vim.h`!
  *
