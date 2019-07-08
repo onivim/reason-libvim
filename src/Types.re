@@ -1,5 +1,16 @@
 type buffer;
 
+module AutoClosingPair = {
+  type t = {
+    opening: char,
+    closing: char,
+  };
+
+  let create = (~opening, ~closing, ()) => {opening, closing};
+};
+
+type autoClosingPairs = array(AutoClosingPair.t);
+
 type mode =
   | Normal
   | Insert
@@ -25,6 +36,11 @@ type visualType =
   | Line
   | Block
   | None;
+
+type msgPriority =
+  | Info
+  | Warning
+  | Error;
 
 type quitType =
   | QuitAll

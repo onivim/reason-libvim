@@ -74,6 +74,24 @@ void onDirectoryChanged(char_u *path) {
   CAMLreturn0;
 }
 
+void onMessage(char_u *title, char_u *contents, msgPriority_T priority) {
+  CAMLparam0();
+  CAMLlocal2(titleString, contentsString);
+
+  static value *lv_onMessage = NULL;
+
+  if (lv_onMessage == NULL) {
+    lv_onMessage = caml_named_value("lv_onMessage");
+  }
+
+  caml_acquire_runtime_system();
+  titleString = caml_copy_string(title);
+  contentsString = caml_copy_string(contents);
+  caml_callback3(*lv_onMessage, Val_int(priority), titleString, contentsString);
+  caml_release_runtime_system();
+  CAMLreturn0;
+}
+
 void onQuit(buf_T *buf, int isForced) {
   CAMLparam0();
   CAMLlocal1(quitResult);
@@ -129,10 +147,35 @@ void onWindowSplit(windowSplit_T splitType, char_u *path) {
   CAMLreturn0;
 }
 
+CAMLprim value libvim_vimAutoClosingPairsSet(value acp) {
+  CAMLparam1(acp);
+  CAMLlocal1(val);
+
+  int len = Wosize_val(acp);
+
+  autoClosingPair_T *pAcp =
+      (autoClosingPair_T *)malloc(sizeof(autoClosingPair_T) * len);
+  if (pAcp != NULL) {
+
+    for (int i = 0; i < len; i++) {
+      val = Field(acp, i);
+      int opening = Int_val(Field(val, 0));
+      int closing = Int_val(Field(val, 1));
+      pAcp[i].open = opening;
+      pAcp[i].close = closing;
+    };
+
+    acp_set_pairs(pAcp, len);
+    free(pAcp);
+  }
+  CAMLreturn(Val_unit);
+}
+
 CAMLprim value libvim_vimInit(value unit) {
   vimSetBufferUpdateCallback(&onBufferChanged);
   vimSetAutoCommandCallback(&onAutocommand);
   vimSetDirectoryChangedCallback(&onDirectoryChanged);
+  vimSetMessageCallback(&onMessage);
   vimSetQuitCallback(&onQuit);
   vimSetWindowMovementCallback(&onWindowMovement);
   vimSetWindowSplitCallback(&onWindowSplit);
@@ -416,6 +459,11 @@ CAMLprim value libvim_vimCursorSetPosition(value l, value c) {
   return Val_unit;
 }
 
+CAMLprim value libvim_vimOptionSetAutoClosingPairs(value ts) {
+  int tabSize = Int_val(ts);
+  p_acp = tabSize;
+}
+
 CAMLprim value libvim_vimOptionSetTabSize(value ts) {
   int tabSize = Int_val(ts);
   vimOptionSetTabSize(tabSize);
@@ -427,6 +475,9 @@ CAMLprim value libvim_vimOptionSetInsertSpaces(value v) {
   return Val_unit;
 }
 
+CAMLprim value libvim_vimOptionGetAutoClosingPairs(value unit) {
+  return Val_bool(p_acp);
+}
 CAMLprim value libvim_vimOptionGetInsertSpaces(value unit) {
   int insertSpaces = vimOptionGetInsertSpaces();
   return Val_bool(insertSpaces);
