@@ -30,6 +30,32 @@ describe("Window", ({describe, _}) => {
     })
   });
   
+  describe("onLeftColumnChanged", ({test, _}) =>
+    test("dispatches on change", ({expect}) => {
+      let _ = resetBuffer();
+
+      Window.setWidth(3);
+      Window.setHeight(3);
+
+      let leftColumnChanges: ref(list(int)) = ref([]);
+      let dispose =
+        Window.onLeftColumnChanged(tl =>
+          leftColumnChanges := [tl, ...leftColumnChanges^]
+        );
+
+      input("$");
+
+      expect.int(List.length(leftColumnChanges^)).toBe(1);
+      expect.int(List.hd(leftColumnChanges^)).toBe(4);
+      
+      input("0");
+      expect.int(List.length(leftColumnChanges^)).toBe(2);
+      expect.int(List.hd(leftColumnChanges^)).toBe(0);
+
+      dispose();
+    })
+  );
+  
   describe("onTopLineChanged", ({test, _}) =>
     test("dispatches on change", ({expect}) => {
       let _ = resetBuffer();
