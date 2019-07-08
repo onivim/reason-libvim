@@ -99,29 +99,29 @@ void onQuit(buf_T *buf, int isForced) {
 
 void onWindowMovement(windowMovement_T movementType, int count) {
   CAMLparam0();
-  
+
   static value *lv_onWindowMovement = NULL;
 
   if (lv_onWindowMovement == NULL) {
     lv_onWindowMovement = caml_named_value("lv_onWindowMovement");
   }
-  
+
   caml_acquire_runtime_system();
   caml_callback2(*lv_onWindowMovement, Val_int(movementType), Val_int(count));
   caml_release_runtime_system();
   CAMLreturn0;
 }
 
-void onWindowSplit(windowSplit_T splitType, char_u* path) {
+void onWindowSplit(windowSplit_T splitType, char_u *path) {
   CAMLparam0();
   CAMLlocal1(pathString);
-  
+
   static value *lv_onWindowSplit = NULL;
 
   if (lv_onWindowSplit == NULL) {
     lv_onWindowSplit = caml_named_value("lv_onWindowSplit");
   }
-  
+
   caml_acquire_runtime_system();
   pathString = caml_copy_string(path);
   caml_callback2(*lv_onWindowSplit, Val_int(splitType), pathString);
