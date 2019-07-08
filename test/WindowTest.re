@@ -55,4 +55,24 @@ describe("Window", ({describe, _}) => {
       dispose();
     })
   );
+
+  describe("onSplit", ({test, _}) => {
+    test("vsp creates split", ({expect}) => {
+      let _ = resetBuffer();
+
+      let splits = ref([]);
+      let dispose = Window.onSplit((splitType, name) => splits := [(splitType, name), ...splits^]);
+      
+      command("vsp test.txt");
+
+      expect.int(List.length(splits^)).toBe(1);
+
+      let (splitType, name) = List.hd(splits^);
+
+      expect.bool(splitType == Types.Vertical).toBe(true);
+      expect.string(name).toEqual("test.txt");
+      
+      dispose();
+    });
+  });
 });
