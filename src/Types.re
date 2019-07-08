@@ -37,6 +37,11 @@ type visualType =
   | Block
   | None;
 
+type msgPriority =
+  | Info
+  | Warning
+  | Error;
+
 type quitType =
   | QuitAll
   | QuitOne(buffer);

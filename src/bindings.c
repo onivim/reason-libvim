@@ -74,6 +74,24 @@ void onDirectoryChanged(char_u *path) {
   CAMLreturn0;
 }
 
+void onMessage(char_u *title, char_u *contents, msgPriority_T priority) {
+  CAMLparam0();
+  CAMLlocal2(titleString, contentsString);
+
+  static value *lv_onMessage = NULL;
+
+  if (lv_onMessage == NULL) {
+    lv_onMessage = caml_named_value("lv_onMessage");
+  }
+
+  caml_acquire_runtime_system();
+  titleString = caml_copy_string(title);
+  contentsString = caml_copy_string(contents);
+  caml_callback3(*lv_onMessage, Val_int(priority), titleString, contentsString);
+  caml_release_runtime_system();
+  CAMLreturn0;
+}
+
 void onQuit(buf_T *buf, int isForced) {
   CAMLparam0();
   CAMLlocal1(quitResult);
@@ -125,6 +143,7 @@ CAMLprim value libvim_vimInit(value unit) {
   vimSetBufferUpdateCallback(&onBufferChanged);
   vimSetAutoCommandCallback(&onAutocommand);
   vimSetDirectoryChangedCallback(&onDirectoryChanged);
+  vimSetMessageCallback(&onMessage);
   vimSetQuitCallback(&onQuit);
 
   char *args[0];
