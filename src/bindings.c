@@ -97,11 +97,29 @@ void onQuit(buf_T *buf, int isForced) {
   CAMLreturn0;
 }
 
+void onWindowSplit(windowSplit_T splitType, char_u* path) {
+  CAMLparam0();
+  CAMLlocal1(pathString);
+  
+  static value *lv_onWindowSplit = NULL;
+
+  if (lv_onWindowSplit == NULL) {
+    lv_onWindowSplit = caml_named_value("lv_onWindowSplit");
+  }
+  
+  caml_acquire_runtime_system();
+  pathString = caml_copy_string(path);
+  caml_callback2(*lv_onWindowSplit, Val_int(splitType), pathString);
+  caml_release_runtime_system();
+  CAMLreturn0;
+}
+
 CAMLprim value libvim_vimInit(value unit) {
   vimSetBufferUpdateCallback(&onBufferChanged);
   vimSetAutoCommandCallback(&onAutocommand);
   vimSetDirectoryChangedCallback(&onDirectoryChanged);
   vimSetQuitCallback(&onQuit);
+  vimSetWindowSplitCallback(&onWindowSplit);
 
   char *args[0];
   vimInit(0, args);

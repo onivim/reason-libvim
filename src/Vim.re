@@ -103,11 +103,16 @@ let _onQuit = (q, f) => {
   queue(() => Event.dispatch2(q, f, Listeners.quit));
 };
 
+let _onWindowSplit = (st, p) => {
+  queue(() => Event.dispatch2(st, p, Listeners.windowSplit));
+};
+
 let init = () => {
   Callback.register("lv_onBufferChanged", _onBufferChanged);
   Callback.register("lv_onAutocommand", _onAutocommand);
   Callback.register("lv_onDirectoryChanged", _onDirectoryChanged);
   Callback.register("lv_onQuit", _onQuit);
+  Callback.register("lv_onWindowSplit", _onWindowSplit);
 
   Native.vimInit();
 
