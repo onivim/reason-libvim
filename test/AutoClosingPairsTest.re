@@ -49,4 +49,25 @@ describe("AutoClosingPairs", ({test, _}) => {
       let line = Buffer.getLine(b, 1);
       expect.string(line).toEqual("[(\"{]");
     });
+
+    test("multiple acp", ({expect}) => {
+      let b = resetBuffer();
+        Options.setAutoClosingPairs(true);
+        AutoClosingPairs.setPairs([|
+            Types.AutoClosingPair.create(~opening='[', ~closing=']', ()),
+            Types.AutoClosingPair.create(~opening='{', ~closing='}', ()),
+            Types.AutoClosingPair.create(~opening='(', ~closing=')', ()),
+            Types.AutoClosingPair.create(~opening='"', ~closing='"', ()),
+        |]);
+        
+        
+      input("O");
+      input("[");
+      input("(");
+      input("\"");
+      input("{");
+
+      let line = Buffer.getLine(b, 1);
+      expect.string(line).toEqual("[(\"{}\")]");
+    });
 });
