@@ -6,7 +6,7 @@ external vimCommand: string => unit = "libvim_vimCommand";
 
 external vimGetMode: unit => Types.mode = "libvim_vimGetMode";
 
-external vimAutoClosingPairsSet: Types.autoClosingPairs = "libvim_vimAutoClosingPairsSet";
+external vimAutoClosingPairsSet: Types.autoClosingPairs => unit = "libvim_vimAutoClosingPairsSet";
 
 external vimBufferOpen: string => buffer = "libvim_vimBufferOpen";
 external vimBufferGetId: buffer => int = "libvim_vimBufferGetId";
