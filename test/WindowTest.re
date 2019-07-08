@@ -55,4 +55,94 @@ describe("Window", ({describe, _}) => {
       dispose();
     })
   );
+
+  describe("onMovement", ({test, _}) => {
+    test("simple movement", ({expect}) => {
+      let _ = resetBuffer();
+
+      let movements = ref([]);
+      let dispose =
+        Window.onMovement((movementType, count) =>
+          movements := [(movementType, count), ...movements^]
+        );
+
+      input("<c-w>");
+      input("j");
+
+      expect.int(List.length(movements^)).toBe(1);
+
+      let (movementType, count) = List.hd(movements^);
+
+      expect.bool(movementType == Types.OneDown).toBe(true);
+      expect.int(count).toBe(1);
+
+      dispose();
+    });
+
+    test("movement with count", ({expect}) => {
+      let _ = resetBuffer();
+
+      let movements = ref([]);
+      let dispose =
+        Window.onMovement((movementType, count) =>
+          movements := [(movementType, count), ...movements^]
+        );
+
+      input("5");
+      input("<c-w>");
+      input("h");
+
+      expect.int(List.length(movements^)).toBe(1);
+
+      let (movementType, count) = List.hd(movements^);
+
+      expect.bool(movementType == Types.OneLeft).toBe(true);
+      expect.int(count).toBe(5);
+
+      dispose();
+    });
+  });
+  describe("onSplit", ({test, _}) => {
+    test("vsp creates split", ({expect}) => {
+      let _ = resetBuffer();
+
+      let splits = ref([]);
+      let dispose =
+        Window.onSplit((splitType, name) =>
+          splits := [(splitType, name), ...splits^]
+        );
+
+      command("vsp test.txt");
+
+      expect.int(List.length(splits^)).toBe(1);
+
+      let (splitType, name) = List.hd(splits^);
+
+      expect.bool(splitType == Types.Vertical).toBe(true);
+      expect.string(name).toEqual("test.txt");
+
+      dispose();
+    });
+
+    test("sp creates split", ({expect}) => {
+      let _ = resetBuffer();
+
+      let splits = ref([]);
+      let dispose =
+        Window.onSplit((splitType, name) =>
+          splits := [(splitType, name), ...splits^]
+        );
+
+      command("sp test2.txt");
+
+      expect.int(List.length(splits^)).toBe(1);
+
+      let (splitType, name) = List.hd(splits^);
+
+      expect.bool(splitType == Types.Horizontal).toBe(true);
+      expect.string(name).toEqual("test2.txt");
+
+      dispose();
+    });
+  });
 });

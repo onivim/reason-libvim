@@ -11,6 +11,8 @@ type modeChangedListener = mode => unit;
 type quitListener = (Types.quitType, bool) => unit;
 type topLineChangedListener = int => unit;
 type visualRangeChangedListener = VisualRange.t => unit;
+type windowMovementListener = (Types.windowMovementType, int) => unit;
+type windowSplitListener = (Types.windowSplitType, string) => unit;
 type noopListener = unit => unit;
 
 let autocmd: ref(list(autocmdListener)) = ref([]);
@@ -27,3 +29,5 @@ let modeChanged: ref(list(modeChangedListener)) = ref([]);
 let quit: ref(list(quitListener)) = ref([]);
 let topLineChanged: ref(list(topLineChangedListener)) = ref([]);
 let visualRangeChanged: ref(list(visualRangeChangedListener)) = ref([]);
+let windowMovement: ref(list(windowMovementListener)) = ref([]);
+let windowSplit: ref(list(windowSplitListener)) = ref([]);
