@@ -75,6 +75,26 @@ describe("Window", ({describe, _}) => {
       
       dispose();
     });
+    
+    test("movement with count", ({expect}) => {
+      let _ = resetBuffer();
+      
+      let movements = ref([]);
+      let dispose = Window.onMovement((movementType, count) => movements := [(movementType, count), ...movements^]);
+
+      input("5");
+      input("<c-w>");
+      input("h");
+
+      expect.int(List.length(movements^)).toBe(1);
+
+      let (movementType, count) = List.hd(movements^);
+
+      expect.bool(movementType == Types.OneLeft).toBe(true);
+      expect.int(count).toBe(5);
+      
+      dispose();
+    });
   });
   describe("onSplit", ({test, _}) => {
     test("vsp creates split", ({expect}) => {
