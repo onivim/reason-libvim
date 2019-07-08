@@ -74,10 +74,10 @@ void onDirectoryChanged(char_u *path) {
   CAMLreturn0;
 }
 
-void onMessage(char_u* title, char_u *contents, msgPriority_T priority) {
+void onMessage(char_u *title, char_u *contents, msgPriority_T priority) {
   CAMLparam0();
   CAMLlocal2(titleString, contentsString);
-  
+
   static value *lv_onMessage = NULL;
 
   if (lv_onMessage == NULL) {
