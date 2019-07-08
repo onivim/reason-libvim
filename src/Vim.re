@@ -1,3 +1,4 @@
+module AutoClosingPairs = AutoClosingPairs;
 module AutoCommands = AutoCommands;
 module Buffer = Buffer;
 module BufferMetadata = BufferMetadata;

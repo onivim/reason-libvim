@@ -46,6 +46,7 @@ by [command(":q")] or [ZZ].
 
 let onQuit: Listeners.quitListener => Event.unsubscribe;
 
+module AutoClosingPairs = AutoClosingPairs;
 module AutoCommands = AutoCommands;
 module Buffer = Buffer;
 module BufferMetadata = BufferMetadata;
