@@ -4,70 +4,68 @@ open Vim;
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 
 describe("AutoClosingPairs", ({test, _}) => {
-    test("get / set acp options", ({expect}) => {
-      let _ = resetBuffer();
+  test("get / set acp options", ({expect}) => {
+    let _ = resetBuffer();
 
-      Options.setAutoClosingPairs(true);
-      expect.bool(Options.getAutoClosingPairs()).toBe(true);
-      
-      Options.setAutoClosingPairs(false);
-      expect.bool(Options.getAutoClosingPairs()).toBe(false);
+    Options.setAutoClosingPairs(true);
+    expect.bool(Options.getAutoClosingPairs()).toBe(true);
 
-      Options.setAutoClosingPairs(true);
-      expect.bool(Options.getAutoClosingPairs()).toBe(true);
-    });
+    Options.setAutoClosingPairs(false);
+    expect.bool(Options.getAutoClosingPairs()).toBe(false);
 
-    test("acp disabled", ({expect}) => {
-      let b = resetBuffer();
+    Options.setAutoClosingPairs(true);
+    expect.bool(Options.getAutoClosingPairs()).toBe(true);
+  });
 
-      Options.setAutoClosingPairs(false);
+  test("acp disabled", ({expect}) => {
+    let b = resetBuffer();
 
-      input("O");
-      input("[");
-      input("(");
-      input("\"");
-      input("{");
+    Options.setAutoClosingPairs(false);
 
-      let line = Buffer.getLine(b, 1);
-      expect.string(line).toEqual("[(\"{");
-    });
+    input("O");
+    input("[");
+    input("(");
+    input("\"");
+    input("{");
 
-    test("single acp", ({expect}) => {
-      let b = resetBuffer();
-        Options.setAutoClosingPairs(true);
-        AutoClosingPairs.setPairs([|
-            Types.AutoClosingPair.create(~opening='[', ~closing=']', ()),
-        |]);
-        
-        
-      input("O");
-      input("[");
-      input("(");
-      input("\"");
-      input("{");
+    let line = Buffer.getLine(b, 1);
+    expect.string(line).toEqual("[(\"{");
+  });
 
-      let line = Buffer.getLine(b, 1);
-      expect.string(line).toEqual("[(\"{]");
-    });
+  test("single acp", ({expect}) => {
+    let b = resetBuffer();
+    Options.setAutoClosingPairs(true);
+    AutoClosingPairs.setPairs([|
+      Types.AutoClosingPair.create(~opening='[', ~closing=']', ()),
+    |]);
 
-    test("multiple acp", ({expect}) => {
-      let b = resetBuffer();
-        Options.setAutoClosingPairs(true);
-        AutoClosingPairs.setPairs([|
-            Types.AutoClosingPair.create(~opening='[', ~closing=']', ()),
-            Types.AutoClosingPair.create(~opening='{', ~closing='}', ()),
-            Types.AutoClosingPair.create(~opening='(', ~closing=')', ()),
-            Types.AutoClosingPair.create(~opening='"', ~closing='"', ()),
-        |]);
-        
-        
-      input("O");
-      input("[");
-      input("(");
-      input("\"");
-      input("{");
+    input("O");
+    input("[");
+    input("(");
+    input("\"");
+    input("{");
 
-      let line = Buffer.getLine(b, 1);
-      expect.string(line).toEqual("[(\"{}\")]");
-    });
+    let line = Buffer.getLine(b, 1);
+    expect.string(line).toEqual("[(\"{]");
+  });
+
+  test("multiple acp", ({expect}) => {
+    let b = resetBuffer();
+    Options.setAutoClosingPairs(true);
+    AutoClosingPairs.setPairs([|
+      Types.AutoClosingPair.create(~opening='[', ~closing=']', ()),
+      Types.AutoClosingPair.create(~opening='{', ~closing='}', ()),
+      Types.AutoClosingPair.create(~opening='(', ~closing=')', ()),
+      Types.AutoClosingPair.create(~opening='"', ~closing='"', ()),
+    |]);
+
+    input("O");
+    input("[");
+    input("(");
+    input("\"");
+    input("{");
+
+    let line = Buffer.getLine(b, 1);
+    expect.string(line).toEqual("[(\"{}\")]");
+  });
 });

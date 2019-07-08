@@ -1,16 +1,13 @@
 type buffer;
 
-module AutoClosingPair {
+module AutoClosingPair = {
   type t = {
     opening: char,
     closing: char,
   };
 
-  let create = (~opening, ~closing, ()) => {
-    opening,
-    closing,
-  };
-}
+  let create = (~opening, ~closing, ()) => {opening, closing};
+};
 
 type autoClosingPairs = array(AutoClosingPair.t);
 
