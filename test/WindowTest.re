@@ -74,5 +74,23 @@ describe("Window", ({describe, _}) => {
       
       dispose();
     });
+    
+    test("sp creates split", ({expect}) => {
+      let _ = resetBuffer();
+
+      let splits = ref([]);
+      let dispose = Window.onSplit((splitType, name) => splits := [(splitType, name), ...splits^]);
+      
+      command("sp test2.txt");
+
+      expect.int(List.length(splits^)).toBe(1);
+
+      let (splitType, name) = List.hd(splits^);
+
+      expect.bool(splitType == Types.Horizontal).toBe(true);
+      expect.string(name).toEqual("test2.txt");
+      
+      dispose();
+    });
   });
 });
