@@ -74,7 +74,7 @@ let checkAndUpdateState = f => {
 
   if (prevLeftColumn != newLeftColumn) {
     Event.dispatch(newLeftColumn, Listeners.leftColumnChanged);
-  }
+  };
 
   if (!Range.equals(prevRange, newRange)
       || newMode == Visual

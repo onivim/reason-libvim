@@ -4,7 +4,7 @@ open Vim;
 let resetBuffer = () => Helpers.resetBuffer("test/lines_100.txt");
 
 describe("Window", ({describe, _}) => {
-  describe("get / set metrics", ({test, _}) => {
+  describe("get / set metrics", ({test, _}) =>
     test("simple test", ({expect}) => {
       let _ = resetBuffer();
 
@@ -14,9 +14,9 @@ describe("Window", ({describe, _}) => {
       expect.int(Window.getWidth()).toBe(50);
       expect.int(Window.getHeight()).toBe(51);
     })
-  });
-  
-  describe("setTopLeft", ({test, _}) => {
+  );
+
+  describe("setTopLeft", ({test, _}) =>
     test("simple test", ({expect}) => {
       let _ = resetBuffer();
 
@@ -28,8 +28,8 @@ describe("Window", ({describe, _}) => {
       expect.int(Window.getTopLine()).toBe(2);
       expect.int(Window.getLeftColumn()).toBe(3);
     })
-  });
-  
+  );
+
   describe("onLeftColumnChanged", ({test, _}) =>
     test("dispatches on change", ({expect}) => {
       let _ = resetBuffer();
@@ -47,7 +47,7 @@ describe("Window", ({describe, _}) => {
 
       expect.int(List.length(leftColumnChanges^)).toBe(1);
       expect.int(List.hd(leftColumnChanges^)).toBe(4);
-      
+
       input("0");
       expect.int(List.length(leftColumnChanges^)).toBe(2);
       expect.int(List.hd(leftColumnChanges^)).toBe(0);
@@ -55,7 +55,7 @@ describe("Window", ({describe, _}) => {
       dispose();
     })
   );
-  
+
   describe("onTopLineChanged", ({test, _}) =>
     test("dispatches on change", ({expect}) => {
       let _ = resetBuffer();
