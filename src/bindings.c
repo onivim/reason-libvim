@@ -1,5 +1,4 @@
 #include "libvim.h"
-
 #include <caml/alloc.h>
 #include <caml/bigarray.h>
 #include <caml/callback.h>
@@ -521,6 +520,11 @@ CAMLprim value libvim_vimWindowGetTopLine(value unit) {
   return Val_int(topline);
 }
 
+CAMLprim value libvim_vimWindowGetLeftColumn(value unit) {
+  int left = vimWindowGetLeftColumn();
+  return Val_int(left);
+}
+
 CAMLprim value libvim_vimWindowSetWidth(value width) {
   int w = Int_val(width);
   vimWindowSetWidth(w);
@@ -530,6 +534,13 @@ CAMLprim value libvim_vimWindowSetWidth(value width) {
 CAMLprim value libvim_vimWindowSetHeight(value height) {
   int h = Int_val(height);
   vimWindowSetHeight(h);
+  return Val_unit;
+}
+
+CAMLprim value libvim_vimWindowSetTopLeft(value top, value left) {
+  int t = Int_val(top);
+  int l = Int_val(left);
+  vimWindowSetTopLeft(t, l);
   return Val_unit;
 }
 
