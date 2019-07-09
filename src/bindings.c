@@ -377,18 +377,22 @@ CAMLprim value libvim_vimCommandLineGetCompletions(value unit) {
   CAMLparam0();
   CAMLlocal1(ret);
 
-  char **completions;
-  int count;
+  char_u **completions = NULL;
+  int count = 0;
 
   vimCommandLineGetCompletions(&completions, &count);
 
-  ret = caml_alloc(count, 0);
-  for (int i = 0; i < count; i++) {
-    Store_field(ret, i, caml_copy_string(completions[i]));
-  }
+  if (count == 0) {
+    ret = Atom(0);
+  } else {
+    ret = caml_alloc(count, 0);
+    for (int i = 0; i < count; i++) {
+      Store_field(ret, i, caml_copy_string(completions[i]));
+    }
 
-  if (completions != NULL) {
-    vim_free(completions);
+    if (completions != NULL) {
+      vim_free(completions);
+    }
   }
 
   CAMLreturn(ret);

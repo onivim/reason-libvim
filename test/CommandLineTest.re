@@ -21,6 +21,25 @@ describe("CommandLine", ({describe, _}) => {
     })
   );
 
+  describe("getCompletions", ({test, _}) => {
+    test("basic completion test", ({expect}) => {
+      let _ = reset();
+      input(":");
+      input("e");
+
+      expect.int(Array.length(CommandLine.getCompletions())).toBe(20);
+    });
+    
+    test("regression test - eh", ({expect}) => {
+      let _ = reset();
+      input(":");
+      input("e");
+      input("h");
+
+      expect.int(Array.length(CommandLine.getCompletions())).toBe(0);
+    });
+  });
+
   describe("listeners", ({test, _}) => {
     test("enter / leave listeners", ({expect}) => {
       open Vim.Types;
