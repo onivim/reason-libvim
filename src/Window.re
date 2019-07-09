@@ -5,22 +5,21 @@ let getTopLine = Native.vimWindowGetTopLine;
 let setWidth = Native.vimWindowSetWidth;
 let setHeight = Native.vimWindowSetHeight;
 let setTopLeft = (top, left) => {
+  let prevTop = getTopLine();
+  let prevLeft = getLeftColumn();
 
-    let prevTop = getTopLine();
-    let prevLeft = getLeftColumn();
+  Native.vimWindowSetTopLeft(top, left);
 
-    Native.vimWindowSetTopLeft(top, left);
+  let newTop = getTopLine();
+  let newLeft = getLeftColumn();
 
-    let newTop = getTopLine();
-    let newLeft = getLeftColumn();
+  if (prevTop != newTop) {
+    Event.dispatch(newTop, Listeners.topLineChanged);
+  };
 
-    if (prevTop != newTop) {
-        Event.dispatch(newTop, Listeners.topLineChanged);
-    }
-
-    if (prevLeft != newLeft) {
-        Event.dispatch(newLeft, Listeners.leftColumnChanged);
-    }
+  if (prevLeft != newLeft) {
+    Event.dispatch(newLeft, Listeners.leftColumnChanged);
+  };
 };
 
 let onLeftColumnChanged = f => Event.add(f, Listeners.leftColumnChanged);

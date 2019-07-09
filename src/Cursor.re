@@ -16,7 +16,7 @@ let setPosition = (line, column) => {
 
   if (!Position.equals(lastPosition, newPosition)) {
     Event.dispatch(newPosition, Listeners.cursorMoved);
-  }
+  };
 };
 
 let onMoved = f => {
