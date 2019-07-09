@@ -9,7 +9,15 @@ let getPosition = () => {
   );
 };
 
-let setPosition = Native.vimCursorSetPosition;
+let setPosition = (line, column) => {
+  let lastPosition = getPosition();
+  Native.vimCursorSetPosition(line, column);
+  let newPosition = getPosition();
+
+  if (!Position.equals(lastPosition, newPosition)) {
+    Event.dispatch(newPosition, Listeners.cursorMoved);
+  };
+};
 
 let onMoved = f => {
   Event.add(f, Listeners.cursorMoved);

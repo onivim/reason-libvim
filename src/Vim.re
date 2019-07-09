@@ -32,6 +32,7 @@ let checkAndUpdateState = f => {
   let prevPosition = Cursor.getPosition();
   let prevRange = Visual.getRange();
   let prevTopLine = Window.getTopLine();
+  let prevLeftColumn = Window.getLeftColumn();
   let prevVisualMode = Visual.getType();
 
   f();
@@ -39,6 +40,7 @@ let checkAndUpdateState = f => {
   let newPosition = Cursor.getPosition();
   let newMode = Mode.getCurrent();
   let newRange = Visual.getRange();
+  let newLeftColumn = Window.getLeftColumn();
   let newTopLine = Window.getTopLine();
   let newVisualMode = Visual.getType();
 
@@ -68,6 +70,10 @@ let checkAndUpdateState = f => {
 
   if (prevTopLine != newTopLine) {
     Event.dispatch(newTopLine, Listeners.topLineChanged);
+  };
+
+  if (prevLeftColumn != newLeftColumn) {
+    Event.dispatch(newLeftColumn, Listeners.leftColumnChanged);
   };
 
   if (!Range.equals(prevRange, newRange)
