@@ -29,7 +29,7 @@ describe("CommandLine", ({describe, _}) => {
 
       expect.int(Array.length(CommandLine.getCompletions())).toBe(20);
     });
-    
+
     test("regression test - eh", ({expect}) => {
       let _ = reset();
       input(":");
