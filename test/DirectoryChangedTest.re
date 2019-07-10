@@ -35,6 +35,7 @@ describe("DirectoryChanged", ({test, _}) => {
     input("<cr>");
     expect.int(List.length(updates^)).toBe(1);
 
+    input(":");
     input("c");
     input("c");
     input("d");
