@@ -17,7 +17,7 @@ describe("DirectoryChanged", ({test, _}) => {
     expect.int(List.length(updates^)).toBe(2);
 
     dispose();
-  })
+  });
   test("change directory via input", ({expect}) => {
     let _ = resetBuffer();
 
@@ -45,5 +45,5 @@ describe("DirectoryChanged", ({test, _}) => {
     expect.int(List.length(updates^)).toBe(2);
 
     dispose();
-  })
+  });
 });
