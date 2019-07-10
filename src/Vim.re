@@ -36,6 +36,7 @@ let checkAndUpdateState = f => {
   let prevVisualMode = Visual.getType();
 
   f();
+  Gc.full_major();
 
   let newPosition = Cursor.getPosition();
   let newMode = Mode.getCurrent();
