@@ -6,5 +6,5 @@ unameOut="$(uname -s)"
 # esac
 
 # ./configure --disable-selinux ${CFLAGS}
-./configure --disable-selinux 
+./configure --disable-selinux "LDFLAGS=-lacl" 
 make installlibvim DESTDIR=$cur__install
