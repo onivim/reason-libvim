@@ -4,7 +4,7 @@ open Vim;
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 
 describe("Quit", ({test, _}) => {
-  test("q", ({expect}) => {
+  test("q command", ({expect}) => {
     let b = resetBuffer();
 
     let updates = ref([]);
@@ -15,6 +15,32 @@ describe("Quit", ({test, _}) => {
       );
 
     command("q");
+    let (qt, forced) = List.hd(updates^);
+
+    expect.int(List.length(updates^)).toBe(1);
+
+    switch (qt) {
+    | QuitOne(buf) => expect.bool(buf == b).toBe(true)
+    | _ => expect.string("Should've been QuitOne").toEqual("")
+    };
+
+    expect.bool(forced).toBe(false);
+
+    dispose();
+  });
+  test("q input", ({expect}) => {
+    let b = resetBuffer();
+
+    let updates = ref([]);
+
+    let dispose =
+      onQuit((quitType, forced) =>
+        updates := [(quitType, forced), ...updates^]
+      );
+
+    input(":");
+    input("q");
+    input("<cr>");
     let (qt, forced) = List.hd(updates^);
 
     expect.int(List.length(updates^)).toBe(1);
