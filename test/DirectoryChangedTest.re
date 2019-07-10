@@ -37,7 +37,6 @@ describe("DirectoryChanged", ({test, _}) => {
 
     input(":");
     input("c");
-    input("c");
     input("d");
     input(" ");
     input(".");
