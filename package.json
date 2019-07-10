@@ -7,10 +7,12 @@
     "format": "esy dune build @fmt --auto-promote"
   },
   "esy": {
-    "build": ["refmterr dune build -p libvim"],
+    "build": [
+      "refmterr dune build -p libvim"
+    ],
     "buildsInSource": "_build",
     "install": [
-        "esy-installer libvim.install"
+      "esy-installer libvim.install"
     ]
   },
   "resolutions": {
@@ -24,9 +26,12 @@
     "@esy-ocaml/reason": "*",
     "refmterr": "*",
     "ocaml": "4.7.1004",
-    "libvim": "8.10869.15"
+    "libvim": "*"
   },
   "devDependencies": {
     "ocaml": "4.7.1004"
+  },
+  "resolutions": {
+    "libvim": "link:./libvim/src"
   }
 }
