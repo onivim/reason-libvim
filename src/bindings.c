@@ -389,10 +389,10 @@ CAMLprim value libvim_vimCommandLineGetCompletions(value unit) {
     for (int i = 0; i < count; i++) {
       Store_field(ret, i, caml_copy_string(completions[i]));
     }
-
-    if (completions != NULL) {
-      vim_free(completions);
-    }
+  }
+  
+  if (completions != NULL) {
+    vim_free(completions);
   }
 
   CAMLreturn(ret);
