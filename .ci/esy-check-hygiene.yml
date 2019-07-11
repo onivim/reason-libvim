@@ -20,10 +20,6 @@ steps:
     displayName: 'esy @doc install'
   - script: git diff --exit-code
     displayName: 'check that `doc.esy.lock` is up-to-date. If this fails, commit `doc.esy.lock` changes and re-submit PR.'
-  - script: esy @example install
-    displayName: 'esy @example install'
-  - script: git diff --exit-code
-    displayName: 'check that `example.esy.lock` is up-to-date. If this fails, commit `example.esy.lock` changes and re-submit PR.'
   - script: esy @test install
     displayName: 'esy @test install'
   - script: git diff --exit-code
