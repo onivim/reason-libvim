@@ -29,6 +29,18 @@ describe("CommandLine", ({describe, _}) => {
 
       expect.int(Array.length(CommandLine.getCompletions())).toBe(20);
     });
+    
+    test("request completions multiple times", ({expect}) => {
+      let _ = reset();
+      input(":");
+      input("e");
+
+      expect.int(Array.length(CommandLine.getCompletions())).toBe(20);
+      expect.int(Array.length(CommandLine.getCompletions())).toBe(20);
+
+      let completions = CommandLine.getCompletions();
+      expect.string(completions[0]).toEqual("earlier");
+    });
 
     test("regression test - eh", ({expect}) => {
       let _ = reset();
