@@ -66,10 +66,8 @@ void onDirectoryChanged(char_u *path) {
     lv_onDirectoryChanged = caml_named_value("lv_onDirectoryChanged");
   }
 
-  caml_acquire_runtime_system();
   pathString = caml_copy_string(path);
   caml_callback(*lv_onDirectoryChanged, pathString);
-  caml_release_runtime_system();
   CAMLreturn0;
 }
 
@@ -83,11 +81,9 @@ void onMessage(char_u *title, char_u *contents, msgPriority_T priority) {
     lv_onMessage = caml_named_value("lv_onMessage");
   }
 
-  caml_acquire_runtime_system();
   titleString = caml_copy_string(title);
   contentsString = caml_copy_string(contents);
   caml_callback3(*lv_onMessage, Val_int(priority), titleString, contentsString);
-  caml_release_runtime_system();
   CAMLreturn0;
 }
 
@@ -101,7 +97,6 @@ void onQuit(buf_T *buf, int isForced) {
     lv_onQuit = caml_named_value("lv_onQuit");
   }
 
-  caml_acquire_runtime_system();
   if (buf == NULL) {
     quitResult = Val_none;
   } else {
@@ -109,7 +104,6 @@ void onQuit(buf_T *buf, int isForced) {
   }
   caml_callback2(*lv_onQuit, quitResult,
                  isForced == TRUE ? Val_true : Val_false);
-  caml_release_runtime_system();
 
   CAMLreturn0;
 }
