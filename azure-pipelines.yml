@@ -20,7 +20,7 @@ jobs:
   steps:
   - script: sudo apt-get install -y libice-dev libsm-dev libacl1-dev
   - template: .ci/use-node.yml
-#  - template: .ci/restore-build-cache.yml
+  - template: .ci/restore-build-cache.yml
   - template: .ci/esy-build-steps.yml
   # - template: .ci/esy-bench.yml
   # - template: .ci/publish-release.yml
