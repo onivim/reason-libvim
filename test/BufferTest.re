@@ -21,6 +21,32 @@ describe("Buffer", ({describe, _}) => {
   );
   describe("onEnter", ({test, _}) => {
     test(
+      "saving to a new file should trigger a buffer enter event", ({expect}) => {
+      let _ = resetBuffer();
+
+      let updates: ref(list(Buffer.t)) = ref([]);
+      let dispose = Buffer.onEnter(upd => updates := [upd, ...updates^]);
+
+      let derp = s => switch(s) {
+      | None => ""
+      | Some(v) => v
+      };
+
+      let _ = onMessage((_, s, t) => print_endline ("MESSAGE: " ++ s ++ "|" ++ t));
+
+      let previousFilename = Buffer.getCurrent() |> Buffer.getFilename |> derp;
+      print_endline ("old id: " ++ previousFilename);
+      command("sav some-new-file.txt");
+      let newFileName = Buffer.getCurrent() |> Buffer.getFilename |> derp;
+      print_endline ("new filename: " ++ newFileName);
+
+      /*expect.bool(newMetadata.id == previousMetadata.id).toBe(false);*/
+
+      expect.int(List.length(updates^)).toBe(1);
+
+      dispose();
+    });
+    test(
       "editing a new file should trigger a buffer enter event", ({expect}) => {
       let _ = resetBuffer();
 
