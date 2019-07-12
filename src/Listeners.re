@@ -2,7 +2,7 @@ open Types;
 
 type autocmdListener = (autocmd, Native.buffer) => unit;
 type bufferListener = Native.buffer => unit;
-type bufferFilenameChangedListener = (BufferMetadata.t) =>  unit;
+type bufferFilenameChangedListener = BufferMetadata.t => unit;
 type bufferUpdateListener = BufferUpdate.t => unit;
 type commandLineUpdateListener = Types.cmdline => unit;
 type directoryChangedListener = string => unit;
@@ -19,7 +19,8 @@ type noopListener = unit => unit;
 
 let autocmd: ref(list(autocmdListener)) = ref([]);
 let bufferEnter: ref(list(bufferListener)) = ref([]);
-let bufferFilenameChanged: ref(list(bufferFilenameChangedListener)) = ref([]);
+let bufferFilenameChanged: ref(list(bufferFilenameChangedListener)) =
+  ref([]);
 let bufferUpdate: ref(list(bufferUpdateListener)) = ref([]);
 let bufferLeave: ref(list(bufferListener)) = ref([]);
 let commandLineEnter: ref(list(commandLineUpdateListener)) = ref([]);

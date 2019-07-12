@@ -77,4 +77,5 @@ associated with a buffer changes. This could happen via a `:sav` command.
 
 Returns a function that can be called to unsubscribe.
 */
-let onFilenameChanged: Listeners.bufferFilenameChangedListener => Event.unsubscribe;
+let onFilenameChanged:
+  Listeners.bufferFilenameChangedListener => Event.unsubscribe;

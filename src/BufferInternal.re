@@ -25,10 +25,11 @@ let notifyUpdate = (buffer: t) => {
     );
 };
 
-let string_opt = s => switch(s) {
-| None => ""
-| Some(v) => v
-};
+let string_opt = s =>
+  switch (s) {
+  | None => ""
+  | Some(v) => v
+  };
 
 let doFullUpdate = (buffer: t) => {
   let bu = BufferUpdate.createFull(buffer);
@@ -67,8 +68,11 @@ let checkCurrentBufferForUpdate = () => {
 
         if (!String.equal(string_opt(lastF), string_opt(newFileName))) {
           lastFilename := newFileName;
-          Event.dispatch(BufferMetadata.ofBuffer(buffer), Listeners.bufferFilenameChanged);
-        }
+          Event.dispatch(
+            BufferMetadata.ofBuffer(buffer),
+            Listeners.bufferFilenameChanged,
+          );
+        };
       }
     | None =>
       Event.dispatch(buffer, Listeners.bufferEnter);
