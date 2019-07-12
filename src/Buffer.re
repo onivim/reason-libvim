@@ -51,3 +51,7 @@ let onEnter = (f: Listeners.bufferListener) => {
 let onUpdate = (f: Listeners.bufferUpdateListener) => {
   Event.add(f, Listeners.bufferUpdate);
 };
+
+let onFilenameChanged = (f: Listeners.bufferFilenameChangedListener) => {
+  Event.add(f, Listeners.bufferFilenameChanged);
+};

@@ -8,6 +8,7 @@ module IntMap =
 
 let knownBuffers: ref(IntMap.t(int)) = ref(IntMap.empty);
 let currentBuffer: ref(option(Native.buffer)) = ref(None);
+let lastFilename = ref(None);
 
 let notifyUpdate = (buffer: t) => {
   let id = Native.vimBufferGetId(buffer);
@@ -23,6 +24,12 @@ let notifyUpdate = (buffer: t) => {
       knownBuffers^,
     );
 };
+
+let string_opt = s =>
+  switch (s) {
+  | None => ""
+  | Some(v) => v
+  };
 
 let doFullUpdate = (buffer: t) => {
   let bu = BufferUpdate.createFull(buffer);
@@ -54,6 +61,18 @@ let checkCurrentBufferForUpdate = () => {
         Event.dispatch(v, Listeners.bufferLeave);
         Event.dispatch(buffer, Listeners.bufferEnter);
         currentBuffer := Some(buffer);
+        lastFilename := Native.vimBufferGetFilename(buffer);
+      } else {
+        let lastF = lastFilename^;
+        let newFileName = Native.vimBufferGetFilename(buffer);
+
+        if (!String.equal(string_opt(lastF), string_opt(newFileName))) {
+          lastFilename := newFileName;
+          Event.dispatch(
+            BufferMetadata.ofBuffer(buffer),
+            Listeners.bufferFilenameChanged,
+          );
+        };
       }
     | None =>
       Event.dispatch(buffer, Listeners.bufferEnter);

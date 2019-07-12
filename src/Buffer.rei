@@ -70,3 +70,12 @@ let onEnter: Listeners.bufferListener => Event.unsubscribe;
 Returns a function that can be called to unsubscribe.
 */
 let onUpdate: Listeners.bufferUpdateListener => Event.unsubscribe;
+
+/**
+[onFileNameChanged(f)] adds a listener [f] that is called whenever the filename
+associated with a buffer changes. This could happen via a `:sav` command.
+
+Returns a function that can be called to unsubscribe.
+*/
+let onFilenameChanged:
+  Listeners.bufferFilenameChangedListener => Event.unsubscribe;
