@@ -48,6 +48,7 @@ let flags =
         @ cclib("-lgdi32")
     | Linux -> []
         @ ccopt(libPath)
+        @ cclib("-lacl")
         @ cclib("-lvim")
         @ cclib("-lICE")
         @ cclib("-lX11")

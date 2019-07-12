@@ -18,7 +18,7 @@ jobs:
     # ESY__NPM_ROOT: /opt/hostedtoolcache/node/8.14.0/x64/lib/node_modules/esy
 
   steps:
-  - script: sudo apt-get install -y libice-dev libsm-dev
+  - script: sudo apt-get install -y libice-dev libsm-dev libacl1-dev
   - template: .ci/use-node.yml
   - template: .ci/restore-build-cache.yml
   - template: .ci/esy-build-steps.yml
@@ -44,7 +44,7 @@ jobs:
   - script: brew update
   - script: brew install libpng ragel
   - template: .ci/use-node.yml
-  - template: .ci/restore-build-cache.yml
+  #- template: .ci/restore-build-cache.yml
   - template: .ci/esy-check-hygiene.yml
   - template: .ci/publish-build-cache.yml
 
