@@ -48,7 +48,6 @@ let checkCurrentBufferForUpdate = () => {
     Event.dispatch(buffer, Listeners.bufferEnter);
     Event.dispatch(update, Listeners.bufferUpdate);
   | Some(lastVersion) =>
-
     /* Check if the current buffer changed */
     switch (currentBuffer^) {
     | Some(v) =>
