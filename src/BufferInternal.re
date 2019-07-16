@@ -48,12 +48,6 @@ let checkCurrentBufferForUpdate = () => {
     Event.dispatch(buffer, Listeners.bufferEnter);
     Event.dispatch(update, Listeners.bufferUpdate);
   | Some(lastVersion) =>
-    let newVersion = Native.vimBufferGetChangedTick(buffer);
-
-    if (newVersion > lastVersion) {
-      doFullUpdate(buffer);
-    };
-
     /* Check if the current buffer changed */
     switch (currentBuffer^) {
     | Some(v) =>
@@ -77,6 +71,11 @@ let checkCurrentBufferForUpdate = () => {
     | None =>
       Event.dispatch(buffer, Listeners.bufferEnter);
       currentBuffer := Some(buffer);
+    };
+    let newVersion = Native.vimBufferGetChangedTick(buffer);
+
+    if (newVersion > lastVersion) {
+      doFullUpdate(buffer);
     };
   };
 };
