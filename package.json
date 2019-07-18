@@ -21,10 +21,10 @@
   },
   "dependencies": {
     "@opam/dune": "*",
-    "@esy-ocaml/reason": "*",
+    "@esy-ocaml/reason": "3.4.0",
     "refmterr": "*",
     "ocaml": "4.7.1004",
-    "libvim": "8.10869.15"
+    "libvim": "8.10869.16"
   },
   "devDependencies": {
     "ocaml": "4.7.1004"
