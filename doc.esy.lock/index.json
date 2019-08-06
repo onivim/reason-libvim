@@ -1,5 +1,5 @@
 {
-  "checksum": "c5c0a1e91f1713f462e9d11c02817b77",
+  "checksum": "e6ed560ecf058618a58556b1da5dba27",
   "root": "reason-libvim@link-dev:./package.json",
   "node": {
     "wordwrap@0.0.3@d41d8cd9": {
@@ -541,12 +541,12 @@
       "dependencies": [
         "ocaml@4.7.1004@d41d8cd9", "@opam/easy-format@opam:1.3.1@9abfd4ed",
         "@opam/dune@opam:1.7.0@2dd70b87", "@opam/cppo@opam:1.6.6@f4f83858",
-        "@opam/biniou@opam:1.2.1@d7570399",
+        "@opam/biniou@opam:1.2.0@c8516f18",
         "@esy-ocaml/substs@0.0.1@d41d8cd9"
       ],
       "devDependencies": [
         "ocaml@4.7.1004@d41d8cd9", "@opam/easy-format@opam:1.3.1@9abfd4ed",
-        "@opam/dune@opam:1.7.0@2dd70b87", "@opam/biniou@opam:1.2.1@d7570399"
+        "@opam/dune@opam:1.7.0@2dd70b87", "@opam/biniou@opam:1.2.0@c8516f18"
       ]
     },
     "@opam/uutf@opam:1.0.2@4440868f": {
@@ -1103,6 +1103,23 @@
         "@opam/base-unix@opam:base@87d0b2eb"
       ]
     },
+    "@opam/conf-which@opam:1@576f0c6d": {
+      "id": "@opam/conf-which@opam:1@576f0c6d",
+      "name": "@opam/conf-which",
+      "version": "opam:1",
+      "source": {
+        "type": "install",
+        "source": [ "no-source:" ],
+        "opam": {
+          "name": "conf-which",
+          "version": "1",
+          "path": "doc.esy.lock/opam/conf-which.1"
+        }
+      },
+      "overrides": [],
+      "dependencies": [ "@esy-ocaml/substs@0.0.1@d41d8cd9" ],
+      "devDependencies": []
+    },
     "@opam/conf-m4@opam:1@da6f4f44": {
       "id": "@opam/conf-m4@opam:1@da6f4f44",
       "name": "@opam/conf-m4",
@@ -1142,30 +1159,31 @@
       ],
       "devDependencies": [ "ocaml@4.7.1004@d41d8cd9" ]
     },
-    "@opam/biniou@opam:1.2.1@d7570399": {
-      "id": "@opam/biniou@opam:1.2.1@d7570399",
+    "@opam/biniou@opam:1.2.0@c8516f18": {
+      "id": "@opam/biniou@opam:1.2.0@c8516f18",
       "name": "@opam/biniou",
-      "version": "opam:1.2.1",
+      "version": "opam:1.2.0",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://opam.ocaml.org/cache/sha256/35/35546c68b1929a8e6d27a3b39ecd17b38303a0d47e65eb9d1480c2061ea84335#sha256:35546c68b1929a8e6d27a3b39ecd17b38303a0d47e65eb9d1480c2061ea84335",
-          "archive:https://github.com/mjambon/biniou/releases/download/1.2.1/biniou-1.2.1.tbz#sha256:35546c68b1929a8e6d27a3b39ecd17b38303a0d47e65eb9d1480c2061ea84335"
+          "archive:https://opam.ocaml.org/cache/md5/f3/f3e92358e832ed94eaf23ce622ccc2f9#md5:f3e92358e832ed94eaf23ce622ccc2f9",
+          "archive:https://github.com/mjambon/biniou/archive/v1.2.0.tar.gz#md5:f3e92358e832ed94eaf23ce622ccc2f9"
         ],
         "opam": {
           "name": "biniou",
-          "version": "1.2.1",
-          "path": "doc.esy.lock/opam/biniou.1.2.1"
+          "version": "1.2.0",
+          "path": "doc.esy.lock/opam/biniou.1.2.0"
         }
       },
       "overrides": [],
       "dependencies": [
-        "ocaml@4.7.1004@d41d8cd9", "@opam/easy-format@opam:1.3.1@9abfd4ed",
-        "@opam/dune@opam:1.7.0@2dd70b87", "@esy-ocaml/substs@0.0.1@d41d8cd9"
+        "ocaml@4.7.1004@d41d8cd9", "@opam/jbuilder@opam:transition@58bdfe0a",
+        "@opam/easy-format@opam:1.3.1@9abfd4ed",
+        "@opam/conf-which@opam:1@576f0c6d",
+        "@esy-ocaml/substs@0.0.1@d41d8cd9"
       ],
       "devDependencies": [
-        "ocaml@4.7.1004@d41d8cd9", "@opam/easy-format@opam:1.3.1@9abfd4ed",
-        "@opam/dune@opam:1.7.0@2dd70b87"
+        "ocaml@4.7.1004@d41d8cd9", "@opam/easy-format@opam:1.3.1@9abfd4ed"
       ]
     },
     "@opam/base-unix@opam:base@87d0b2eb": {
@@ -1244,12 +1262,12 @@
       "dependencies": [
         "ocaml@4.7.1004@d41d8cd9", "@opam/yojson@opam:1.7.0@7056d985",
         "@opam/jbuilder@opam:transition@58bdfe0a",
-        "@opam/biniou@opam:1.2.1@d7570399",
+        "@opam/biniou@opam:1.2.0@c8516f18",
         "@esy-ocaml/substs@0.0.1@d41d8cd9"
       ],
       "devDependencies": [
         "ocaml@4.7.1004@d41d8cd9", "@opam/yojson@opam:1.7.0@7056d985",
-        "@opam/biniou@opam:1.2.1@d7570399"
+        "@opam/biniou@opam:1.2.0@c8516f18"
       ]
     },
     "@opam/atdgen@opam:2.0.0@5d912e07": {
@@ -1272,13 +1290,13 @@
       "dependencies": [
         "ocaml@4.7.1004@d41d8cd9", "@opam/yojson@opam:1.7.0@7056d985",
         "@opam/jbuilder@opam:transition@58bdfe0a",
-        "@opam/biniou@opam:1.2.1@d7570399",
+        "@opam/biniou@opam:1.2.0@c8516f18",
         "@opam/atdgen-runtime@opam:2.0.0@8a75c3bb",
         "@opam/atd@opam:2.0.0@087614b7", "@esy-ocaml/substs@0.0.1@d41d8cd9"
       ],
       "devDependencies": [
         "ocaml@4.7.1004@d41d8cd9", "@opam/yojson@opam:1.7.0@7056d985",
-        "@opam/biniou@opam:1.2.1@d7570399",
+        "@opam/biniou@opam:1.2.0@c8516f18",
         "@opam/atdgen-runtime@opam:2.0.0@8a75c3bb",
         "@opam/atd@opam:2.0.0@087614b7"
       ]
