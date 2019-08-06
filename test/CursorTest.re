@@ -15,36 +15,41 @@ describe("Cursor", ({describe, _}) => {
       expect.int(Cursor.getColumn()).toBe(4);
     });
 
-    test("topline should be updated when moving outside the viewport", ({expect}) => {
+    test(
+      "topline should be updated when moving outside the viewport",
+      ({expect}) => {
       let _ = resetBuffer();
 
       let topLineEvents = ref([]);
-      let unsubscribe = Window.onTopLineChanged((topline) => {
-          topLineEvents := [topline, topLineEvents^]; 
-      });
+      let unsubscribe =
+        Window.onTopLineChanged(topline =>
+          topLineEvents := [topline, topLineEvents^]
+        );
 
       Window.setWidth(80);
       Window.setHeight(40);
       Window.setTopLeft(1, 1);
-      
+
       Cursor.setPosition(1, 1);
       Cursor.setPosition(90, 1);
-      
+
       expect.int(Window.getTopLine()).toBe(62);
       expect.int(List.length(topLineEvents^)).toBe(1);
       expect.int(List.hd(topLineEvents^)).toBe(62);
     });
-    
-    test("topline should not be updated when moving outside the viewport", ({expect}) => {
+
+    test(
+      "topline should not be updated when moving outside the viewport",
+      ({expect}) => {
       let _ = resetBuffer();
-      
+
       Window.setWidth(80);
       Window.setHeight(40);
       Window.setTopLeft(75, 1);
-      
+
       Cursor.setPosition(1, 1);
       Cursor.setPosition(90, 1);
-      
+
       expect.int(Window.getTopLine()).toBe(75);
     });
   });
