@@ -36,7 +36,7 @@ describe("Cursor", ({describe, _}) => {
       expect.int(Window.getTopLine()).toBe(61);
       expect.int(List.length(topLineEvents^)).toBe(1);
       expect.int(List.hd(topLineEvents^)).toBe(61);
-      
+
       unsubscribe();
     });
 
@@ -45,9 +45,9 @@ describe("Cursor", ({describe, _}) => {
       ({expect}) => {
       Window.setWidth(80);
       Window.setHeight(40);
-      
+
       let _ = resetBuffer();
-      
+
       Window.setTopLeft(71, 4);
       Cursor.setPosition(90, 1);
 
