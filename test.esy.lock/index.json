@@ -1,5 +1,5 @@
 {
-  "checksum": "807ded57172289bba18d4a1dbb6ae94d",
+  "checksum": "7a4a1a28073cc896d12c8eea50267265",
   "root": "reason-libvim@link-dev:./package.json",
   "node": {
     "refmterr@3.2.2@d41d8cd9": {
@@ -158,13 +158,13 @@
       },
       "overrides": [],
       "dependencies": [
-        "ocaml@4.7.1004@d41d8cd9", "@opam/easy-format@opam:1.3.2@0484b3c4",
+        "ocaml@4.7.1004@d41d8cd9", "@opam/easy-format@opam:1.3.1@9abfd4ed",
         "@opam/dune@opam:1.7.0@2dd70b87", "@opam/cppo@opam:1.6.6@f4f83858",
         "@opam/biniou@opam:1.2.1@d7570399",
         "@esy-ocaml/substs@0.0.1@d41d8cd9"
       ],
       "devDependencies": [
-        "ocaml@4.7.1004@d41d8cd9", "@opam/easy-format@opam:1.3.2@0484b3c4",
+        "ocaml@4.7.1004@d41d8cd9", "@opam/easy-format@opam:1.3.1@9abfd4ed",
         "@opam/dune@opam:1.7.0@2dd70b87", "@opam/biniou@opam:1.2.1@d7570399"
       ]
     },
@@ -640,30 +640,28 @@
         "@opam/astring@opam:0.8.3@4e5e17d5"
       ]
     },
-    "@opam/easy-format@opam:1.3.2@0484b3c4": {
-      "id": "@opam/easy-format@opam:1.3.2@0484b3c4",
+    "@opam/easy-format@opam:1.3.1@9abfd4ed": {
+      "id": "@opam/easy-format@opam:1.3.1@9abfd4ed",
       "name": "@opam/easy-format",
-      "version": "opam:1.3.2",
+      "version": "opam:1.3.1",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://opam.ocaml.org/cache/sha256/34/3440c2b882d537ae5e9011eb06abb53f5667e651ea4bb3b460ea8230fa8c1926#sha256:3440c2b882d537ae5e9011eb06abb53f5667e651ea4bb3b460ea8230fa8c1926",
-          "archive:https://github.com/mjambon/easy-format/releases/download/1.3.2/easy-format-1.3.2.tbz#sha256:3440c2b882d537ae5e9011eb06abb53f5667e651ea4bb3b460ea8230fa8c1926"
+          "archive:https://opam.ocaml.org/cache/md5/4e/4e163700fb88fdcd6b8976c3a216c8ea#md5:4e163700fb88fdcd6b8976c3a216c8ea",
+          "archive:https://github.com/mjambon/easy-format/archive/v1.3.1.tar.gz#md5:4e163700fb88fdcd6b8976c3a216c8ea"
         ],
         "opam": {
           "name": "easy-format",
-          "version": "1.3.2",
-          "path": "test.esy.lock/opam/easy-format.1.3.2"
+          "version": "1.3.1",
+          "path": "test.esy.lock/opam/easy-format.1.3.1"
         }
       },
       "overrides": [],
       "dependencies": [
-        "ocaml@4.7.1004@d41d8cd9", "@opam/dune@opam:1.7.0@2dd70b87",
+        "ocaml@4.7.1004@d41d8cd9", "@opam/jbuilder@opam:transition@58bdfe0a",
         "@esy-ocaml/substs@0.0.1@d41d8cd9"
       ],
-      "devDependencies": [
-        "ocaml@4.7.1004@d41d8cd9", "@opam/dune@opam:1.7.0@2dd70b87"
-      ]
+      "devDependencies": [ "ocaml@4.7.1004@d41d8cd9" ]
     },
     "@opam/dune@opam:1.7.0@2dd70b87": {
       "id": "@opam/dune@opam:1.7.0@2dd70b87",
@@ -781,11 +779,11 @@
       },
       "overrides": [],
       "dependencies": [
-        "ocaml@4.7.1004@d41d8cd9", "@opam/easy-format@opam:1.3.2@0484b3c4",
+        "ocaml@4.7.1004@d41d8cd9", "@opam/easy-format@opam:1.3.1@9abfd4ed",
         "@opam/dune@opam:1.7.0@2dd70b87", "@esy-ocaml/substs@0.0.1@d41d8cd9"
       ],
       "devDependencies": [
-        "ocaml@4.7.1004@d41d8cd9", "@opam/easy-format@opam:1.3.2@0484b3c4",
+        "ocaml@4.7.1004@d41d8cd9", "@opam/easy-format@opam:1.3.1@9abfd4ed",
         "@opam/dune@opam:1.7.0@2dd70b87"
       ]
     },
@@ -924,11 +922,11 @@
       "dependencies": [
         "ocaml@4.7.1004@d41d8cd9", "@opam/menhir@opam:20190626@bbeb8953",
         "@opam/jbuilder@opam:transition@58bdfe0a",
-        "@opam/easy-format@opam:1.3.2@0484b3c4",
+        "@opam/easy-format@opam:1.3.1@9abfd4ed",
         "@esy-ocaml/substs@0.0.1@d41d8cd9"
       ],
       "devDependencies": [
-        "ocaml@4.7.1004@d41d8cd9", "@opam/easy-format@opam:1.3.2@0484b3c4"
+        "ocaml@4.7.1004@d41d8cd9", "@opam/easy-format@opam:1.3.1@9abfd4ed"
       ]
     },
     "@opam/astring@opam:0.8.3@4e5e17d5": {
