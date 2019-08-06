@@ -23,7 +23,7 @@ describe("Cursor", ({describe, _}) => {
       let topLineEvents = ref([]);
       let unsubscribe =
         Window.onTopLineChanged(topline =>
-          topLineEvents := [topline, topLineEvents^]
+          topLineEvents := [topline, ...topLineEvents^]
         );
 
       Window.setWidth(80);
@@ -33,24 +33,25 @@ describe("Cursor", ({describe, _}) => {
       Cursor.setPosition(1, 1);
       Cursor.setPosition(90, 1);
 
-      expect.int(Window.getTopLine()).toBe(62);
+      expect.int(Window.getTopLine()).toBe(61);
       expect.int(List.length(topLineEvents^)).toBe(1);
-      expect.int(List.hd(topLineEvents^)).toBe(62);
+      expect.int(List.hd(topLineEvents^)).toBe(61);
+      
+      unsubscribe();
     });
 
     test(
-      "topline should not be updated when moving outside the viewport",
+      "topline should not be updated when moving inside the viewport",
       ({expect}) => {
-      let _ = resetBuffer();
-
       Window.setWidth(80);
       Window.setHeight(40);
-      Window.setTopLeft(75, 1);
-
-      Cursor.setPosition(1, 1);
+      
+      let _ = resetBuffer();
+      
+      Window.setTopLeft(71, 4);
       Cursor.setPosition(90, 1);
 
-      expect.int(Window.getTopLine()).toBe(75);
+      expect.int(Window.getTopLine()).toBe(71);
     });
   });
   describe("normal mode", ({test, _}) => {
