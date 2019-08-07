@@ -26,7 +26,7 @@
     "@esy-ocaml/reason": "3.4.0",
     "refmterr": "*",
     "ocaml": "4.7.1004",
-    "libvim": "8.10869.18"
+    "libvim": "8.10869.19"
   },
   "devDependencies": {
     "ocaml": "4.7.1004"
