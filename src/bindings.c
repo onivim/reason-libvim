@@ -179,7 +179,7 @@ CAMLprim value libvim_vimInit(value unit) {
   vimSetDirectoryChangedCallback(&onDirectoryChanged);
   vimSetMessageCallback(&onMessage);
   vimSetQuitCallback(&onQuit);
-  vimSetStopSearchCallback(&onStopSearch);
+  vimSetStopSearchHighlightCallback(&onStopSearch);
   vimSetWindowMovementCallback(&onWindowMovement);
   vimSetWindowSplitCallback(&onWindowSplit);
 
