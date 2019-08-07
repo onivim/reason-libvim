@@ -20,7 +20,7 @@ type t = {
 
 let dCode = Char.code('d');
 
-let create = (~lines, ~yankTypeInt, ~operator, ~register, ()) => {
+let create = (~lines, ~yankTypeInt, ~operator, ~register, ~startLine, ~startColumn, ~endLine, ~endColumn, ()) => {
   /* NOTE: This must be kept in sync with the definitions of MBLOCK/MLINE/MCHAR
        in vim.h
      */
@@ -43,9 +43,9 @@ let create = (~lines, ~yankTypeInt, ~operator, ~register, ()) => {
     yankType,
     operator: op,
     register: Char.chr(register),
-    startLine: 1,
-    endLine: 2,
-    startColumn: 1,
-    endColumn: 1,
+    startLine,
+    endLine,
+    startColumn,
+    endColumn,
   };
 };
