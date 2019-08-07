@@ -14,6 +14,7 @@ module Types = Types;
 module Visual = Visual;
 module VisualRange = VisualRange;
 module Window = Window;
+module Yank = Yank;
 
 type fn = unit => unit;
 
@@ -155,4 +156,8 @@ let onMessage = f => {
 
 let onQuit = f => {
   Event.add2(f, Listeners.quit);
+};
+
+let onYank = f => {
+  Event.add(f, Listeners.yank);
 };
