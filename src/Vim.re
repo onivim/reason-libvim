@@ -131,6 +131,7 @@ let init = () => {
   Callback.register("lv_onQuit", _onQuit);
   Callback.register("lv_onWindowMovement", _onWindowMovement);
   Callback.register("lv_onWindowSplit", _onWindowSplit);
+  Callback.register("lv_onYank", _onYank);
 
   Native.vimInit();
 

@@ -136,6 +136,18 @@ void onWindowSplit(windowSplit_T splitType, char_u *path) {
   CAMLreturn0;
 }
 
+void onYank(yankInfo_T *yankInfo) {
+  CAMLparam0();
+
+  if (lv_onYank == NULL) {
+    lv_onYank = caml_named_value("lv_onYank");
+  }
+  
+  caml_callback(*lv_onYank, Val_unit);
+
+  CAMLreturn0;
+}
+
 CAMLprim value libvim_vimAutoClosingPairsSet(value acp) {
   CAMLparam1(acp);
   CAMLlocal1(val);
@@ -168,6 +180,7 @@ CAMLprim value libvim_vimInit(value unit) {
   vimSetQuitCallback(&onQuit);
   vimSetWindowMovementCallback(&onWindowMovement);
   vimSetWindowSplitCallback(&onWindowSplit);
+  vimSetYankCallback(&onYank);
 
   char *args[0];
   vimInit(0, args);
