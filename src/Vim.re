@@ -123,6 +123,14 @@ let _onWindowSplit = (st, p) => {
   queue(() => Event.dispatch2(st, p, Listeners.windowSplit));
 };
 
+let _onWindowSplit = (st, p) => {
+  queue(() => Event.dispatch2(st, p, Listeners.windowSplit));
+};
+
+let _onYank = (lines) => {
+  queue(() => Event.dispatch(Yank.create(~lines, ()), Listeners.yank));
+};
+
 let init = () => {
   Callback.register("lv_onBufferChanged", _onBufferChanged);
   Callback.register("lv_onAutocommand", _onAutocommand);

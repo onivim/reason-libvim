@@ -138,12 +138,24 @@ void onWindowSplit(windowSplit_T splitType, char_u *path) {
 
 void onYank(yankInfo_T *yankInfo) {
   CAMLparam0();
+  CAMLlocal1(lines);
 
+  static value *lv_onYank = NULL;
   if (lv_onYank == NULL) {
     lv_onYank = caml_named_value("lv_onYank");
   }
   
-  caml_callback(*lv_onYank, Val_unit);
+
+  if (yankInfo->numLines == 0) {
+    lines = Atom(0);
+  } else {
+    lines = caml_alloc(yankInfo->numLines, 0);
+    for (int i = 0; i < yankInfo->numLines; i++) {
+      Store_field(lines, i, caml_copy_string(yankInfo->lines[i]));
+    }
+  }
+  
+  caml_callback(*lv_onYank, lines);
 
   CAMLreturn0;
 }
