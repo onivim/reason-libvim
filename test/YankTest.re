@@ -20,7 +20,7 @@ describe("Yank", ({test, _}) => {
     expect.int(del.startColumn).toBe(0);
     expect.int(del.endLine).toBe(1);
     expect.int(del.endColumn).toBe(0);
-    
+
     expect.bool(del.operator == Yank.Delete).toBe(true);
     expect.int(Array.length(del.lines)).toBe(1);
     expect.string(del.lines[0]).toEqual(
