@@ -108,6 +108,19 @@ void onQuit(buf_T *buf, int isForced) {
   CAMLreturn0;
 }
 
+void onStopSearch(void) {
+  CAMLparam0();
+
+  static value *lv_onStopSearch = NULL;
+
+  if (lv_onStopSearch == NULL) {
+    lv_onStopSearch = caml_named_value("lv_onStopSearch");
+  }
+
+  caml_callback(*lv_onStopSearch, Val_unit);
+  CAMLreturn0;
+}
+
 void onWindowMovement(windowMovement_T movementType, int count) {
   CAMLparam0();
 
@@ -190,6 +203,7 @@ CAMLprim value libvim_vimInit(value unit) {
   vimSetDirectoryChangedCallback(&onDirectoryChanged);
   vimSetMessageCallback(&onMessage);
   vimSetQuitCallback(&onQuit);
+  vimSetStopSearchHighlightCallback(&onStopSearch);
   vimSetWindowMovementCallback(&onWindowMovement);
   vimSetWindowSplitCallback(&onWindowSplit);
   vimSetYankCallback(&onYank);
