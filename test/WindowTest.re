@@ -141,6 +141,51 @@ describe("Window", ({describe, _}) => {
 
       dispose();
     });
+
+    test("rotate downwards", ({expect}) => {
+      let _ = resetBuffer();
+
+      let movements = ref([]);
+      let dispose =
+        Window.onMovement((movementType, count) =>
+          movements := [(movementType, count), ...movements^]
+        );
+
+      input("<c-w>");
+      input("r");
+
+      expect.int(List.length(movements^)).toBe(1);
+
+      let (movementType, count) = List.hd(movements^);
+
+      expect.bool(movementType == Types.RotateDownwards).toBe(true);
+      expect.int(count).toBe(1);
+
+      dispose();
+    });
+
+
+    test("rotate upwards", ({expect}) => {
+      let _ = resetBuffer();
+
+      let movements = ref([]);
+      let dispose =
+        Window.onMovement((movementType, count) =>
+          movements := [(movementType, count), ...movements^]
+        );
+
+      input("<c-w>");
+      input("R");
+
+      expect.int(List.length(movements^)).toBe(1);
+
+      let (movementType, count) = List.hd(movements^);
+
+      expect.bool(movementType == Types.RotateUpwards).toBe(true);
+      expect.int(count).toBe(1);
+
+      dispose();
+    });
   });
   describe("onSplit", ({test, _}) => {
     test("vsp creates split", ({expect}) => {
