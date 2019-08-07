@@ -16,6 +16,11 @@ describe("Yank", ({test, _}) => {
     expect.int(List.length(yanks^)).toBe(1);
     let del: Yank.t = List.hd(yanks^);
 
+    expect.int(del.startLine).toBe(1);
+    expect.int(del.startColumn).toBe(0);
+    expect.int(del.endLine).toBe(1);
+    expect.int(del.endColumn).toBe(0);
+    
     expect.bool(del.operator == Yank.Delete).toBe(true);
     expect.int(Array.length(del.lines)).toBe(1);
     expect.string(del.lines[0]).toEqual(
@@ -56,16 +61,21 @@ describe("Yank", ({test, _}) => {
     let yanks: ref(list(Yank.t)) = ref([]);
     let dispose = Vim.onYank(yank => yanks := [yank, ...yanks^]);
 
+    Vim.input("l");
     Vim.input("x");
 
     expect.int(List.length(yanks^)).toBe(1);
     let del: Yank.t = List.hd(yanks^);
 
+    expect.int(del.startLine).toBe(1);
+    expect.int(del.startColumn).toBe(1);
+    expect.int(del.endLine).toBe(1);
+    expect.int(del.endColumn).toBe(2);
     expect.int(Char.code(del.register)).toBe(0);
     expect.bool(del.yankType == Yank.Char).toBe(true);
     expect.bool(del.operator == Yank.Delete).toBe(true);
     expect.int(Array.length(del.lines)).toBe(1);
-    expect.string(del.lines[0]).toEqual("T");
+    expect.string(del.lines[0]).toEqual("h");
 
     dispose();
   });
