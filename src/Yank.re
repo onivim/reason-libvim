@@ -18,22 +18,29 @@ type t = {
   endColumn: int,
 };
 
-let create = (~lines, ~yankTypeInt, ()) =>  {
+let dCode = Char.code('d');
+
+let create = (~lines, ~yankTypeInt, ~operator: int, ()) =>  {
 
   /* NOTE: This must be kept in sync with the definitions of MBLOCK/MLINE/MCHAR
      in vim.h
    */
   let yankType = switch(yankTypeInt) {
-  | 0 => MCHAR
-  | 1 => MLINE
-  | 2 => MBLOCK
-  | _ => MLINE
+  | 0 => Char
+  | 1 => Line
+  | 2 => Block
+  | _ => Line
+  };
+
+  let op = switch(operator) {
+  | v when v == dCode => Delete
+  | _ =>  Yank
   };
 
 {
   lines,
   yankType,
-  operator: Yank,
+  operator: op,
   register: 'a',
   startLine: 1,
   endLine: 2,

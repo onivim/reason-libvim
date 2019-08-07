@@ -168,7 +168,7 @@ void onYank(yankInfo_T *yankInfo) {
     }
   }
   
-  caml_callback(*lv_onYank, lines);
+  caml_callback3(*lv_onYank, lines, Val_int(yankInfo->blockType), Val_int(yankInfo->op_char));
 
   CAMLreturn0;
 }
