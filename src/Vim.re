@@ -123,7 +123,7 @@ let _onWindowSplit = (st, p) => {
 };
 
 let _onStopSearch = () => {
-  queue(() => Event.dispatch((), Listeners.stopSearchHighlight);
+  queue(() => Event.dispatch((), Listeners.stopSearchHighlight));
 };
 
 let init = () => {
