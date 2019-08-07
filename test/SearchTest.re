@@ -41,23 +41,24 @@ describe("Search", ({describe, _}) => {
       expect.int(Array.length(highlights)).toBe(1);
     });
   });
-  
-  describe("onStopSearchHighlight", ({test, _}) => {
-    test("onStopSearchHighlight dispatches when nohlsearch is called", ({expect}) => {
+
+  describe("onStopSearchHighlight", ({test, _}) =>
+    test(
+      "onStopSearchHighlight dispatches when nohlsearch is called",
+      ({expect}) => {
       let _ = reset();
 
       let callCount = ref(0);
-      let unsubscribe = Vim.Search.onStopSearchHighlight(() => {
-        incr(callCount);
-      });
+      let unsubscribe =
+        Vim.Search.onStopSearchHighlight(() => incr(callCount));
 
       Vim.command("nohlsearch");
 
       expect.int(callCount^).toBe(1);
 
       unsubscribe();
-    });
-  });
+    })
+  );
 
   describe("getMatchingPair", ({test, _}) => {
     test("get matching bracket for initial character", ({expect}) => {
