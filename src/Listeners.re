@@ -15,7 +15,7 @@ type topLineChangedListener = int => unit;
 type visualRangeChangedListener = VisualRange.t => unit;
 type windowMovementListener = (Types.windowMovementType, int) => unit;
 type windowSplitListener = (Types.windowSplitType, string) => unit;
-type yankListener = (Yank.t) => unit;
+type yankListener = Yank.t => unit;
 type noopListener = unit => unit;
 
 let autocmd: ref(list(autocmdListener)) = ref([]);

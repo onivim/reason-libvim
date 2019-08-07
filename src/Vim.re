@@ -127,8 +127,13 @@ let _onWindowSplit = (st, p) => {
   queue(() => Event.dispatch2(st, p, Listeners.windowSplit));
 };
 
-let _onYank = (lines, yankTypeInt, operator) => {
-  queue(() => Event.dispatch(Yank.create(~lines, ~yankTypeInt, ~operator, ()), Listeners.yank));
+let _onYank = (lines, yankTypeInt, operator, register) => {
+  queue(() =>
+    Event.dispatch(
+      Yank.create(~lines, ~yankTypeInt, ~operator, ~register, ()),
+      Listeners.yank,
+    )
+  );
 };
 
 let _onStopSearch = () => {

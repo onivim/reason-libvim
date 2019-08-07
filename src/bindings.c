@@ -168,8 +168,15 @@ void onYank(yankInfo_T *yankInfo) {
     }
   }
   
-  caml_callback3(*lv_onYank, lines, Val_int(yankInfo->blockType), Val_int(yankInfo->op_char));
+  value *pArgs = (value *)malloc(sizeof(value) * 4);
+  pArgs[0] = lines;
+  pArgs[1] = Val_int(yankInfo->blockType);
+  pArgs[2] = Val_int(yankInfo->op_char);
+  pArgs[3] = Val_int(yankInfo->regname);
 
+  caml_callbackN(*lv_onYank, 4, pArgs);
+  free(pArgs);
+  
   CAMLreturn0;
 }
 
