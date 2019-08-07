@@ -127,10 +127,30 @@ let _onWindowSplit = (st, p) => {
   queue(() => Event.dispatch2(st, p, Listeners.windowSplit));
 };
 
-let _onYank = (lines, yankTypeInt, operator, register, startLine, startColumn, endLine, endColumn) => {
+let _onYank =
+    (
+      lines,
+      yankTypeInt,
+      operator,
+      register,
+      startLine,
+      startColumn,
+      endLine,
+      endColumn,
+    ) => {
   queue(() =>
     Event.dispatch(
-      Yank.create(~lines, ~yankTypeInt, ~operator, ~register, ~startLine, ~startColumn, ~endLine, ~endColumn, ()),
+      Yank.create(
+        ~lines,
+        ~yankTypeInt,
+        ~operator,
+        ~register,
+        ~startLine,
+        ~startColumn,
+        ~endLine,
+        ~endColumn,
+        (),
+      ),
       Listeners.yank,
     )
   );
