@@ -164,7 +164,6 @@ describe("Window", ({describe, _}) => {
       dispose();
     });
 
-
     test("rotate upwards", ({expect}) => {
       let _ = resetBuffer();
 
