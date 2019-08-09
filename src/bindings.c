@@ -157,7 +157,6 @@ void onYank(yankInfo_T *yankInfo) {
   if (lv_onYank == NULL) {
     lv_onYank = caml_named_value("lv_onYank");
   }
-  
 
   if (yankInfo->numLines == 0) {
     lines = Atom(0);
@@ -167,7 +166,7 @@ void onYank(yankInfo_T *yankInfo) {
       Store_field(lines, i, caml_copy_string(yankInfo->lines[i]));
     }
   }
-  
+
   value *pArgs = (value *)malloc(sizeof(value) * 8);
   pArgs[0] = lines;
   pArgs[1] = Val_int(yankInfo->blockType);
@@ -180,7 +179,7 @@ void onYank(yankInfo_T *yankInfo) {
 
   caml_callbackN(*lv_onYank, 8, pArgs);
   free(pArgs);
-  
+
   CAMLreturn0;
 }
 
