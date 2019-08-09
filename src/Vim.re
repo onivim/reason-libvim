@@ -14,6 +14,7 @@ module Types = Types;
 module Visual = Visual;
 module VisualRange = VisualRange;
 module Window = Window;
+module Yank = Yank;
 
 type fn = unit => unit;
 
@@ -122,6 +123,39 @@ let _onWindowSplit = (st, p) => {
   queue(() => Event.dispatch2(st, p, Listeners.windowSplit));
 };
 
+let _onWindowSplit = (st, p) => {
+  queue(() => Event.dispatch2(st, p, Listeners.windowSplit));
+};
+
+let _onYank =
+    (
+      lines,
+      yankTypeInt,
+      operator,
+      register,
+      startLine,
+      startColumn,
+      endLine,
+      endColumn,
+    ) => {
+  queue(() =>
+    Event.dispatch(
+      Yank.create(
+        ~lines,
+        ~yankTypeInt,
+        ~operator,
+        ~register,
+        ~startLine,
+        ~startColumn,
+        ~endLine,
+        ~endColumn,
+        (),
+      ),
+      Listeners.yank,
+    )
+  );
+};
+
 let _onStopSearch = () => {
   queue(() => Event.dispatch((), Listeners.stopSearchHighlight));
 };
@@ -135,6 +169,7 @@ let init = () => {
   Callback.register("lv_onStopSearch", _onStopSearch);
   Callback.register("lv_onWindowMovement", _onWindowMovement);
   Callback.register("lv_onWindowSplit", _onWindowSplit);
+  Callback.register("lv_onYank", _onYank);
 
   Native.vimInit();
 
@@ -160,4 +195,8 @@ let onMessage = f => {
 
 let onQuit = f => {
   Event.add2(f, Listeners.quit);
+};
+
+let onYank = f => {
+  Event.add(f, Listeners.yank);
 };
