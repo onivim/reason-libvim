@@ -149,10 +149,10 @@ void onWindowSplit(windowSplit_T splitType, char_u *path) {
   CAMLreturn0;
 }
 
-int getClipboardCallback(int regname, int* num_lines, char_u*** lines) {
+int getClipboardCallback(int regname, int *num_lines, char_u ***lines) {
   CAMLparam0();
   CAMLlocal1(clipboardArray);
-  
+
   static value *lv_clipboardGet = NULL;
 
   if (lv_clipboardGet == NULL) {
@@ -164,12 +164,23 @@ int getClipboardCallback(int regname, int* num_lines, char_u*** lines) {
   int ret = 0;
   // Some
   if (Is_block(v)) {
-    clipboardArray = Field(v, 0); 
+    clipboardArray = Field(v, 0);
     int len = Wosize_val(clipboardArray);
-    printf("Got %d lines!\n", len);
-    ret = 0; 
+
+    *num_lines = len;
+    char_u **out = malloc(sizeof(char_u *) * len);
+
+    for (int i = 0; i < len; i++) {
+      char *sz = String_val(Field(clipboardArray, i));
+      out[i] = malloc((sizeof(char) * strlen(sz)) + 1);
+      strcpy((char *)out[i], sz);
+    }
+    *lines = out;
+
+    ret = 1;
+    // None
   } else {
-    ret = 0; 
+    ret = 0;
   }
 
   CAMLreturn(ret);

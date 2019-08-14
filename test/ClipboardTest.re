@@ -6,6 +6,58 @@ let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 let makeFun = (s) => (_) => Some([|s|]);
 
 describe("Clipboard", ({describe, _}) => {
+
+  describe("override", ({test, _}) => {
+
+    test("None should use default behavior", ({expect, _}) => {
+      let buf = resetBuffer();
+
+      Clipboard.setProvider((_) => None);
+
+      input("y");
+      input("y");
+      input("p");
+
+      let line = Buffer.getLine(buf, 1);
+
+      expect.string(line).toEqual("This is the first line of a test file");
+    });
+    
+    test("return single line", ({expect, _}) => {
+      let buf = resetBuffer();
+
+      Clipboard.setProvider((_) => Some([|"a"|]));
+
+      input("y");
+      input("y");
+      input("P");
+
+      let line = Buffer.getLine(buf, 1);
+
+      expect.string(line).toEqual("a");
+    });
+    
+    test("return multiple lines", ({expect, _}) => {
+      let buf = resetBuffer();
+
+      Clipboard.setProvider((_) => Some([|"a", "b", "c"|]));
+
+      input("y");
+      input("y");
+      input("P");
+
+      let line1 = Buffer.getLine(buf, 1);
+      let line2 = Buffer.getLine(buf, 2);
+      let line3 = Buffer.getLine(buf, 3);
+      let line4 = Buffer.getLine(buf, 4);
+
+      expect.string(line1).toEqual("a");
+      expect.string(line2).toEqual("b");
+      expect.string(line3).toEqual("c");
+      expect.string(line4).toEqual("This is the first line of a test file");
+    });
+  });
+
   describe("garbage collection", ({test, _}) => {
     test("clipboard function should not get collected", ({expect, _}) => {
       
