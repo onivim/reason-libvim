@@ -8,6 +8,8 @@
 
 #define Val_none Val_int(0)
 
+value relv_clipboardCallback = Val_unit;
+
 static value Val_some(value v) {
   CAMLparam1(v);
   CAMLlocal1(some);
@@ -149,6 +151,10 @@ void onWindowSplit(windowSplit_T splitType, char_u *path) {
   CAMLreturn0;
 }
 
+int getClipboardCallback(int regname, int num_lines, char_u*** lines) {
+  return FALSE;
+}
+
 CAMLprim value libvim_vimAutoClosingPairsSet(value acp) {
   CAMLparam1(acp);
   CAMLlocal1(val);
@@ -176,6 +182,7 @@ CAMLprim value libvim_vimAutoClosingPairsSet(value acp) {
 CAMLprim value libvim_vimInit(value unit) {
   vimSetBufferUpdateCallback(&onBufferChanged);
   vimSetAutoCommandCallback(&onAutocommand);
+  vimSetClipboardGetCallback(&getClipboardCallback);
   vimSetDirectoryChangedCallback(&onDirectoryChanged);
   vimSetMessageCallback(&onMessage);
   vimSetQuitCallback(&onQuit);
