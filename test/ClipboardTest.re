@@ -62,15 +62,11 @@ describe("Clipboard", ({describe, _}) => {
 
       let finalizeCount = ref(0);
 
-      print_endline("setting provider...");
       Clipboard.setProvider(f);
-      print_endline("provider set.");
 
       Gc.finalise_last(() => incr(finalizeCount), f);
 
       Gc.full_major();
-
-      print_endline("finalise count: " ++ string_of_int(finalizeCount^));
 
       expect.int(finalizeCount^).toBe(0);
     });
