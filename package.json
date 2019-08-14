@@ -19,14 +19,15 @@
     "@opam/merlin-extend": "0.3",
     "@opam/ocaml-migrate-parsetree": "1.3.1",
     "@opam/biniou": "1.2.0",
-    "@opam/easy-format": "1.3.1"
+    "@opam/easy-format": "1.3.1",
+    "libvim": "link:../libvim1/src"
   },
   "dependencies": {
     "@opam/dune": "*",
     "@esy-ocaml/reason": "3.4.0",
     "refmterr": "*",
     "ocaml": "4.7.1004",
-    "libvim": "8.10869.19"
+    "libvim": "*"
   },
   "devDependencies": {
     "ocaml": "4.7.1004"

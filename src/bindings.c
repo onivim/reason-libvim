@@ -8,8 +8,6 @@
 
 #define Val_none Val_int(0)
 
-value relv_clipboardCallback = Val_unit;
-
 static value Val_some(value v) {
   CAMLparam1(v);
   CAMLlocal1(some);
@@ -151,8 +149,30 @@ void onWindowSplit(windowSplit_T splitType, char_u *path) {
   CAMLreturn0;
 }
 
-int getClipboardCallback(int regname, int num_lines, char_u*** lines) {
-  return FALSE;
+int getClipboardCallback(int regname, int* num_lines, char_u*** lines) {
+  CAMLparam0();
+  CAMLlocal1(clipboardArray);
+  
+  static value *lv_clipboardGet = NULL;
+
+  if (lv_clipboardGet == NULL) {
+    lv_clipboardGet = caml_named_value("lv_clipboardGet");
+  }
+
+  value v = caml_callback(*lv_clipboardGet, Val_int(regname));
+
+  int ret = 0;
+  // Some
+  if (Is_block(v)) {
+    clipboardArray = Field(v, 0); 
+    int len = Wosize_val(clipboardArray);
+    printf("Got %d lines!\n", len);
+    ret = 0; 
+  } else {
+    ret = 0; 
+  }
+
+  CAMLreturn(ret);
 }
 
 CAMLprim value libvim_vimAutoClosingPairsSet(value acp) {

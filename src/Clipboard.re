@@ -1,6 +1,6 @@
 
-type clipboardProvider = (int) => option(string);
+let _provider: ref(option(Types.clipboardProvider)) = ref(None);
 
-let setProvider = (_provider: clipboardProvider) => {
-    ();
+let setProvider = (provider: Types.clipboardProvider) => {
+    _provider := Some(provider);
 };
