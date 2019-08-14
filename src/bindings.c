@@ -108,6 +108,19 @@ void onQuit(buf_T *buf, int isForced) {
   CAMLreturn0;
 }
 
+void onStopSearch(void) {
+  CAMLparam0();
+
+  static value *lv_onStopSearch = NULL;
+
+  if (lv_onStopSearch == NULL) {
+    lv_onStopSearch = caml_named_value("lv_onStopSearch");
+  }
+
+  caml_callback(*lv_onStopSearch, Val_unit);
+  CAMLreturn0;
+}
+
 void onWindowMovement(windowMovement_T movementType, int count) {
   CAMLparam0();
 
@@ -133,6 +146,40 @@ void onWindowSplit(windowSplit_T splitType, char_u *path) {
 
   pathString = caml_copy_string(path);
   caml_callback2(*lv_onWindowSplit, Val_int(splitType), pathString);
+  CAMLreturn0;
+}
+
+void onYank(yankInfo_T *yankInfo) {
+  CAMLparam0();
+  CAMLlocal1(lines);
+
+  static value *lv_onYank = NULL;
+  if (lv_onYank == NULL) {
+    lv_onYank = caml_named_value("lv_onYank");
+  }
+
+  if (yankInfo->numLines == 0) {
+    lines = Atom(0);
+  } else {
+    lines = caml_alloc(yankInfo->numLines, 0);
+    for (int i = 0; i < yankInfo->numLines; i++) {
+      Store_field(lines, i, caml_copy_string(yankInfo->lines[i]));
+    }
+  }
+
+  value *pArgs = (value *)malloc(sizeof(value) * 8);
+  pArgs[0] = lines;
+  pArgs[1] = Val_int(yankInfo->blockType);
+  pArgs[2] = Val_int(yankInfo->op_char);
+  pArgs[3] = Val_int(yankInfo->regname);
+  pArgs[4] = Val_int(yankInfo->start.lnum);
+  pArgs[5] = Val_int(yankInfo->start.col);
+  pArgs[6] = Val_int(yankInfo->end.lnum);
+  pArgs[7] = Val_int(yankInfo->end.col);
+
+  caml_callbackN(*lv_onYank, 8, pArgs);
+  free(pArgs);
+
   CAMLreturn0;
 }
 
@@ -166,8 +213,10 @@ CAMLprim value libvim_vimInit(value unit) {
   vimSetDirectoryChangedCallback(&onDirectoryChanged);
   vimSetMessageCallback(&onMessage);
   vimSetQuitCallback(&onQuit);
+  vimSetStopSearchHighlightCallback(&onStopSearch);
   vimSetWindowMovementCallback(&onWindowMovement);
   vimSetWindowSplitCallback(&onWindowSplit);
+  vimSetYankCallback(&onYank);
 
   char *args[0];
   vimInit(0, args);

@@ -21,3 +21,5 @@ let getMatchingPair = () => {
   | Some((line, column)) => Some(Position.create(~line, ~column))
   };
 };
+
+let onStopSearchHighlight = f => Event.add(f, Listeners.stopSearchHighlight);
