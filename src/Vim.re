@@ -162,10 +162,10 @@ let _onStopSearch = () => {
 };
 
 let _clipboardGet = (regname: int) => {
-   switch (Clipboard._provider^) {
-   | None => None
-   | Some(v) => v(regname)
-   }
+  switch (Clipboard._provider^) {
+  | None => None
+  | Some(v) => v(regname)
+  };
 };
 
 let init = () => {

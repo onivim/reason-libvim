@@ -3,16 +3,14 @@ open Vim;
 
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 
-let makeFun = (s) => (_) => Some([|s|]);
+let makeFun = (s, _) => Some([|s|]);
 
 describe("Clipboard", ({describe, _}) => {
-
   describe("override", ({test, _}) => {
-
     test("None should use default behavior", ({expect, _}) => {
       let buf = resetBuffer();
 
-      Clipboard.setProvider((_) => None);
+      Clipboard.setProvider(_ => None);
 
       input("y");
       input("y");
@@ -22,11 +20,11 @@ describe("Clipboard", ({describe, _}) => {
 
       expect.string(line).toEqual("This is the first line of a test file");
     });
-    
+
     test("return single line", ({expect, _}) => {
       let buf = resetBuffer();
 
-      Clipboard.setProvider((_) => Some([|"a"|]));
+      Clipboard.setProvider(_ => Some([|"a"|]));
 
       input("y");
       input("y");
@@ -36,11 +34,11 @@ describe("Clipboard", ({describe, _}) => {
 
       expect.string(line).toEqual("a");
     });
-    
+
     test("return multiple lines", ({expect, _}) => {
       let buf = resetBuffer();
 
-      Clipboard.setProvider((_) => Some([|"a", "b", "c"|]));
+      Clipboard.setProvider(_ => Some([|"a", "b", "c"|]));
 
       input("y");
       input("y");
@@ -60,7 +58,6 @@ describe("Clipboard", ({describe, _}) => {
 
   describe("garbage collection", ({test, _}) => {
     test("clipboard function should not get collected", ({expect, _}) => {
-      
       let f = makeFun("a");
 
       let finalizeCount = ref(0);
@@ -73,13 +70,14 @@ describe("Clipboard", ({describe, _}) => {
 
       Gc.full_major();
 
-      print_endline ("finalise count: " ++ string_of_int(finalizeCount^));
+      print_endline("finalise count: " ++ string_of_int(finalizeCount^));
 
       expect.int(finalizeCount^).toBe(0);
     });
-    
-    test("clipboard function should be collected if it is overridden", ({expect, _}) => {
-      
+
+    test(
+      "clipboard function should be collected if it is overridden",
+      ({expect, _}) => {
       let f0 = makeFun("a");
       let f1 = makeFun("b");
 
@@ -88,7 +86,7 @@ describe("Clipboard", ({describe, _}) => {
       Clipboard.setProvider(f0);
 
       Gc.finalise_last(() => incr(finalizeCount), f0);
-      
+
       Clipboard.setProvider(f1);
 
       Gc.full_major();

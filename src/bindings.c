@@ -149,7 +149,6 @@ void onWindowSplit(windowSplit_T splitType, char_u *path) {
   CAMLreturn0;
 }
 
-<<<<<<< HEAD
 int getClipboardCallback(int regname, int *num_lines, char_u ***lines) {
   CAMLparam0();
   CAMLlocal1(clipboardArray);

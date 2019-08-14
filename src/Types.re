@@ -11,7 +11,7 @@ module AutoClosingPair = {
 
 type autoClosingPairs = array(AutoClosingPair.t);
 
-type clipboardProvider = (int) => option(array(string));
+type clipboardProvider = int => option(array(string));
 
 type mode =
   | Normal
