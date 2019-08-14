@@ -149,6 +149,43 @@ void onWindowSplit(windowSplit_T splitType, char_u *path) {
   CAMLreturn0;
 }
 
+int getClipboardCallback(int regname, int *num_lines, char_u ***lines) {
+  CAMLparam0();
+  CAMLlocal1(clipboardArray);
+
+  static value *lv_clipboardGet = NULL;
+
+  if (lv_clipboardGet == NULL) {
+    lv_clipboardGet = caml_named_value("lv_clipboardGet");
+  }
+
+  value v = caml_callback(*lv_clipboardGet, Val_int(regname));
+
+  int ret = 0;
+  // Some
+  if (Is_block(v)) {
+    clipboardArray = Field(v, 0);
+    int len = Wosize_val(clipboardArray);
+
+    *num_lines = len;
+    char_u **out = malloc(sizeof(char_u *) * len);
+
+    for (int i = 0; i < len; i++) {
+      char *sz = String_val(Field(clipboardArray, i));
+      out[i] = malloc((sizeof(char) * strlen(sz)) + 1);
+      strcpy((char *)out[i], sz);
+    }
+    *lines = out;
+
+    ret = 1;
+    // None
+  } else {
+    ret = 0;
+  }
+
+  CAMLreturn(ret);
+}
+
 void onYank(yankInfo_T *yankInfo) {
   CAMLparam0();
   CAMLlocal1(lines);
@@ -210,6 +247,7 @@ CAMLprim value libvim_vimAutoClosingPairsSet(value acp) {
 CAMLprim value libvim_vimInit(value unit) {
   vimSetBufferUpdateCallback(&onBufferChanged);
   vimSetAutoCommandCallback(&onAutocommand);
+  vimSetClipboardGetCallback(&getClipboardCallback);
   vimSetDirectoryChangedCallback(&onDirectoryChanged);
   vimSetMessageCallback(&onMessage);
   vimSetQuitCallback(&onQuit);

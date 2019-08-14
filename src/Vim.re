@@ -3,6 +3,7 @@ module AutoCommands = AutoCommands;
 module Buffer = Buffer;
 module BufferMetadata = BufferMetadata;
 module BufferUpdate = BufferUpdate;
+module Clipboard = Clipboard;
 module CommandLine = CommandLine;
 module Cursor = Cursor;
 module Mode = Mode;
@@ -160,7 +161,15 @@ let _onStopSearch = () => {
   queue(() => Event.dispatch((), Listeners.stopSearchHighlight));
 };
 
+let _clipboardGet = (regname: int) => {
+  switch (Clipboard._provider^) {
+  | None => None
+  | Some(v) => v(regname)
+  };
+};
+
 let init = () => {
+  Callback.register("lv_clipboardGet", _clipboardGet);
   Callback.register("lv_onBufferChanged", _onBufferChanged);
   Callback.register("lv_onAutocommand", _onAutocommand);
   Callback.register("lv_onDirectoryChanged", _onDirectoryChanged);

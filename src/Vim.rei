@@ -66,6 +66,7 @@ module AutoCommands = AutoCommands;
 module Buffer = Buffer;
 module BufferMetadata = BufferMetadata;
 module BufferUpdate = BufferUpdate;
+module Clipboard = Clipboard;
 module CommandLine = CommandLine;
 module Cursor = Cursor;
 module Mode = Mode;
