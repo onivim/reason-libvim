@@ -252,7 +252,7 @@ describe("Window", ({describe, _}) => {
 
       dispose();
     });
-    
+
     test("<C-w>s creates split, with same buffer", ({expect}) => {
       let buf = resetBuffer();
 
