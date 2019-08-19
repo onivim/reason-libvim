@@ -228,5 +228,53 @@ describe("Window", ({describe, _}) => {
 
       dispose();
     });
+
+    test("<C-w>v creates split, with same buffer", ({expect}) => {
+      let buf = resetBuffer();
+
+      let splits = ref([]);
+      let dispose =
+        Window.onSplit((splitType, name) =>
+          splits := [(splitType, name), ...splits^]
+        );
+
+      input("<c-w>");
+      input("v");
+
+      expect.int(List.length(splits^)).toBe(1);
+
+      let (splitType, _) = List.hd(splits^);
+
+      let newBuf = Vim.Buffer.getCurrent();
+
+      expect.bool(splitType == Types.Vertical).toBe(true);
+      expect.int(Vim.Buffer.getId(newBuf)).toBe(Vim.Buffer.getId(buf));
+
+      dispose();
+    });
+
+    test("<C-w>s creates split, with same buffer", ({expect}) => {
+      let buf = resetBuffer();
+
+      let splits = ref([]);
+      let dispose =
+        Window.onSplit((splitType, name) =>
+          splits := [(splitType, name), ...splits^]
+        );
+
+      input("<c-w>");
+      input("s");
+
+      expect.int(List.length(splits^)).toBe(1);
+
+      let (splitType, _) = List.hd(splits^);
+
+      let newBuf = Vim.Buffer.getCurrent();
+
+      expect.bool(splitType == Types.Horizontal).toBe(true);
+      expect.int(Vim.Buffer.getId(newBuf)).toBe(Vim.Buffer.getId(buf));
+
+      dispose();
+    });
   });
 });
