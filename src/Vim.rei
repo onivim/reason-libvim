@@ -53,11 +53,20 @@ by [command(":q")] or [ZZ].
 
 let onQuit: Listeners.quitListener => Event.unsubscribe;
 
+/**
+[onYank(f)] registers a yank listener [f]
+
+[f] is called whenever a value is 'yanked' to a register -
+this could happen as a result of a yank or a delete command.
+*/
+let onYank: Listeners.yankListener => Event.unsubscribe;
+
 module AutoClosingPairs = AutoClosingPairs;
 module AutoCommands = AutoCommands;
 module Buffer = Buffer;
 module BufferMetadata = BufferMetadata;
 module BufferUpdate = BufferUpdate;
+module Clipboard = Clipboard;
 module CommandLine = CommandLine;
 module Cursor = Cursor;
 module Mode = Mode;
@@ -69,3 +78,4 @@ module Types = Types;
 module Visual = Visual;
 module VisualRange = VisualRange;
 module Window = Window;
+module Yank = Yank;

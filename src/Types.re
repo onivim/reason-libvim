@@ -11,6 +11,8 @@ module AutoClosingPair = {
 
 type autoClosingPairs = array(AutoClosingPair.t);
 
+type clipboardProvider = int => option(array(string));
+
 type mode =
   | Normal
   | Insert
@@ -61,7 +63,10 @@ type windowMovementType =
   | FullUp
   | FullDown
   | TopLeft
-  | BottomRight;
+  | BottomRight
+  | Previous
+  | RotateDownwards
+  | RotateUpwards;
 
 /**
  * NOTE: This type must be kept in sync with the `auto_event` enum in `vim.h`!

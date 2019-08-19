@@ -108,6 +108,19 @@ void onQuit(buf_T *buf, int isForced) {
   CAMLreturn0;
 }
 
+void onStopSearch(void) {
+  CAMLparam0();
+
+  static value *lv_onStopSearch = NULL;
+
+  if (lv_onStopSearch == NULL) {
+    lv_onStopSearch = caml_named_value("lv_onStopSearch");
+  }
+
+  caml_callback(*lv_onStopSearch, Val_unit);
+  CAMLreturn0;
+}
+
 void onWindowMovement(windowMovement_T movementType, int count) {
   CAMLparam0();
 
@@ -133,6 +146,77 @@ void onWindowSplit(windowSplit_T splitType, char_u *path) {
 
   pathString = caml_copy_string(path);
   caml_callback2(*lv_onWindowSplit, Val_int(splitType), pathString);
+  CAMLreturn0;
+}
+
+int getClipboardCallback(int regname, int *num_lines, char_u ***lines) {
+  CAMLparam0();
+  CAMLlocal1(clipboardArray);
+
+  static value *lv_clipboardGet = NULL;
+
+  if (lv_clipboardGet == NULL) {
+    lv_clipboardGet = caml_named_value("lv_clipboardGet");
+  }
+
+  value v = caml_callback(*lv_clipboardGet, Val_int(regname));
+
+  int ret = 0;
+  // Some
+  if (Is_block(v)) {
+    clipboardArray = Field(v, 0);
+    int len = Wosize_val(clipboardArray);
+
+    *num_lines = len;
+    char_u **out = malloc(sizeof(char_u *) * len);
+
+    for (int i = 0; i < len; i++) {
+      char *sz = String_val(Field(clipboardArray, i));
+      out[i] = malloc((sizeof(char) * strlen(sz)) + 1);
+      strcpy((char *)out[i], sz);
+    }
+    *lines = out;
+
+    ret = 1;
+    // None
+  } else {
+    ret = 0;
+  }
+
+  CAMLreturn(ret);
+}
+
+void onYank(yankInfo_T *yankInfo) {
+  CAMLparam0();
+  CAMLlocal1(lines);
+
+  static value *lv_onYank = NULL;
+  if (lv_onYank == NULL) {
+    lv_onYank = caml_named_value("lv_onYank");
+  }
+
+  if (yankInfo->numLines == 0) {
+    lines = Atom(0);
+  } else {
+    lines = caml_alloc(yankInfo->numLines, 0);
+    for (int i = 0; i < yankInfo->numLines; i++) {
+      Store_field(lines, i, caml_copy_string(yankInfo->lines[i]));
+    }
+  }
+
+  value *pArgs = (value *)malloc(sizeof(value) * 8);
+  pArgs[0] = lines;
+  pArgs[1] = Val_int(yankInfo->blockType);
+  pArgs[2] = Val_int(yankInfo->op_char);
+  pArgs[3] = Val_int(yankInfo->regname);
+  pArgs[4] = Val_int(yankInfo->start.lnum);
+  pArgs[5] = Val_int(yankInfo->start.col);
+  pArgs[6] = Val_int(yankInfo->end.lnum);
+  pArgs[7] = Val_int(yankInfo->end.col);
+
+  caml_callbackN(*lv_onYank, 8, pArgs);
+  free(pArgs);
+
   CAMLreturn0;
 }
 
@@ -163,11 +247,14 @@ CAMLprim value libvim_vimAutoClosingPairsSet(value acp) {
 CAMLprim value libvim_vimInit(value unit) {
   vimSetBufferUpdateCallback(&onBufferChanged);
   vimSetAutoCommandCallback(&onAutocommand);
+  vimSetClipboardGetCallback(&getClipboardCallback);
   vimSetDirectoryChangedCallback(&onDirectoryChanged);
   vimSetMessageCallback(&onMessage);
   vimSetQuitCallback(&onQuit);
+  vimSetStopSearchHighlightCallback(&onStopSearch);
   vimSetWindowMovementCallback(&onWindowMovement);
   vimSetWindowSplitCallback(&onWindowSplit);
+  vimSetYankCallback(&onYank);
 
   char *args[0];
   vimInit(0, args);

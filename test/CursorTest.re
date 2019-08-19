@@ -1,10 +1,10 @@
 open TestFramework;
 open Vim;
 
-let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
+let resetBuffer = () => Helpers.resetBuffer("test/lines_100.txt");
 
 describe("Cursor", ({describe, _}) => {
-  describe("setPosition", ({test, _}) =>
+  describe("setPosition", ({test, _}) => {
     test("cursor position gets updated", ({expect}) => {
       Cursor.setPosition(1, 1);
       expect.int(Cursor.getLine()).toBe(1);
@@ -13,8 +13,47 @@ describe("Cursor", ({describe, _}) => {
       Cursor.setPosition(3, 4);
       expect.int(Cursor.getLine()).toBe(3);
       expect.int(Cursor.getColumn()).toBe(4);
-    })
-  );
+    });
+
+    test(
+      "topline should be updated when moving outside the viewport",
+      ({expect}) => {
+      let _ = resetBuffer();
+
+      let topLineEvents = ref([]);
+      let unsubscribe =
+        Window.onTopLineChanged(topline =>
+          topLineEvents := [topline, ...topLineEvents^]
+        );
+
+      Window.setWidth(80);
+      Window.setHeight(40);
+      Window.setTopLeft(1, 1);
+
+      Cursor.setPosition(1, 1);
+      Cursor.setPosition(90, 1);
+
+      expect.int(Window.getTopLine()).toBe(61);
+      expect.int(List.length(topLineEvents^)).toBe(1);
+      expect.int(List.hd(topLineEvents^)).toBe(61);
+
+      unsubscribe();
+    });
+
+    test(
+      "topline should not be updated when moving inside the viewport",
+      ({expect}) => {
+      Window.setWidth(80);
+      Window.setHeight(40);
+
+      let _ = resetBuffer();
+
+      Window.setTopLeft(71, 4);
+      Cursor.setPosition(90, 1);
+
+      expect.int(Window.getTopLine()).toBe(71);
+    });
+  });
   describe("normal mode", ({test, _}) => {
     test("j / k", ({expect}) => {
       let _ = resetBuffer();
@@ -60,7 +99,7 @@ describe("Cursor", ({describe, _}) => {
 
       input("G");
 
-      expect.int(Cursor.getLine()).toBe(3);
+      expect.int(Cursor.getLine()).toBe(100);
       expect.int(Cursor.getColumn()).toBe(0);
       expect.int(List.length(cursorMoves^)).toBe(1);
 

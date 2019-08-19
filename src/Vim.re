@@ -3,6 +3,7 @@ module AutoCommands = AutoCommands;
 module Buffer = Buffer;
 module BufferMetadata = BufferMetadata;
 module BufferUpdate = BufferUpdate;
+module Clipboard = Clipboard;
 module CommandLine = CommandLine;
 module Cursor = Cursor;
 module Mode = Mode;
@@ -14,6 +15,7 @@ module Types = Types;
 module Visual = Visual;
 module VisualRange = VisualRange;
 module Window = Window;
+module Yank = Yank;
 
 type fn = unit => unit;
 
@@ -122,14 +124,61 @@ let _onWindowSplit = (st, p) => {
   queue(() => Event.dispatch2(st, p, Listeners.windowSplit));
 };
 
+let _onWindowSplit = (st, p) => {
+  queue(() => Event.dispatch2(st, p, Listeners.windowSplit));
+};
+
+let _onYank =
+    (
+      lines,
+      yankTypeInt,
+      operator,
+      register,
+      startLine,
+      startColumn,
+      endLine,
+      endColumn,
+    ) => {
+  queue(() =>
+    Event.dispatch(
+      Yank.create(
+        ~lines,
+        ~yankTypeInt,
+        ~operator,
+        ~register,
+        ~startLine,
+        ~startColumn,
+        ~endLine,
+        ~endColumn,
+        (),
+      ),
+      Listeners.yank,
+    )
+  );
+};
+
+let _onStopSearch = () => {
+  queue(() => Event.dispatch((), Listeners.stopSearchHighlight));
+};
+
+let _clipboardGet = (regname: int) => {
+  switch (Clipboard._provider^) {
+  | None => None
+  | Some(v) => v(regname)
+  };
+};
+
 let init = () => {
+  Callback.register("lv_clipboardGet", _clipboardGet);
   Callback.register("lv_onBufferChanged", _onBufferChanged);
   Callback.register("lv_onAutocommand", _onAutocommand);
   Callback.register("lv_onDirectoryChanged", _onDirectoryChanged);
   Callback.register("lv_onMessage", _onMessage);
   Callback.register("lv_onQuit", _onQuit);
+  Callback.register("lv_onStopSearch", _onStopSearch);
   Callback.register("lv_onWindowMovement", _onWindowMovement);
   Callback.register("lv_onWindowSplit", _onWindowSplit);
+  Callback.register("lv_onYank", _onYank);
 
   Native.vimInit();
 
@@ -155,4 +204,8 @@ let onMessage = f => {
 
 let onQuit = f => {
   Event.add2(f, Listeners.quit);
+};
+
+let onYank = f => {
+  Event.add(f, Listeners.yank);
 };
