@@ -65,6 +65,14 @@ Returns a function that can be called to unsubscribe.
 let onEnter: Listeners.bufferListener => Event.unsubscribe;
 
 /**
+[onModifiedChanged(f)] adds a listener [f] that is called when a buffer's modified
+state _changes._ [f(id, modified)] is called where [id] is the [id] of the affected
+buffer, and [modified] is the new state of the modified flag.
+*/
+let onModifiedChanged:
+  Listeners.bufferModifiedChangedListener => Event.unsubscribe;
+
+/**
 [onUpdate(f)] adds a listener [f] that is called whenever a buffer is modified.
 
 Returns a function that can be called to unsubscribe.

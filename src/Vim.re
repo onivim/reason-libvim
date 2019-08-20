@@ -30,21 +30,25 @@ let flushQueue = () => {
 };
 
 let checkAndUpdateState = f => {
+  let oldBuf = Buffer.getCurrent();
   let prevMode = Mode.getCurrent();
   let prevPosition = Cursor.getPosition();
   let prevRange = Visual.getRange();
   let prevTopLine = Window.getTopLine();
   let prevLeftColumn = Window.getLeftColumn();
   let prevVisualMode = Visual.getType();
+  let prevModified = Buffer.isModified(oldBuf);
 
   f();
 
+  let newBuf = Buffer.getCurrent();
   let newPosition = Cursor.getPosition();
   let newMode = Mode.getCurrent();
   let newRange = Visual.getRange();
   let newLeftColumn = Window.getLeftColumn();
   let newTopLine = Window.getTopLine();
   let newVisualMode = Visual.getType();
+  let newModified = Buffer.isModified(newBuf);
 
   BufferInternal.checkCurrentBufferForUpdate();
 
@@ -85,6 +89,11 @@ let checkAndUpdateState = f => {
     let vr =
       VisualRange.create(~range=newRange, ~visualType=newVisualMode, ());
     Event.dispatch(vr, Listeners.visualRangeChanged);
+  };
+
+  if (prevModified != newModified) {
+    let id = Buffer.getId(newBuf);
+    Event.dispatch2(id, newModified, Listeners.bufferModifiedChanged);
   };
 
   flushQueue();

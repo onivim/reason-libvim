@@ -48,6 +48,10 @@ let onEnter = (f: Listeners.bufferListener) => {
   Event.add(f, Listeners.bufferEnter);
 };
 
+let onModifiedChanged = (f: Listeners.bufferModifiedChangedListener) => {
+  Event.add2(f, Listeners.bufferModifiedChanged);
+};
+
 let onUpdate = (f: Listeners.bufferUpdateListener) => {
   Event.add(f, Listeners.bufferUpdate);
 };
