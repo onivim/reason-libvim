@@ -93,8 +93,8 @@ let checkAndUpdateState = f => {
 
   if (prevModified != newModified) {
     let id = Buffer.getId(newBuf);
-    Event.dispatch2(id, newModified, Listeners.bufferModifiedChanged) ;
-  }
+    Event.dispatch2(id, newModified, Listeners.bufferModifiedChanged);
+  };
 
   flushQueue();
 };

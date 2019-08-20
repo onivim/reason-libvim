@@ -19,7 +19,7 @@ describe("Buffer", ({describe, _}) => {
       expect.int(Buffer.getLineCount(buffer)).toBe(3);
     })
   );
-  describe("onModifiedChanged", ({test, _}) => {
+  describe("onModifiedChanged", ({test, _}) =>
     test(
       "switching to a new file should not trigger an onFilenameChanged event",
       ({expect}) => {
@@ -27,20 +27,21 @@ describe("Buffer", ({describe, _}) => {
 
       let modifyVals = ref([]);
       let dispose =
-        Buffer.onModifiedChanged((_id, modified) => modifyVals := [(modified), ...modifyVals^]);
+        Buffer.onModifiedChanged((_id, modified) =>
+          modifyVals := [modified, ...modifyVals^]
+        );
 
       input("i");
-      
+
       // Switching modes shouldn't trigger a modified change..
       expect.int(List.length(modifyVals^)).toBe(0);
-      
+
       // Typing a character should trigger a modified change...
       input("a");
 
-      
       expect.int(List.length(modifyVals^)).toBe(1);
       expect.bool(List.hd(modifyVals^)).toBe(true);
-      
+
       // Switching mode shouldn't trigger a modified change
       input("<esc>");
       expect.int(List.length(modifyVals^)).toBe(1);
@@ -49,15 +50,15 @@ describe("Buffer", ({describe, _}) => {
       input("u");
       expect.int(List.length(modifyVals^)).toBe(2);
       expect.bool(List.hd(modifyVals^)).toBe(false);
-      
+
       // ..and redo
       input("<c-r>");
       expect.int(List.length(modifyVals^)).toBe(3);
       expect.bool(List.hd(modifyVals^)).toBe(true);
 
       dispose();
-    });
-  });
+    })
+  );
   describe("onFilenameChanged", ({test, _}) => {
     test(
       "switching to a new file should not trigger an onFilenameChanged event",

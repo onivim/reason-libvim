@@ -23,7 +23,8 @@ let autocmd: ref(list(autocmdListener)) = ref([]);
 let bufferEnter: ref(list(bufferListener)) = ref([]);
 let bufferFilenameChanged: ref(list(bufferFilenameChangedListener)) =
   ref([]);
-let bufferModifiedChanged: ref(list(bufferModifiedChangedListener)) = ref([]);
+let bufferModifiedChanged: ref(list(bufferModifiedChangedListener)) =
+  ref([]);
 let bufferUpdate: ref(list(bufferUpdateListener)) = ref([]);
 let bufferLeave: ref(list(bufferListener)) = ref([]);
 let commandLineEnter: ref(list(commandLineUpdateListener)) = ref([]);
