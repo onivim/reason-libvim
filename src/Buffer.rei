@@ -69,7 +69,7 @@ let onEnter: Listeners.bufferListener => Event.unsubscribe;
 state _changes._ [f(id, modified)] is called where [id] is the [id] of the affected
 buffer, and [modified] is the new state of the modified flag.
 */
-let onModified: Listeners.bufferModifiedChanged => Event.unsubscribe;
+let onModifiedChanged: Listeners.bufferModifiedChangedListener => Event.unsubscribe;
 
 /**
 [onUpdate(f)] adds a listener [f] that is called whenever a buffer is modified.
