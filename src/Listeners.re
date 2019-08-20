@@ -2,6 +2,7 @@ open Types;
 
 type autocmdListener = (autocmd, Native.buffer) => unit;
 type bufferListener = Native.buffer => unit;
+type bufferModifiedChangedListener = (int, bool) = >unit;
 type bufferFilenameChangedListener = BufferMetadata.t => unit;
 type bufferUpdateListener = BufferUpdate.t => unit;
 type commandLineUpdateListener = Types.cmdline => unit;
