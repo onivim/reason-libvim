@@ -38,6 +38,7 @@ let modeChanged: ref(list(modeChangedListener)) = ref([]);
 let quit: ref(list(quitListener)) = ref([]);
 let stopSearchHighlight: ref(list(noopListener)) = ref([]);
 let topLineChanged: ref(list(topLineChangedListener)) = ref([]);
+let unhandledEscape: ref(list(noopListener)) = ref([]);
 let visualRangeChanged: ref(list(visualRangeChangedListener)) = ref([]);
 let windowMovement: ref(list(windowMovementListener)) = ref([]);
 let windowSplit: ref(list(windowSplitListener)) = ref([]);
