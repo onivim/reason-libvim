@@ -170,6 +170,10 @@ let _onStopSearch = () => {
   queue(() => Event.dispatch((), Listeners.stopSearchHighlight));
 };
 
+let _onUnhandledEscape = () => {
+  queue(() => Event.dispatch((), Listeners.unhandledEscape));
+};
+
 let _clipboardGet = (regname: int) => {
   switch (Clipboard._provider^) {
   | None => None
@@ -184,6 +188,7 @@ let init = () => {
   Callback.register("lv_onDirectoryChanged", _onDirectoryChanged);
   Callback.register("lv_onMessage", _onMessage);
   Callback.register("lv_onQuit", _onQuit);
+  Callback.register("lv_onUnhandledEscape", _onUnhandledEscape);
   Callback.register("lv_onStopSearch", _onStopSearch);
   Callback.register("lv_onWindowMovement", _onWindowMovement);
   Callback.register("lv_onWindowSplit", _onWindowSplit);
@@ -213,6 +218,10 @@ let onMessage = f => {
 
 let onQuit = f => {
   Event.add2(f, Listeners.quit);
+};
+
+let onUnhandledEscape = f => {
+  Event.add(f, Listeners.unhandledEscape);
 };
 
 let onYank = f => {

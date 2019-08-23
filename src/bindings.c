@@ -108,6 +108,18 @@ void onQuit(buf_T *buf, int isForced) {
   CAMLreturn0;
 }
 
+void onUnhandledEscape() {
+  CAMLparam0();
+
+  static value *lv_onUnhandledEscape = NULL;
+
+  if (lv_onUnhandledEscape == NULL) {
+    lv_onUnhandledEscape = caml_named_value("lv_onUnhandledEscape");
+  }
+  caml_callback(*lv_onUnhandledEscape, Val_unit);
+  CAMLreturn0;
+}
+
 void onStopSearch(void) {
   CAMLparam0();
 
@@ -252,6 +264,7 @@ CAMLprim value libvim_vimInit(value unit) {
   vimSetMessageCallback(&onMessage);
   vimSetQuitCallback(&onQuit);
   vimSetStopSearchHighlightCallback(&onStopSearch);
+  vimSetUnhandledEscapeCallback(&onUnhandledEscape);
   vimSetWindowMovementCallback(&onWindowMovement);
   vimSetWindowSplitCallback(&onWindowSplit);
   vimSetYankCallback(&onYank);

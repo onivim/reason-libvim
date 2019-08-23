@@ -54,6 +54,16 @@ by [command(":q")] or [ZZ].
 let onQuit: Listeners.quitListener => Event.unsubscribe;
 
 /**
+[onUnhandledEscape(f)] registers an unhandled escape listener [f].
+
+[f] is called whenver an _unhandled escape_ occurs. This happens, for example,
+if the user presses <esc> while in normal mode, but there is no pending operator.
+
+The default Vim behavior was to 'beep', but UIs might want to handle this differently.
+*/
+let onUnhandledEscape: Listeners.noopListener => Event.unsubscribe;
+
+/**
 [onYank(f)] registers a yank listener [f]
 
 [f] is called whenever a value is 'yanked' to a register -
