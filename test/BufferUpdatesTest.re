@@ -32,29 +32,6 @@ describe("Buffer.onUpdate", ({describe, _}) => {
   );
 
   describe("normal mode", ({test, _}) => {
-    test("add line", ({expect}) => {
-      let _ = resetBuffer();
-
-      let updates: ref(list(BufferUpdate.t)) = ref([]);
-      let dispose = Buffer.onUpdate(upd => updates := [upd, ...updates^]);
-
-      input("j");
-      input("y");
-      input("y");
-      input("p");
-
-      expect.int(List.length(updates^)).toBe(1);
-      let bu: BufferUpdate.t = List.hd(updates^);
-
-      expect.int(bu.startLine).toBe(3);
-      expect.int(bu.endLine).toBe(3);
-      expect.int(Array.length(bu.lines)).toBe(1);
-      expect.string(bu.lines[0]).toEqual(
-        "This is the second line of a test file",
-      );
-
-      dispose();
-    });
     test("delete 2nd line", ({expect}) => {
       let _ = resetBuffer();
 
