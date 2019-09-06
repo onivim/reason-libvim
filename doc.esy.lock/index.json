@@ -1,5 +1,5 @@
 {
-  "checksum": "a6074b137796c671da5528aa9567bce8",
+  "checksum": "bde5d36b59975a00a155e103add2b6bc",
   "root": "reason-libvim@link-dev:./package.json",
   "node": {
     "wordwrap@0.0.3@d41d8cd9": {
@@ -90,9 +90,9 @@
       "overrides": [ "doc.json" ],
       "dependencies": [
         "refmterr@3.2.2@d41d8cd9", "ocaml@4.7.1004@d41d8cd9",
-        "libvim@8.10869.21@d41d8cd9", "http-server@0.11.1@d41d8cd9",
+        "libvim@8.10869.22@d41d8cd9", "http-server@0.11.1@d41d8cd9",
         "@reason-native/rely@2.2.0@d41d8cd9",
-        "@opam/odoc@opam:1.4.1@becd49d1", "@opam/dune@opam:1.7.0@2dd70b87",
+        "@opam/odoc@opam:1.4.1@7b0020a6", "@opam/dune@opam:1.7.0@2dd70b87",
         "@esy-ocaml/reason@3.4.0@d41d8cd9"
       ],
       "devDependencies": [ "ocaml@4.7.1004@d41d8cd9" ]
@@ -111,14 +111,14 @@
       "dependencies": [],
       "devDependencies": []
     },
-    "portfinder@1.0.23@d41d8cd9": {
-      "id": "portfinder@1.0.23@d41d8cd9",
+    "portfinder@1.0.24@d41d8cd9": {
+      "id": "portfinder@1.0.24@d41d8cd9",
       "name": "portfinder",
-      "version": "1.0.23",
+      "version": "1.0.24",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://registry.npmjs.org/portfinder/-/portfinder-1.0.23.tgz#sha1:894db4bcc5daf02b6614517ce89cd21a38226b82"
+          "archive:https://registry.npmjs.org/portfinder/-/portfinder-1.0.24.tgz#sha1:11efbc6865f12f37624b6531ead1d809ed965cfa"
         ]
       },
       "overrides": [],
@@ -270,14 +270,14 @@
       "dependencies": [],
       "devDependencies": []
     },
-    "libvim@8.10869.21@d41d8cd9": {
-      "id": "libvim@8.10869.21@d41d8cd9",
+    "libvim@8.10869.22@d41d8cd9": {
+      "id": "libvim@8.10869.22@d41d8cd9",
       "name": "libvim",
-      "version": "8.10869.21",
+      "version": "8.10869.22",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://registry.npmjs.org/libvim/-/libvim-8.10869.21.tgz#sha1:9e652a01043dc22fd8bd7ef05476d8ffc36a6ca4"
+          "archive:https://registry.npmjs.org/libvim/-/libvim-8.10869.22.tgz#sha1:ba7408c5a7ff2c6a99acce04a6083902389166bf"
         ]
       },
       "overrides": [],
@@ -296,7 +296,7 @@
       },
       "overrides": [],
       "dependencies": [
-        "union@0.4.6@d41d8cd9", "portfinder@1.0.23@d41d8cd9",
+        "union@0.4.6@d41d8cd9", "portfinder@1.0.24@d41d8cd9",
         "optimist@0.6.1@d41d8cd9", "opener@1.4.3@d41d8cd9",
         "http-proxy@1.17.0@d41d8cd9", "ecstatic@3.3.2@d41d8cd9",
         "corser@2.0.1@d41d8cd9", "colors@1.0.3@d41d8cd9"
@@ -315,7 +315,7 @@
       },
       "overrides": [],
       "dependencies": [
-        "requires-port@1.0.0@d41d8cd9", "follow-redirects@1.7.0@d41d8cd9",
+        "requires-port@1.0.0@d41d8cd9", "follow-redirects@1.9.0@d41d8cd9",
         "eventemitter3@3.1.2@d41d8cd9"
       ],
       "devDependencies": []
@@ -334,14 +334,14 @@
       "dependencies": [],
       "devDependencies": []
     },
-    "follow-redirects@1.7.0@d41d8cd9": {
-      "id": "follow-redirects@1.7.0@d41d8cd9",
+    "follow-redirects@1.9.0@d41d8cd9": {
+      "id": "follow-redirects@1.9.0@d41d8cd9",
       "name": "follow-redirects",
-      "version": "1.7.0",
+      "version": "1.9.0",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.7.0.tgz#sha1:489ebc198dc0e7f64167bd23b03c4c19b5784c76"
+          "archive:https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.9.0.tgz#sha1:8d5bcdc65b7108fe1508649c79c12d732dcedb4f"
         ]
       },
       "overrides": [],
@@ -569,7 +569,7 @@
       "dependencies": [
         "ocaml@4.7.1004@d41d8cd9", "@opam/uchar@opam:0.0.2@c8218eea",
         "@opam/topkg@opam:1.0.1@a42c631e",
-        "@opam/ocamlfind@opam:1.8.1@c65fe06a",
+        "@opam/ocamlfind@opam:1.8.1@ff07b0f9",
         "@opam/ocamlbuild@opam:0.14.0@427a2331",
         "@opam/cmdliner@opam:1.0.4@93208aac",
         "@esy-ocaml/substs@0.0.1@d41d8cd9"
@@ -647,7 +647,7 @@
       },
       "overrides": [],
       "dependencies": [
-        "ocaml@4.7.1004@d41d8cd9", "@opam/ocamlfind@opam:1.8.1@c65fe06a",
+        "ocaml@4.7.1004@d41d8cd9", "@opam/ocamlfind@opam:1.8.1@ff07b0f9",
         "@opam/ocamlbuild@opam:0.14.0@427a2331",
         "@esy-ocaml/substs@0.0.1@d41d8cd9"
       ],
@@ -745,7 +745,7 @@
       "dependencies": [
         "ocaml@4.7.1004@d41d8cd9", "@opam/topkg@opam:1.0.1@a42c631e",
         "@opam/result@opam:1.4@6fb665c3",
-        "@opam/ocamlfind@opam:1.8.1@c65fe06a",
+        "@opam/ocamlfind@opam:1.8.1@ff07b0f9",
         "@opam/ocamlbuild@opam:0.14.0@427a2331",
         "@esy-ocaml/substs@0.0.1@d41d8cd9"
       ],
@@ -778,8 +778,8 @@
         "ocaml@4.7.1004@d41d8cd9", "@opam/dune@opam:1.7.0@2dd70b87"
       ]
     },
-    "@opam/odoc@opam:1.4.1@becd49d1": {
-      "id": "@opam/odoc@opam:1.4.1@becd49d1",
+    "@opam/odoc@opam:1.4.1@7b0020a6": {
+      "id": "@opam/odoc@opam:1.4.1@7b0020a6",
       "name": "@opam/odoc",
       "version": "opam:1.4.1",
       "source": {
@@ -807,8 +807,8 @@
         "ocaml@4.7.1004@d41d8cd9", "@opam/dune@opam:1.7.0@2dd70b87"
       ]
     },
-    "@opam/ocamlfind@opam:1.8.1@c65fe06a": {
-      "id": "@opam/ocamlfind@opam:1.8.1@c65fe06a",
+    "@opam/ocamlfind@opam:1.8.1@ff07b0f9": {
+      "id": "@opam/ocamlfind@opam:1.8.1@ff07b0f9",
       "name": "@opam/ocamlfind",
       "version": "opam:1.8.1",
       "source": {
@@ -863,8 +863,8 @@
       ],
       "devDependencies": [ "ocaml@4.7.1004@d41d8cd9" ]
     },
-    "@opam/ocaml-migrate-parsetree@opam:1.3.1@73570fbd": {
-      "id": "@opam/ocaml-migrate-parsetree@opam:1.3.1@73570fbd",
+    "@opam/ocaml-migrate-parsetree@opam:1.3.1@b0538b43": {
+      "id": "@opam/ocaml-migrate-parsetree@opam:1.3.1@b0538b43",
       "name": "@opam/ocaml-migrate-parsetree",
       "version": "opam:1.3.1",
       "source": {
@@ -914,7 +914,7 @@
         }
       ],
       "dependencies": [
-        "ocaml@4.7.1004@d41d8cd9", "@opam/ocamlfind@opam:1.8.1@c65fe06a",
+        "ocaml@4.7.1004@d41d8cd9", "@opam/ocamlfind@opam:1.8.1@ff07b0f9",
         "@opam/cppo@opam:1.6.6@f4f83858", "@esy-ocaml/substs@0.0.1@d41d8cd9"
       ],
       "devDependencies": [ "ocaml@4.7.1004@d41d8cd9" ]
@@ -937,7 +937,7 @@
       },
       "overrides": [],
       "dependencies": [
-        "ocaml@4.7.1004@d41d8cd9", "@opam/ocamlfind@opam:1.8.1@c65fe06a",
+        "ocaml@4.7.1004@d41d8cd9", "@opam/ocamlfind@opam:1.8.1@ff07b0f9",
         "@opam/ocamlbuild@opam:0.14.0@427a2331",
         "@esy-ocaml/substs@0.0.1@d41d8cd9"
       ],
@@ -1011,7 +1011,7 @@
       "dependencies": [
         "ocaml@4.7.1004@d41d8cd9", "@opam/topkg@opam:1.0.1@a42c631e",
         "@opam/result@opam:1.4@6fb665c3",
-        "@opam/ocamlfind@opam:1.8.1@c65fe06a",
+        "@opam/ocamlfind@opam:1.8.1@ff07b0f9",
         "@opam/ocamlbuild@opam:0.14.0@427a2331",
         "@opam/astring@opam:0.8.3@4e5e17d5",
         "@esy-ocaml/substs@0.0.1@d41d8cd9"
@@ -1235,11 +1235,11 @@
       },
       "overrides": [],
       "dependencies": [
-        "ocaml@4.7.1004@d41d8cd9", "@opam/ocamlfind@opam:1.8.1@c65fe06a",
+        "ocaml@4.7.1004@d41d8cd9", "@opam/ocamlfind@opam:1.8.1@ff07b0f9",
         "@esy-ocaml/substs@0.0.1@d41d8cd9"
       ],
       "devDependencies": [
-        "ocaml@4.7.1004@d41d8cd9", "@opam/ocamlfind@opam:1.8.1@c65fe06a"
+        "ocaml@4.7.1004@d41d8cd9", "@opam/ocamlfind@opam:1.8.1@ff07b0f9"
       ]
     },
     "@opam/atdgen-runtime@opam:2.0.0@8a75c3bb": {
@@ -1347,7 +1347,7 @@
       "overrides": [],
       "dependencies": [
         "ocaml@4.7.1004@d41d8cd9", "@opam/topkg@opam:1.0.1@a42c631e",
-        "@opam/ocamlfind@opam:1.8.1@c65fe06a",
+        "@opam/ocamlfind@opam:1.8.1@ff07b0f9",
         "@opam/ocamlbuild@opam:0.14.0@427a2331",
         "@opam/base-bytes@opam:base@19d0c2ff",
         "@esy-ocaml/substs@0.0.1@d41d8cd9"
@@ -1383,8 +1383,8 @@
       "overrides": [],
       "dependencies": [
         "ocaml@4.7.1004@d41d8cd9", "@opam/result@opam:1.4@6fb665c3",
-        "@opam/ocamlfind@opam:1.8.1@c65fe06a",
-        "@opam/ocaml-migrate-parsetree@opam:1.3.1@73570fbd",
+        "@opam/ocamlfind@opam:1.8.1@ff07b0f9",
+        "@opam/ocaml-migrate-parsetree@opam:1.3.1@b0538b43",
         "@opam/merlin-extend@opam:0.3@0af73a50",
         "@opam/menhir@opam:20190626@bbeb8953",
         "@opam/dune@opam:1.7.0@2dd70b87"
