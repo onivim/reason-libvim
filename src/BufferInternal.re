@@ -2,7 +2,7 @@ type t = Native.buffer;
 
 module IntMap =
   Map.Make({
-    let compare = Pervasives.compare;
+    let compare = Stdlib.compare;
     type t = int;
   });
 
