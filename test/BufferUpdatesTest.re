@@ -37,8 +37,13 @@ describe("Buffer.onUpdate", ({describe, _}) => {
 
       let lc = Buffer.getLineCount(buf);
       let i = ref(1);
-      while(i^ <= lc) {
-        prerr_endline ("Buffer line: " ++ string_of_int(i^) ++ ": " ++ Buffer.getLine(buf, i^));
+      while (i^ <= lc) {
+        prerr_endline(
+          "Buffer line: "
+          ++ string_of_int(i^)
+          ++ ": "
+          ++ Buffer.getLine(buf, i^),
+        );
         incr(i);
       };
 
