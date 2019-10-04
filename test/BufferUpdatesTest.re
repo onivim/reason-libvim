@@ -33,7 +33,19 @@ describe("Buffer.onUpdate", ({describe, _}) => {
 
   describe("normal mode", ({test, _}) => {
     test("add line", ({expect}) => {
-      let _ = resetBuffer();
+      let buf = resetBuffer();
+
+      let lc = Buffer.getLineCount(buf);
+      let i = ref(1);
+      while (i^ <= lc) {
+        prerr_endline(
+          "Buffer line: "
+          ++ string_of_int(i^)
+          ++ ": "
+          ++ Buffer.getLine(buf, i^),
+        );
+        incr(i);
+      };
 
       let updates: ref(list(BufferUpdate.t)) = ref([]);
       let dispose = Buffer.onUpdate(upd => updates := [upd, ...updates^]);
