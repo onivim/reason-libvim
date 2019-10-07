@@ -115,6 +115,26 @@ describe("Buffer", ({describe, _}) => {
       dispose2();
     });
   });
+  describe("onFiletypeChanged", ({test, _}) => {
+    test(
+      "switching filetype should trigger event",
+      ({expect}) => {
+      let _ = resetBuffer();
+
+      let updates = ref([]);
+      let dispose =
+        Buffer.onFiletypeChanged(meta => updates := [meta.fileType, ...updates^]);
+
+      command("set filetype=derp");
+
+      /* A filename changed event should not have been triggered */
+      expect.int(List.length(updates^)).toBe(1);
+      /* An enter event should've been triggered */
+      expect.bool(List.hd(updates^) == Some("derp")).toBe(true);
+
+      dispose();
+    });
+  });
   describe("onEnter", ({test, _}) => {
     test(
       "editing a new file should trigger a buffer enter event", ({expect}) => {

@@ -60,7 +60,7 @@ let checkCurrentBufferForUpdate = () => {
         lastFiletype := Native.vimBufferGetFiletype(buffer);
       } else {
         let lastF = lastFilename^;
-        let lastFiletype = lastFiletype^;
+        let lastFt = lastFiletype^;
         let newFileName = Native.vimBufferGetFilename(buffer);
         let newFiletype = Native.vimBufferGetFiletype(buffer);
 
@@ -72,7 +72,7 @@ let checkCurrentBufferForUpdate = () => {
           );
         };
 
-        if (!String.equal(string_opt(lastFiletype), string_opt(newFiletype))) {
+        if (!String.equal(string_opt(lastFt), string_opt(newFiletype))) {
           lastFiletype := newFiletype;
           Event.dispatch(
             BufferMetadata.ofBuffer(buffer),

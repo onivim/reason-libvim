@@ -11,6 +11,10 @@ let getFilename = (buffer: t) => {
   Native.vimBufferGetFilename(buffer);
 };
 
+let getFiletype = (buffer: t) => {
+  Native.vimBufferGetFiletype(buffer);
+};
+
 let getVersion = (buffer: t) => {
   Native.vimBufferGetChangedTick(buffer);
 };
@@ -56,6 +60,10 @@ let onUpdate = (f: Listeners.bufferUpdateListener) => {
   Event.add(f, Listeners.bufferUpdate);
 };
 
-let onFilenameChanged = (f: Listeners.bufferFilenameChangedListener) => {
+let onFilenameChanged = (f: Listeners.bufferMetadataChangedListener) => {
   Event.add(f, Listeners.bufferFilenameChanged);
+};
+
+let onFiletypeChanged = (f: Listeners.bufferMetadataChangedListener) => {
+  Event.add(f, Listeners.bufferFiletypeChanged);
 };
