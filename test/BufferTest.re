@@ -116,14 +116,14 @@ describe("Buffer", ({describe, _}) => {
     });
   });
   describe("onFiletypeChanged", ({test, _}) => {
-    test(
-      "switching filetype should trigger event",
-      ({expect}) => {
+    test("switching filetype should trigger event", ({expect}) => {
       let _ = resetBuffer();
 
       let updates = ref([]);
       let dispose =
-        Buffer.onFiletypeChanged(meta => updates := [meta.fileType, ...updates^]);
+        Buffer.onFiletypeChanged(meta =>
+          updates := [meta.fileType, ...updates^]
+        );
 
       command("set filetype=derp");
 
@@ -133,7 +133,7 @@ describe("Buffer", ({describe, _}) => {
       expect.bool(List.hd(updates^) == Some("derp")).toBe(true);
 
       dispose();
-    });
+    })
   });
   describe("onEnter", ({test, _}) => {
     test(
