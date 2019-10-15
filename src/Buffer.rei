@@ -11,6 +11,11 @@ let openFile: string => t;
 let getFilename: t => option(string);
 
 /**
+[getFiletype(buffer)] returns the filetype of the buffer [buffer]
+*/
+let getFiletype: t => option(string);
+
+/**
 [getVersion(buffer)] returns the latest changedtick of the buffer [buffer].
 
 The changedtick gets updated with each modification to the buffer
@@ -86,4 +91,12 @@ associated with a buffer changes. This could happen via a `:sav` command.
 Returns a function that can be called to unsubscribe.
 */
 let onFilenameChanged:
-  Listeners.bufferFilenameChangedListener => Event.unsubscribe;
+  Listeners.bufferMetadataChangedListener => Event.unsubscribe;
+/**
+[onFiletypeChanged(f)] adds a listener [f] that is called whenever the filetype
+associated with a buffer changes. This could happen via a `:set ft` command.
+
+Returns a function that can be called to unsubscribe.
+*/
+let onFiletypeChanged:
+  Listeners.bufferMetadataChangedListener => Event.unsubscribe;
