@@ -1,5 +1,14 @@
-let getLine = Native.vimCursorGetLine;
+type t = {
+  line: int,
+  column: int,
+};
 
+let create = (~line, ~column, ()) => {
+  line,
+  column,
+};
+
+let getLine = Native.vimCursorGetLine;
 let getColumn = Native.vimCursorGetColumn;
 
 let getPosition = () => {

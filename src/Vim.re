@@ -200,8 +200,29 @@ let init = () => {
   BufferInternal.checkCurrentBufferForUpdate();
 };
 
-let input = v => {
-  checkAndUpdateState(() => Native.vimInput(v));
+let _getDefaultCursors = (cursors: list(Cursor.t)) => {
+  if (cursors == []) {
+    [Cursor.create(
+      ~line=Cursor.getLine(),
+      ~column=Cursor.getLine(),
+      ()
+      )
+    ]
+  } else {
+    cursors
+  }
+};
+
+let input = (~cursors: list(Cursor.t)=[], v) => {
+  checkAndUpdateState(() => 
+
+    let mode = Mode.get();
+    if (mode == Vim.Types.Insert) {
+    Native.vimInput(v)
+    } else {
+    Native.vimInput(v)
+    }
+  );
 };
 
 let command = v => {
