@@ -2,6 +2,7 @@ open TestFramework;
 open Vim;
 
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
+let input = (s) => ignore(Vim.input(s));
 
 describe("DirectoryChanged", ({test, _}) => {
   test("get changed directory event", ({expect}) => {

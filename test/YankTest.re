@@ -2,6 +2,7 @@ open TestFramework;
 open Vim;
 
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
+let input = (s) => ignore(Vim.input(s));
 
 describe("Yank", ({test, _}) => {
   test("onYank works for deleting single line", ({expect}) => {
@@ -10,8 +11,8 @@ describe("Yank", ({test, _}) => {
     let yanks: ref(list(Yank.t)) = ref([]);
     let dispose = Vim.onYank(yank => yanks := [yank, ...yanks^]);
 
-    Vim.input("d");
-    Vim.input("d");
+    let _ = Vim.input("d");
+    let _ = Vim.input("d");
 
     expect.int(List.length(yanks^)).toBe(1);
     let del: Yank.t = List.hd(yanks^);
@@ -35,8 +36,8 @@ describe("Yank", ({test, _}) => {
     let yanks: ref(list(Yank.t)) = ref([]);
     let dispose = Vim.onYank(yank => yanks := [yank, ...yanks^]);
 
-    Vim.input("d");
-    Vim.input("j");
+    let _ = Vim.input("d");
+    let _ = Vim.input("j");
 
     expect.int(List.length(yanks^)).toBe(1);
     let del: Yank.t = List.hd(yanks^);
@@ -61,8 +62,8 @@ describe("Yank", ({test, _}) => {
     let yanks: ref(list(Yank.t)) = ref([]);
     let dispose = Vim.onYank(yank => yanks := [yank, ...yanks^]);
 
-    Vim.input("l");
-    Vim.input("x");
+    let _ = Vim.input("l");
+    let _ = Vim.input("x");
 
     expect.int(List.length(yanks^)).toBe(1);
     let del: Yank.t = List.hd(yanks^);
@@ -86,8 +87,8 @@ describe("Yank", ({test, _}) => {
     let yanks: ref(list(Yank.t)) = ref([]);
     let dispose = Vim.onYank(yank => yanks := [yank, ...yanks^]);
 
-    Vim.input("y");
-    Vim.input("y");
+    let _ = Vim.input("y");
+    let _ = Vim.input("y");
 
     expect.int(List.length(yanks^)).toBe(1);
     let del: Yank.t = List.hd(yanks^);
@@ -109,10 +110,10 @@ describe("Yank", ({test, _}) => {
     let yanks: ref(list(Yank.t)) = ref([]);
     let dispose = Vim.onYank(yank => yanks := [yank, ...yanks^]);
 
-    Vim.input("\"");
-    Vim.input("a");
-    Vim.input("y");
-    Vim.input("y");
+    let _ = Vim.input("\"");
+    let _ = Vim.input("a");
+    let _ = Vim.input("y");
+    let _ = Vim.input("y");
 
     expect.int(List.length(yanks^)).toBe(1);
     let del: Yank.t = List.hd(yanks^);

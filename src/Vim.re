@@ -39,7 +39,7 @@ let checkAndUpdateState = f => {
   let prevVisualMode = Visual.getType();
   let prevModified = Buffer.isModified(oldBuf);
 
-  f();
+  let ret = f();
 
   let newBuf = Buffer.getCurrent();
   let newPosition = Cursor.getPosition();
@@ -97,6 +97,7 @@ let checkAndUpdateState = f => {
   };
 
   flushQueue();
+  ret;
 };
 
 let _onAutocommand = (autoCommand: Types.autocmd, buffer: Buffer.t) => {
@@ -222,7 +223,7 @@ let input = (~cursors: list(Cursor.t)=[], v) => {
     let mode = Mode.getCurrent();
     if (mode == Types.Insert) {
 
-      let runAdditionalCursors = (curs) => {
+      let runCursor = (curs) => {
         Cursor.set(curs);
         
         // TODO: Save line
@@ -235,13 +236,12 @@ let input = (~cursors: list(Cursor.t)=[], v) => {
 
       switch (cursors) {
       | [hd, ...tail] =>
-        Native.vimInput(v);
-        let newHead = _createCursorFromCurrent();
+        let newHead = runCursor(hd);
 
         let newMode = Mode.getCurrent();
         // If we're still in insert mode, run the command for all the rest of the characters too
         let remainingCursors = if (newMode == Types.Insert) {
-          List.map(runAdditionalCursors, tail);
+          List.map(runCursor, tail);
         } else {
           tail 
         };
@@ -249,7 +249,7 @@ let input = (~cursors: list(Cursor.t)=[], v) => {
         [newHead, ...remainingCursors];
       // This should never happen...
       | [] => cursors
-      }
+      };
     } else {
       Native.vimInput(v);
       cursors;

@@ -2,6 +2,7 @@ open TestFramework;
 open Vim;
 
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
+let input = (s) => ignore(Vim.input(s));
 
 describe("Buffer", ({describe, _}) => {
   describe("getLine", ({test, _}) =>

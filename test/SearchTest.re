@@ -4,6 +4,7 @@ open Range;
 
 let resetBrackets = () => Helpers.resetBuffer("test/brackets.txt");
 let reset = () => Helpers.resetBuffer("test/testfile.txt");
+let input = (s) => ignore(Vim.input(s));
 
 describe("Search", ({describe, _}) => {
   describe("getSearchHighlights", ({test, _}) => {
