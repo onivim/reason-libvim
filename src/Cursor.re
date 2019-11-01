@@ -18,6 +18,7 @@ let getPosition = () => {
   );
 };
 
+
 let setPosition = (line, column) => {
   let previousTopLine = Native.vimWindowGetTopLine();
   let previousLeft = Native.vimWindowGetLeftColumn();
@@ -43,4 +44,8 @@ let setPosition = (line, column) => {
 
 let onMoved = f => {
   Event.add(f, Listeners.cursorMoved);
+}
+
+let set = (v: t) => {
+  setPosition(v.line, v.column);
 };

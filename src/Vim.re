@@ -200,29 +200,61 @@ let init = () => {
   BufferInternal.checkCurrentBufferForUpdate();
 };
 
-let _getDefaultCursors = (cursors: list(Cursor.t)) => {
-  if (cursors == []) {
-    [Cursor.create(
+let _createCursorFromCurrent = () => {
+Cursor.create(
       ~line=Cursor.getLine(),
       ~column=Cursor.getLine(),
       ()
-      )
-    ]
+      );
+}
+
+let _getDefaultCursors = (cursors: list(Cursor.t)) => {
+  if (cursors == []) {
+    [_createCursorFromCurrent()]
   } else {
     cursors
   }
 };
 
 let input = (~cursors: list(Cursor.t)=[], v) => {
-  checkAndUpdateState(() => 
+  checkAndUpdateState(() => {
 
-    let mode = Mode.get();
-    if (mode == Vim.Types.Insert) {
-    Native.vimInput(v)
+    let mode = Mode.getCurrent();
+    if (mode == Types.Insert) {
+
+      let runAdditionalCursors = (curs) => {
+        Cursor.set(curs);
+        
+        // TODO: Save line
+        Native.vimInput(v);
+
+        _createCursorFromCurrent();
+      };
+
+      // Run first command, verify we don't go back to insert mode
+
+      switch (cursors) {
+      | [hd, ...tail] =>
+        Native.vimInput(v);
+        let newHead = _createCursorFromCurrent();
+
+        let newMode = Mode.getCurrent();
+        // If we're still in insert mode, run the command for all the rest of the characters too
+        let remainingCursors = if (newMode == Types.Insert) {
+          List.map(runAdditionalCursors, tail);
+        } else {
+          tail 
+        };
+
+        [newHead, ...remainingCursors];
+      // This should never happen...
+      | [] => cursors
+      }
     } else {
-    Native.vimInput(v)
+      Native.vimInput(v);
+      cursors;
     }
-  );
+  });
 };
 
 let command = v => {
