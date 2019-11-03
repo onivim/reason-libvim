@@ -221,10 +221,11 @@ let input = (~cursors: list(Cursor.t)=[], v) => {
   checkAndUpdateState(() => {
 
     let mode = Mode.getCurrent();
+    let cursors = _getDefaultCursors(cursors);
     if (mode == Types.Insert) {
 
-      let runCursor = (curs) => {
-        Cursor.set(curs);
+      let runCursor = (_curs) => {
+        //Cursor.set(curs);
         
         // TODO: Save line
         Native.vimInput(v);
