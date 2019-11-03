@@ -1,7 +1,7 @@
 open TestFramework;
 
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
-let input = (s) => ignore(Vim.input(s));
+let input = s => ignore(Vim.input(s));
 
 describe("onUnhandledEscape", ({test, _}) => {
   test("unhandled escape called with no pending operator", ({expect}) => {

@@ -2,7 +2,7 @@ open TestFramework;
 open Vim;
 
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
-let input = (s) => ignore(Vim.input(s));
+let input = s => ignore(Vim.input(s));
 
 describe("Visual", ({describe, _}) => {
   describe("getRange", ({test, _}) =>

@@ -16,4 +16,4 @@ let resetBuffer = filePath => {
   ret;
 };
 
-let input = (sz) => Vim.input(sz) |> ignore; 
+let input = sz => Vim.input(sz) |> ignore;

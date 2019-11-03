@@ -15,7 +15,7 @@ The value [s] may be of the following form:
 
 The keystroke is processed synchronously.
 */
-let input: (~cursors:list(Cursor.t)=?, string) => list(Cursor.t);
+let input: (~cursors: list(Cursor.t)=?, string) => list(Cursor.t);
 
 /**
 [command(cmd)] executes [cmd] as an Ex command.

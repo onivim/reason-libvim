@@ -202,31 +202,24 @@ let init = () => {
 };
 
 let _createCursorFromCurrent = () => {
-Cursor.create(
-      ~line=Cursor.getLine(),
-      ~column=Cursor.getLine(),
-      ()
-      );
-}
-
-let _getDefaultCursors = (cursors: list(Cursor.t)) => {
-  if (cursors == []) {
-    [_createCursorFromCurrent()]
-  } else {
-    cursors
-  }
+  Cursor.create(~line=Cursor.getLine(), ~column=Cursor.getColumn(), ());
 };
+
+let _getDefaultCursors = (cursors: list(Cursor.t)) =>
+  if (cursors == []) {
+    [_createCursorFromCurrent()];
+  } else {
+    cursors;
+  };
 
 let input = (~cursors: list(Cursor.t)=[], v) => {
   checkAndUpdateState(() => {
-
     let mode = Mode.getCurrent();
     let cursors = _getDefaultCursors(cursors);
     if (mode == Types.Insert) {
-
-      let runCursor = (curs) => {
+      let runCursor = curs => {
         Cursor.set(curs);
-        
+
         // TODO: Save line
         Native.vimInput(v);
 
@@ -241,11 +234,12 @@ let input = (~cursors: list(Cursor.t)=[], v) => {
 
         let newMode = Mode.getCurrent();
         // If we're still in insert mode, run the command for all the rest of the characters too
-        let remainingCursors = if (newMode == Types.Insert) {
-          List.map(runCursor, tail);
-        } else {
-          tail 
-        };
+        let remainingCursors =
+          if (newMode == Types.Insert) {
+            List.map(runCursor, tail);
+          } else {
+            tail;
+          };
 
         [newHead, ...remainingCursors];
       // This should never happen...
@@ -254,7 +248,7 @@ let input = (~cursors: list(Cursor.t)=[], v) => {
     } else {
       Native.vimInput(v);
       cursors;
-    }
+    };
   });
 };
 

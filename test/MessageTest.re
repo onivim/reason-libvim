@@ -2,7 +2,7 @@ open TestFramework;
 open Vim;
 
 let reset = () => Helpers.resetBuffer("test/testfile.txt");
-let input = (s) => ignore(Vim.input(s));
+let input = s => ignore(Vim.input(s));
 
 describe("Messages", ({test, _}) => {
   test("echo dispatches message", ({expect}) => {
