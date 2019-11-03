@@ -224,8 +224,8 @@ let input = (~cursors: list(Cursor.t)=[], v) => {
     let cursors = _getDefaultCursors(cursors);
     if (mode == Types.Insert) {
 
-      let runCursor = (_curs) => {
-        //Cursor.set(curs);
+      let runCursor = (curs) => {
+        Cursor.set(curs);
         
         // TODO: Save line
         Native.vimInput(v);
