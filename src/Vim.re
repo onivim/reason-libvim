@@ -12,6 +12,7 @@ module Position = Position;
 module Range = Range;
 module Search = Search;
 module Types = Types;
+module Undo = Undo;
 module Visual = Visual;
 module VisualRange = VisualRange;
 module Window = Window;
@@ -200,8 +201,38 @@ let init = () => {
   BufferInternal.checkCurrentBufferForUpdate();
 };
 
-let input = v => {
-  checkAndUpdateState(() => Native.vimInput(v));
+let input = (v: string) => {
+  checkAndUpdateState(() =>
+    // Special auto-closing pairs handling...
+    if (AutoClosingPairs.getEnabled() && Mode.getCurrent() == Types.Insert) {
+      let isBetweenPairs = {
+        let position = Cursor.getPosition();
+        let line = Buffer.getLine(Buffer.getCurrent(), position.line);
+        AutoClosingPairs.isBetweenPairs(line, position.column);
+      };
+
+      if (v == "<BS>" && isBetweenPairs) {
+        Native.vimInput("<DEL>");
+        Native.vimInput("<BS>");
+      } else if (v == "<CR>" && isBetweenPairs) {
+        Native.vimInput("<CR>");
+        Native.vimInput("<CR>");
+        Native.vimInput("<UP>");
+        Native.vimInput("<TAB>");
+      } else if (AutoClosingPairs.isOpeningPair(v)) {
+        let pair = AutoClosingPairs.getByOpeningPair(v);
+        Native.vimInput(v);
+        Native.vimInput(pair.closing);
+        Native.vimInput("<LEFT>");
+      } else if (AutoClosingPairs.isClosingPair(v) && isBetweenPairs) {
+        Native.vimInput("<RIGHT>");
+      } else {
+        Native.vimInput(v);
+      };
+    } else {
+      Native.vimInput(v);
+    }
+  );
 };
 
 let command = v => {
