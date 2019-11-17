@@ -202,37 +202,38 @@ let init = () => {
 };
 
 let input = (v: string) => {
-  checkAndUpdateState(() =>
+  checkAndUpdateState(()
     // Special auto-closing pairs handling...
-    if (AutoClosingPairs.getEnabled() && Mode.getCurrent() == Types.Insert) {
-      let isBetweenPairs = {
-        let position = Cursor.getPosition();
-        let line = Buffer.getLine(Buffer.getCurrent(), position.line);
-        AutoClosingPairs.isBetweenPairs(line, position.column);
-      };
+    =>
+      if (AutoClosingPairs.getEnabled() && Mode.getCurrent() == Types.Insert) {
+        let isBetweenPairs = {
+          let position = Cursor.getPosition();
+          let line = Buffer.getLine(Buffer.getCurrent(), position.line);
+          AutoClosingPairs.isBetweenPairs(line, position.column);
+        };
 
-      if (v == "<BS>" && isBetweenPairs) {
-        Native.vimInput("<DEL>");
-        Native.vimInput("<BS>");
-      } else if (v == "<CR>" && isBetweenPairs) {
-        Native.vimInput("<CR>");
-        Native.vimInput("<CR>");
-        Native.vimInput("<UP>");
-        Native.vimInput("<TAB>");
-      } else if (AutoClosingPairs.isOpeningPair(v)) {
-        let pair = AutoClosingPairs.getByOpeningPair(v);
-        Native.vimInput(v);
-        Native.vimInput(pair.closing);
-        Native.vimInput("<LEFT>");
-      } else if (AutoClosingPairs.isClosingPair(v) && isBetweenPairs) {
-        Native.vimInput("<RIGHT>");
+        if (v == "<BS>" && isBetweenPairs) {
+          Native.vimInput("<DEL>");
+          Native.vimInput("<BS>");
+        } else if (v == "<CR>" && isBetweenPairs) {
+          Native.vimInput("<CR>");
+          Native.vimInput("<CR>");
+          Native.vimInput("<UP>");
+          Native.vimInput("<TAB>");
+        } else if (AutoClosingPairs.isOpeningPair(v)) {
+          let pair = AutoClosingPairs.getByOpeningPair(v);
+          Native.vimInput(v);
+          Native.vimInput(pair.closing);
+          Native.vimInput("<LEFT>");
+        } else if (AutoClosingPairs.isClosingPair(v) && isBetweenPairs) {
+          Native.vimInput("<RIGHT>");
+        } else {
+          Native.vimInput(v);
+        };
       } else {
         Native.vimInput(v);
-      };
-    } else {
-      Native.vimInput(v);
-    }
-  );
+      }
+    );
 };
 
 let command = v => {
