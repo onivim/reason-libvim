@@ -232,30 +232,6 @@ void onYank(yankInfo_T *yankInfo) {
   CAMLreturn0;
 }
 
-CAMLprim value libvim_vimAutoClosingPairsSet(value acp) {
-  CAMLparam1(acp);
-  CAMLlocal1(val);
-
-  int len = Wosize_val(acp);
-
-  autoClosingPair_T *pAcp =
-      (autoClosingPair_T *)malloc(sizeof(autoClosingPair_T) * len);
-  if (pAcp != NULL) {
-
-    for (int i = 0; i < len; i++) {
-      val = Field(acp, i);
-      int opening = Int_val(Field(val, 0));
-      int closing = Int_val(Field(val, 1));
-      pAcp[i].open = opening;
-      pAcp[i].close = closing;
-    };
-
-    acp_set_pairs(pAcp, len);
-    free(pAcp);
-  }
-  CAMLreturn(Val_unit);
-}
-
 CAMLprim value libvim_vimInit(value unit) {
   vimSetBufferUpdateCallback(&onBufferChanged);
   vimSetAutoCommandCallback(&onAutocommand);
@@ -551,11 +527,6 @@ CAMLprim value libvim_vimCursorSetPosition(value l, value c) {
   return Val_unit;
 }
 
-CAMLprim value libvim_vimOptionSetAutoClosingPairs(value ts) {
-  int tabSize = Int_val(ts);
-  p_acp = tabSize;
-}
-
 CAMLprim value libvim_vimOptionSetTabSize(value ts) {
   int tabSize = Int_val(ts);
   vimOptionSetTabSize(tabSize);
@@ -567,9 +538,6 @@ CAMLprim value libvim_vimOptionSetInsertSpaces(value v) {
   return Val_unit;
 }
 
-CAMLprim value libvim_vimOptionGetAutoClosingPairs(value unit) {
-  return Val_bool(p_acp);
-}
 CAMLprim value libvim_vimOptionGetInsertSpaces(value unit) {
   int insertSpaces = vimOptionGetInsertSpaces();
   return Val_bool(insertSpaces);
