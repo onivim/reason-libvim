@@ -110,6 +110,27 @@ describe("AutoClosingPairs", ({test, _}) => {
     expect.int(position.column).toBe(2);
   });
 
+  test("pass-through not between pairs", ({expect}) => {
+    let b = resetBuffer();
+    Options.setAutoClosingPairs(true);
+    AutoClosingPairs.create(
+      AutoClosingPairs.[
+        AutoClosingPair.create(~opening="(", ~closing=")", ()),
+      ],
+    )
+    |> AutoClosingPairs.setPairs;
+
+    input("O");
+    input("(");
+    input("x");
+    input(")");
+
+    let line = Buffer.getLine(b, 1);
+    let position = Cursor.getPosition();
+    expect.string(line).toEqual("(x)");
+    expect.int(position.column).toBe(3);
+  });
+
   test("multiple acp", ({expect}) => {
     let b = resetBuffer();
     Options.setAutoClosingPairs(true);
