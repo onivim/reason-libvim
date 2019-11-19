@@ -225,7 +225,7 @@ let input = (v: string) => {
           Native.vimInput(v);
           Native.vimInput(pair.closing);
           Native.vimInput("<LEFT>");
-        } else if (AutoClosingPairs.isClosingPair(v) && isBetweenPairs) {
+        } else if (AutoClosingPairs.isClosingPair(v)) {
           Native.vimInput("<RIGHT>");
         } else {
           Native.vimInput(v);
