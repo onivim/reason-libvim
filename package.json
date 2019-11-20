@@ -26,6 +26,6 @@
     "libvim": "8.10869.24"
   },
   "devDependencies": {
-    "ocaml": ">=4.7.0 <4.9.0"
+    "ocaml": "~4.7.0"
   }
 }

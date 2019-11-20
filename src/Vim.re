@@ -206,16 +206,21 @@ let input = (v: string) => {
     // Special auto-closing pairs handling...
     =>
       if (AutoClosingPairs.getEnabled() && Mode.getCurrent() == Types.Insert) {
-        let isBetweenPairs = {
+        let isBetweenPairs = () => {
           let position = Cursor.getPosition();
           let line = Buffer.getLine(Buffer.getCurrent(), position.line);
           AutoClosingPairs.isBetweenPairs(line, position.column);
         };
-
-        if (v == "<BS>" && isBetweenPairs) {
+        
+        let isNextCharacterClosing = () => {
+          let position = Cursor.getPosition();
+          let line = Buffer.getLine(Buffer.getCurrent(), position.line);
+          AutoClosingPairs.isNextCharacterClosing(line, position.column);
+        };
+        if (v == "<BS>" && isBetweenPairs()) {
           Native.vimInput("<DEL>");
           Native.vimInput("<BS>");
-        } else if (v == "<CR>" && isBetweenPairs) {
+        } else if (v == "<CR>" && isBetweenPairs()) {
           Native.vimInput("<CR>");
           Native.vimInput("<CR>");
           Native.vimInput("<UP>");
@@ -225,7 +230,7 @@ let input = (v: string) => {
           Native.vimInput(v);
           Native.vimInput(pair.closing);
           Native.vimInput("<LEFT>");
-        } else if (AutoClosingPairs.isClosingPair(v) && isBetweenPairs) {
+        } else if (AutoClosingPairs.isClosingPair(v) && isNextCharacterClosing()) {
           Native.vimInput("<RIGHT>");
         } else {
           Native.vimInput(v);
