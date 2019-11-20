@@ -131,6 +131,23 @@ describe("AutoClosingPairs", ({test, _}) => {
     expect.int(position.column).toBe(3);
   });
 
+  test("can insert closing pair", ({expect}) => {
+    let b = resetBuffer();
+    Options.setAutoClosingPairs(true);
+    AutoClosingPairs.create(
+      AutoClosingPairs.[
+        AutoClosingPair.create(~opening="[", ~closing="]", ()),
+      ],
+    )
+    |> AutoClosingPairs.setPairs;
+
+    input("O");
+    input("]");
+
+    let line = Buffer.getLine(b, 1);
+    expect.string(line).toEqual("]");
+  });
+
   test("multiple acp", ({expect}) => {
     let b = resetBuffer();
     Options.setAutoClosingPairs(true);

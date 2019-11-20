@@ -65,3 +65,15 @@ let isBetweenPairs = (line, position) => {
     false;
   };
 };
+
+let isNextCharacterClosing = (line, position) => {
+  let len = String.length(line);
+  if (position > 0 && position < len) {
+    List.exists(
+      (p: AutoClosingPair.t) => p.closing == String.sub(line, position, 1),
+      closingPairs^.pairs,
+    );
+  } else {
+    false;
+  };
+};
