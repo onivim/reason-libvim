@@ -530,6 +530,7 @@ CAMLprim value libvim_vimCursorSetPosition(value l, value c) {
 CAMLprim value libvim_vimOptionSetTabSize(value ts) {
   int tabSize = Int_val(ts);
   vimOptionSetTabSize(tabSize);
+  return Val_unit;
 }
 
 CAMLprim value libvim_vimOptionSetInsertSpaces(value v) {
