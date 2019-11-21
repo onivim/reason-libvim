@@ -66,13 +66,10 @@ let isBetweenPairs = (line, position) => {
   };
 };
 
-let isNextCharacterClosing = (line, position) => {
+let doesNextCharacterMatch = (line, position, s) => {
   let len = String.length(line);
   if (position > 0 && position < len) {
-    List.exists(
-      (p: AutoClosingPair.t) => p.closing == String.sub(line, position, 1),
-      closingPairs^.pairs,
-    );
+    s == String.sub(line, position, 1);
   } else {
     false;
   };
