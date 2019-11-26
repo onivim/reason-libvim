@@ -283,7 +283,7 @@ let input = (~cursors=[], v: string) => {
       | _ => ()
       };
       Native.vimInput(v);
-      cursors;
+      _getDefaultCursors([]);
     };
   });
 };

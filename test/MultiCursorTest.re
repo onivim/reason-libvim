@@ -8,13 +8,17 @@ describe("Multi-cursor", ({describe, _}) => {
     describe("single cursor", ({test, _}) => {
       test("set cursor works as expected", ({expect}) => {
         let _ = resetBuffer();
-        let _ = Vim.input("j");
+        let cursors1 = Vim.input("j");
+
+        cursors1 |> List.hd |> (cursor => expect.int(cursor.line).toBe(2));
 
         expect.int(Cursor.getLine()).toBe(2);
 
         // set cursor, and move up
-        let _ =
+        let cursors2 =
           Vim.input(~cursors=[Cursor.create(~line=3, ~column=0, ())], "k");
+
+        cursors2 |> List.hd |> (cursor => expect.int(cursor.line).toBe(2));
 
         expect.int(Cursor.getLine()).toBe(2);
       })
