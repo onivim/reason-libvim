@@ -139,5 +139,9 @@ describe("Multi-cursor", ({describe, _}) => {
 
       dispose();
     });
+<<<<<<< HEAD
   });
+=======
+  })
+>>>>>>> master
 });
