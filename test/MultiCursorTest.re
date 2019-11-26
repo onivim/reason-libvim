@@ -4,6 +4,22 @@ open Vim;
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 
 describe("Multi-cursor", ({describe, _}) => {
+  describe("normal mode", ({describe, _}) => {
+    describe("single cursor", ({test, _}) => {
+      test("set cursor works as expected", ({expect, _}) => {
+        let _ = resetBuffer();
+        let _ = Vim.input("j");
+
+        expect.int(Cursor.getLine()).toBe(2);
+
+        // set cursor, and move up
+        let _ =
+          Vim.input(~cursors=[Cursor.create(~line=3, ~column=0, ())], "k");
+
+        expect.int(Cursor.getLine()).toBe(2);
+      })
+    })
+  });
   describe("insert mode", ({test, _}) => {
     test("multi-cursor auto-closing paris", ({expect}) => {
       let buf = resetBuffer();
@@ -123,5 +139,5 @@ describe("Multi-cursor", ({describe, _}) => {
 
       dispose();
     });
-  })
+  });
 });

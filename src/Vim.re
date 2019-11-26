@@ -278,6 +278,10 @@ let input = (~cursors=[], v: string) => {
       | [] => cursors
       };
     } else {
+      switch (cursors) {
+      | [hd, ..._] => Cursor.set(hd)
+      | _ => ()
+      };
       Native.vimInput(v);
       cursors;
     };
