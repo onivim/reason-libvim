@@ -6,7 +6,7 @@ let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 describe("Multi-cursor", ({describe, _}) => {
   describe("normal mode", ({describe, _}) => {
     describe("single cursor", ({test, _}) => {
-      test("set cursor works as expected", ({expect, _}) => {
+      test("set cursor works as expected", ({expect}) => {
         let _ = resetBuffer();
         let _ = Vim.input("j");
 
@@ -139,9 +139,5 @@ describe("Multi-cursor", ({describe, _}) => {
 
       dispose();
     });
-<<<<<<< HEAD
   });
-=======
-  })
->>>>>>> master
 });
