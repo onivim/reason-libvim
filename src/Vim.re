@@ -12,6 +12,7 @@ module Position = Position;
 module Range = Range;
 module Search = Search;
 module Types = Types;
+module Undo = Undo;
 module Visual = Visual;
 module VisualRange = VisualRange;
 module Window = Window;
@@ -212,22 +213,53 @@ let _getDefaultCursors = (cursors: list(Cursor.t)) =>
     cursors;
   };
 
-let input = (~cursors: list(Cursor.t)=[], v) => {
+let input = (~cursors=[], v: string) => {
   checkAndUpdateState(() => {
+    // Special auto-closing pairs handling...
+
+    let runCursor = cursor => {
+      Cursor.set(cursor);
+      if (AutoClosingPairs.getEnabled() && Mode.getCurrent() == Types.Insert) {
+        let isBetweenPairs = () => {
+          let position = Cursor.getPosition();
+          let line = Buffer.getLine(Buffer.getCurrent(), position.line);
+          AutoClosingPairs.isBetweenPairs(line, position.column);
+        };
+
+        let doesNextCharacterMatch = s => {
+          let position = Cursor.getPosition();
+          let line = Buffer.getLine(Buffer.getCurrent(), position.line);
+          AutoClosingPairs.doesNextCharacterMatch(line, position.column, s);
+        };
+        if (v == "<BS>" && isBetweenPairs()) {
+          Native.vimInput("<DEL>");
+          Native.vimInput("<BS>");
+        } else if (v == "<CR>" && isBetweenPairs()) {
+          Native.vimInput("<CR>");
+          Native.vimInput("<CR>");
+          Native.vimInput("<UP>");
+          Native.vimInput("<TAB>");
+        } else if (AutoClosingPairs.isClosingPair(v)
+                   && doesNextCharacterMatch(v)) {
+          Native.vimInput("<RIGHT>");
+        } else if (AutoClosingPairs.isOpeningPair(v)) {
+          let pair = AutoClosingPairs.getByOpeningPair(v);
+          Native.vimInput(v);
+          Native.vimInput(pair.closing);
+          Native.vimInput("<LEFT>");
+        } else {
+          Native.vimInput(v);
+        };
+      } else {
+        Native.vimInput(v);
+      };
+      _createCursorFromCurrent();
+    };
+
     let mode = Mode.getCurrent();
     let cursors = _getDefaultCursors(cursors);
     if (mode == Types.Insert) {
-      let runCursor = curs => {
-        Cursor.set(curs);
-
-        // TODO: Save line
-        Native.vimInput(v);
-
-        _createCursorFromCurrent();
-      };
-
       // Run first command, verify we don't go back to insert mode
-
       switch (cursors) {
       | [hd, ...tail] =>
         let newHead = runCursor(hd);

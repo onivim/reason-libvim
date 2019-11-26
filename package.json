@@ -1,6 +1,6 @@
 {
   "name": "reason-libvim",
-  "version": "8.10869.22001",
+  "version": "8.10869.25000",
   "description": "Reason adapter for libvim",
   "license": "MIT",
   "scripts": {
@@ -23,9 +23,9 @@
     "@esy-ocaml/reason": "^3.4.0",
     "refmterr": "*",
     "ocaml": ">=4.7.0 <4.9.0",
-    "libvim": "8.10869.23"
+    "libvim": "8.10869.25"
   },
   "devDependencies": {
-    "ocaml": ">=4.7.0 <4.9.0"
+    "ocaml": "~4.7.0"
   }
 }

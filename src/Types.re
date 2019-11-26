@@ -1,16 +1,5 @@
 type buffer;
 
-module AutoClosingPair = {
-  type t = {
-    opening: char,
-    closing: char,
-  };
-
-  let create = (~opening, ~closing, ()) => {opening, closing};
-};
-
-type autoClosingPairs = array(AutoClosingPair.t);
-
 type clipboardProvider = int => option(array(string));
 
 type mode =
