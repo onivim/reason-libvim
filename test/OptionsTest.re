@@ -2,6 +2,7 @@ open TestFramework;
 open Vim;
 
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
+let input = s => ignore(Vim.input(s));
 
 describe("Options", ({describe, _}) =>
   describe("tabs / spaces", ({test, _}) => {

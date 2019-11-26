@@ -40,7 +40,7 @@ let checkAndUpdateState = f => {
   let prevVisualMode = Visual.getType();
   let prevModified = Buffer.isModified(oldBuf);
 
-  f();
+  let ret = f();
 
   let newBuf = Buffer.getCurrent();
   let newPosition = Cursor.getPosition();
@@ -98,6 +98,7 @@ let checkAndUpdateState = f => {
   };
 
   flushQueue();
+  ret;
 };
 
 let _onAutocommand = (autoCommand: Types.autocmd, buffer: Buffer.t) => {
@@ -201,10 +202,23 @@ let init = () => {
   BufferInternal.checkCurrentBufferForUpdate();
 };
 
-let input = (v: string) => {
-  checkAndUpdateState(()
+let _createCursorFromCurrent = () => {
+  Cursor.create(~line=Cursor.getLine(), ~column=Cursor.getColumn(), ());
+};
+
+let _getDefaultCursors = (cursors: list(Cursor.t)) =>
+  if (cursors == []) {
+    [_createCursorFromCurrent()];
+  } else {
+    cursors;
+  };
+
+let input = (~cursors=[], v: string) => {
+  checkAndUpdateState(() => {
     // Special auto-closing pairs handling...
-    =>
+
+    let runCursor = cursor => {
+      Cursor.set(cursor);
       if (AutoClosingPairs.getEnabled() && Mode.getCurrent() == Types.Insert) {
         let isBetweenPairs = () => {
           let position = Cursor.getPosition();
@@ -238,8 +252,36 @@ let input = (v: string) => {
         };
       } else {
         Native.vimInput(v);
-      }
-    );
+      };
+      _createCursorFromCurrent();
+    };
+
+    let mode = Mode.getCurrent();
+    let cursors = _getDefaultCursors(cursors);
+    if (mode == Types.Insert) {
+      // Run first command, verify we don't go back to insert mode
+      switch (cursors) {
+      | [hd, ...tail] =>
+        let newHead = runCursor(hd);
+
+        let newMode = Mode.getCurrent();
+        // If we're still in insert mode, run the command for all the rest of the characters too
+        let remainingCursors =
+          if (newMode == Types.Insert) {
+            List.map(runCursor, tail);
+          } else {
+            tail;
+          };
+
+        [newHead, ...remainingCursors];
+      // This should never happen...
+      | [] => cursors
+      };
+    } else {
+      Native.vimInput(v);
+      cursors;
+    };
+  });
 };
 
 let command = v => {

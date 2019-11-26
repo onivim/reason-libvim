@@ -2,6 +2,7 @@ open TestFramework;
 open Vim;
 
 let reset = () => Helpers.resetBuffer("test/testfile.txt");
+let input = s => ignore(Vim.input(s));
 
 describe("CommandLine", ({describe, _}) => {
   describe("getType", ({test, _}) =>

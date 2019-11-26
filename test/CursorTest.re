@@ -2,6 +2,7 @@ open TestFramework;
 open Vim;
 
 let resetBuffer = () => Helpers.resetBuffer("test/lines_100.txt");
+let input = s => ignore(Vim.input(s));
 
 describe("Cursor", ({describe, _}) => {
   describe("setPosition", ({test, _}) => {

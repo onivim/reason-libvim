@@ -1,5 +1,13 @@
-let getLine = Native.vimCursorGetLine;
+type t = {
+  line: int,
+  column: int,
+};
 
+let create = (~line, ~column, ()) => {line, column};
+
+let show = v => Printf.sprintf("Line %d column %d\n", v.line, v.column);
+
+let getLine = Native.vimCursorGetLine;
 let getColumn = Native.vimCursorGetColumn;
 
 let getPosition = () => {
@@ -34,4 +42,8 @@ let setPosition = (line, column) => {
 
 let onMoved = f => {
   Event.add(f, Listeners.cursorMoved);
+};
+
+let set = (v: t) => {
+  setPosition(v.line, v.column);
 };
