@@ -217,8 +217,12 @@ let input = (~cursors=[], v: string) => {
   checkAndUpdateState(() => {
     // Special auto-closing pairs handling...
 
-    let runCursor = cursor => {
+    let runCursor = (~first, cursor) => {
+      print_endline ("!! RUNCURSOR - 1");
       Cursor.set(cursor);
+      //if (!first) {
+        Undo.saveCursor();
+      //}
       if (AutoClosingPairs.getEnabled() && Mode.getCurrent() == Types.Insert) {
         let isBetweenPairs = () => {
           let position = Cursor.getPosition();
@@ -262,13 +266,13 @@ let input = (~cursors=[], v: string) => {
       // Run first command, verify we don't go back to insert mode
       switch (cursors) {
       | [hd, ...tail] =>
-        let newHead = runCursor(hd);
+        let newHead = runCursor(~first=true, hd);
 
         let newMode = Mode.getCurrent();
         // If we're still in insert mode, run the command for all the rest of the characters too
         let remainingCursors =
           if (newMode == Types.Insert) {
-            List.map(runCursor, tail);
+            List.map(runCursor(~first=false), tail);
           } else {
             tail;
           };
