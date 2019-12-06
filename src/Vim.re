@@ -302,6 +302,10 @@ let onDirectoryChanged = f => {
   Event.add(f, Listeners.directoryChanged);
 };
 
+let onGoto = f => {
+  Event.add2(f, Listeners.goto);
+};
+
 let onMessage = f => {
   Event.add3(f, Listeners.message);
 };
