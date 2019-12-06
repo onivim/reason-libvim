@@ -38,6 +38,14 @@ let onDirectoryChanged:
   Listeners.directoryChangedListener => Event.unsubscribe;
 
 /**
+[onGoto(f)] registers a handler for the goto command [f].
+
+[f] is called whenever a goto command is executed, for example,
+"gd" (go-to definition) or "gD" (go-to declaration)
+*/
+let onGoto: Listeners.gotoListener => Event.unsubscribe;
+
+/**
 [onMessage(f)] registers a message listener [f].
 
 [f] is called whenever a message is emitted from Vim.
