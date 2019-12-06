@@ -183,11 +183,17 @@ let _clipboardGet = (regname: int) => {
   };
 };
 
+let _onGoto = (line: int, column: int, gotoType: Types.gotoType) => {
+  let position = Position.create(~line, ~column);
+  queue(() => Event.dispatch2(position, gotoType, Listeners.goto));
+};
+
 let init = () => {
   Callback.register("lv_clipboardGet", _clipboardGet);
   Callback.register("lv_onBufferChanged", _onBufferChanged);
   Callback.register("lv_onAutocommand", _onAutocommand);
   Callback.register("lv_onDirectoryChanged", _onDirectoryChanged);
+  Callback.register("lv_onGoto", _onGoto);
   Callback.register("lv_onMessage", _onMessage);
   Callback.register("lv_onQuit", _onQuit);
   Callback.register("lv_onUnhandledEscape", _onUnhandledEscape);

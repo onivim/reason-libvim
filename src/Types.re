@@ -2,6 +2,10 @@ type buffer;
 
 type clipboardProvider = int => option(array(string));
 
+type gotoType =
+| Definition
+| Declaration;
+
 type mode =
   | Normal
   | Insert

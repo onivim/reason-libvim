@@ -47,6 +47,30 @@ void onBufferChanged(bufferUpdate_T bu) {
   free(pArgs);
 }
 
+void onGoto(gotoRequest_T gotoInfo) {
+  static value *lv_onGoto = NULL;
+  
+  if (lv_onGoto == NULL) {
+    lv_onGoto = caml_named_value("lv_onGoto");
+  }
+
+  int line = gotoInfo.location.lnum;
+  int col = gotoInfo.location.col;
+  int target = 0;
+  switch (gotoInfo.target) {
+    case DEFINITION:
+      target = 0;
+      break;
+    case DECLARATION:
+      target = 1;
+      break;
+    default:
+      target = 0;
+  }
+
+  caml_callback3(*lv_onGoto, Val_int(line), Val_int(col), Val_int(target));
+}
+
 void onAutocommand(event_T event, buf_T *buf) {
   static value *lv_onAutocmd = NULL;
 
@@ -233,10 +257,11 @@ void onYank(yankInfo_T *yankInfo) {
 }
 
 CAMLprim value libvim_vimInit(value unit) {
-  vimSetBufferUpdateCallback(&onBufferChanged);
   vimSetAutoCommandCallback(&onAutocommand);
+  vimSetBufferUpdateCallback(&onBufferChanged);
   vimSetClipboardGetCallback(&getClipboardCallback);
   vimSetDirectoryChangedCallback(&onDirectoryChanged);
+  vimSetGotoCallback(&onGoto);
   vimSetMessageCallback(&onMessage);
   vimSetQuitCallback(&onQuit);
   vimSetStopSearchHighlightCallback(&onStopSearch);
