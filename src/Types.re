@@ -3,8 +3,8 @@ type buffer;
 type clipboardProvider = int => option(array(string));
 
 type gotoType =
-| Definition
-| Declaration;
+  | Definition
+  | Declaration;
 
 type mode =
   | Normal
