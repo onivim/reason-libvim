@@ -11,7 +11,7 @@ describe("Goto", ({test, _}) => {
     let updates = ref([]);
 
     let dispose =
-      onGoto((_position, gotoType) => updates := [gotoType, ...updates^]);
+      onGoto((_location, gotoType) => updates := [gotoType, ...updates^]);
 
     input("gd");
     let gotoType = List.hd(updates^);
@@ -27,7 +27,7 @@ describe("Goto", ({test, _}) => {
     let updates = ref([]);
 
     let dispose =
-      onGoto((_position, gotoType) => updates := [gotoType, ...updates^]);
+      onGoto((_location, gotoType) => updates := [gotoType, ...updates^]);
 
     input("gD");
     let gotoType = List.hd(updates^);

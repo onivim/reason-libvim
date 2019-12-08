@@ -1,5 +1,6 @@
-open TestFramework;
+open EditorCoreTypes;
 open Vim;
+open TestFramework;
 
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 let input = s => ignore(Vim.input(s));
@@ -48,13 +49,13 @@ describe("Options", ({describe, _}) =>
       input("I");
       input("<tab>");
 
-      expect.string(Buffer.getLine(b, 1)).toEqual(
+      expect.string(Buffer.getLine(b, Index.zero)).toEqual(
         "   This is the first line of a test file",
       );
 
       input("<bs>");
 
-      expect.string(Buffer.getLine(b, 1)).toEqual(
+      expect.string(Buffer.getLine(b, Index.zero)).toEqual(
         "This is the first line of a test file",
       );
 
@@ -62,7 +63,7 @@ describe("Options", ({describe, _}) =>
       Options.setInsertSpaces(false);
 
       input("<tab>");
-      expect.string(Buffer.getLine(b, 1)).toEqual(
+      expect.string(Buffer.getLine(b, Index.zero)).toEqual(
         "\tThis is the first line of a test file",
       );
     });

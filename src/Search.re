@@ -1,10 +1,21 @@
-let getHighlightsInRange = (startLine, endLine) => {
-  let highlights = Native.vimSearchGetHighlights(startLine, endLine);
+open EditorCoreTypes;
+
+let getHighlightsInRange = (startLine, stopLine) => {
+  let highlights = Native.vimSearchGetHighlights(startLine, stopLine);
   Array.map(
-    v => {
-      let (startLine, startColumn, endLine, endColumn) = v;
-      Range.create(~startLine, ~startColumn, ~endLine, ~endColumn, ());
-    },
+    ((startLine, startColumn, stopLine, stopColumn)) =>
+      Range.create(
+        ~start=
+          Location.create(
+            ~line=Index.fromOneBased(startLine),
+            ~column=Index.fromZeroBased(startColumn),
+          ),
+        ~stop=
+          Location.create(
+            ~line=Index.fromOneBased(stopLine),
+            ~column=Index.fromZeroBased(stopColumn),
+          ),
+      ),
     highlights,
   );
 };
@@ -14,11 +25,15 @@ let getHighlights = () => {
 };
 
 let getMatchingPair = () => {
-  let result: option((int, int)) = Native.vimSearchGetMatchingPair();
-
-  switch (result) {
+  switch (Native.vimSearchGetMatchingPair()) {
+  | Some((line, column)) =>
+    Some(
+      Location.create(
+        ~line=Index.fromOneBased(line),
+        ~column=Index.fromZeroBased(column),
+      ),
+    )
   | None => None
-  | Some((line, column)) => Some(Position.create(~line, ~column))
   };
 };
 

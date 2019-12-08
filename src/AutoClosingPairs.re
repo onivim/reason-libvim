@@ -1,3 +1,5 @@
+open EditorCoreTypes;
+
 module AutoClosingPair = {
   type t = {
     opening: string,
@@ -52,13 +54,14 @@ let getByOpeningPair = c => {
   };
 };
 
-let isBetweenPairs = (line, position) => {
+let isBetweenPairs = (line, index) => {
+  let index = Index.toZeroBased(index);
   let len = String.length(line);
-  if (position > 0 && position < len) {
+  if (index > 0 && index < len) {
     List.exists(
       (p: AutoClosingPair.t) =>
-        p.opening == String.sub(line, position - 1, 1)
-        && p.closing == String.sub(line, position, 1),
+        p.opening == String.sub(line, index - 1, 1)
+        && p.closing == String.sub(line, index, 1),
       closingPairs^.pairs,
     );
   } else {
@@ -66,10 +69,11 @@ let isBetweenPairs = (line, position) => {
   };
 };
 
-let doesNextCharacterMatch = (line, position, s) => {
+let doesNextCharacterMatch = (line, index, s) => {
+  let index = Index.toZeroBased(index);
   let len = String.length(line);
-  if (position > 0 && position < len) {
-    s == String.sub(line, position, 1);
+  if (index > 0 && index < len) {
+    s == String.sub(line, index, 1);
   } else {
     false;
   };

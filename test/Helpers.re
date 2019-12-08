@@ -9,7 +9,7 @@ let resetBuffer = filePath => {
   command("e!");
   let ret = Buffer.openFile(filePath);
 
-  /* Move cursor to initial position */
+  /* Move cursor to initial location */
   let _ = input("g");
   let _ = input("g");
   let _ = input("0");

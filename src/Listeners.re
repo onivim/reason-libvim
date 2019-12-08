@@ -1,3 +1,4 @@
+open EditorCoreTypes;
 open Types;
 
 type autocmdListener = (autocmd, Native.buffer) => unit;
@@ -6,8 +7,8 @@ type bufferModifiedChangedListener = (int, bool) => unit;
 type bufferMetadataChangedListener = BufferMetadata.t => unit;
 type bufferUpdateListener = BufferUpdate.t => unit;
 type commandLineUpdateListener = Types.cmdline => unit;
-type cursorMovedListener = Position.t => unit;
-type gotoListener = (Position.t, Types.gotoType) => unit;
+type cursorMovedListener = Location.t => unit;
+type gotoListener = (Location.t, Types.gotoType) => unit;
 type directoryChangedListener = string => unit;
 type leftColumnChangedListener = int => unit;
 type messageListener = (Types.msgPriority, string, string) => unit;

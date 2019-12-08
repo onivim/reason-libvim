@@ -1,5 +1,6 @@
-open TestFramework;
+open EditorCoreTypes;
 open Vim;
+open TestFramework;
 
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 let input = s => ignore(Vim.input(s));
@@ -12,13 +13,13 @@ describe("Edit", ({describe, _}) =>
       expect.bool(Buffer.isModified(buffer)).toBe(false);
 
       input("I");
-      let line = Buffer.getLine(buffer, 1);
+      let line = Buffer.getLine(buffer, Index.zero);
       expect.string(line).toEqual("This is the first line of a test file");
 
       expect.bool(Buffer.isModified(buffer)).toBe(false);
 
       input("z");
-      let line = Buffer.getLine(buffer, 1);
+      let line = Buffer.getLine(buffer, Index.zero);
       expect.string(line).toEqual("zThis is the first line of a test file");
 
       expect.bool(Buffer.isModified(buffer)).toBe(true);
@@ -27,25 +28,25 @@ describe("Edit", ({describe, _}) =>
       let buffer = resetBuffer();
 
       input("I");
-      let line = Buffer.getLine(buffer, 1);
+      let line = Buffer.getLine(buffer, Index.zero);
       expect.string(line).toEqual("This is the first line of a test file");
 
       input("a");
-      let line = Buffer.getLine(buffer, 1);
+      let line = Buffer.getLine(buffer, Index.zero);
       expect.string(line).toEqual("aThis is the first line of a test file");
 
       input("b");
-      let line = Buffer.getLine(buffer, 1);
+      let line = Buffer.getLine(buffer, Index.zero);
       expect.string(line).toEqual("abThis is the first line of a test file");
 
       input("c");
-      let line = Buffer.getLine(buffer, 1);
+      let line = Buffer.getLine(buffer, Index.zero);
       expect.string(line).toEqual(
         "abcThis is the first line of a test file",
       );
 
       input("<cr>");
-      let line = Buffer.getLine(buffer, 1);
+      let line = Buffer.getLine(buffer, Index.zero);
       expect.string(line).toEqual("abc");
     });
     test("changed tick should be updated after each input", ({expect}) => {

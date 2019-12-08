@@ -1,34 +1,45 @@
-type t = {
-  line: int,
-  column: int,
-};
+open EditorCoreTypes;
 
-let create = (~line, ~column, ()) => {line, column};
+type t =
+  Location.t = {
+    line: Index.t,
+    column: Index.t,
+  };
 
-let show = v => Printf.sprintf("Line %d column %d\n", v.line, v.column);
+let create = Location.create;
 
-let getLine = Native.vimCursorGetLine;
-let getColumn = Native.vimCursorGetColumn;
-
-let getPosition = () => {
-  Position.create(
-    ~line=Native.vimCursorGetLine(),
-    ~column=Native.vimCursorGetColumn(),
+let show = cursor =>
+  Printf.sprintf(
+    "Line %d column %d\n",
+    Index.toOneBased(cursor.line),
+    Index.toZeroBased(cursor.column),
   );
-};
 
-let setPosition = (line, column) => {
+let getLine = () => Index.fromOneBased(Native.vimCursorGetLine());
+let getColumn = () => Index.fromZeroBased(Native.vimCursorGetColumn());
+let get = () => create(~line=getLine(), ~column=getColumn());
+
+let getLocation = () =>
+  Location.create(
+    ~line=Index.fromOneBased(Native.vimCursorGetLine()),
+    ~column=Index.fromZeroBased(Native.vimCursorGetColumn()),
+  );
+
+let setLocation = (~line, ~column) => {
   let previousTopLine = Native.vimWindowGetTopLine();
   let previousLeft = Native.vimWindowGetLeftColumn();
 
-  let lastPosition = getPosition();
-  Native.vimCursorSetPosition(line, column);
-  let newPosition = getPosition();
+  let lastLocation = getLocation();
+  Native.vimCursorSetPosition(
+    Index.toOneBased(line),
+    Index.toZeroBased(column),
+  );
+  let newLocation = getLocation();
   let newTopLine = Native.vimWindowGetTopLine();
   let newLeft = Native.vimWindowGetLeftColumn();
 
-  if (!Position.equals(lastPosition, newPosition)) {
-    Event.dispatch(newPosition, Listeners.cursorMoved);
+  if (!Location.(lastLocation == newLocation)) {
+    Event.dispatch(newLocation, Listeners.cursorMoved);
   };
 
   if (previousTopLine !== newTopLine) {
@@ -40,10 +51,6 @@ let setPosition = (line, column) => {
   };
 };
 
-let onMoved = f => {
-  Event.add(f, Listeners.cursorMoved);
-};
+let onMoved = f => Event.add(f, Listeners.cursorMoved);
 
-let set = (v: t) => {
-  setPosition(v.line, v.column);
-};
+let set = ({line, column}) => setLocation(~line, ~column);

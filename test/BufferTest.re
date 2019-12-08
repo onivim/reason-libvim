@@ -1,5 +1,6 @@
-open TestFramework;
+open EditorCoreTypes;
 open Vim;
+open TestFramework;
 
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 let input = s => ignore(Vim.input(s));
@@ -9,7 +10,7 @@ describe("Buffer", ({describe, _}) => {
     test("single file", ({expect}) => {
       let _ = resetBuffer();
       let buffer = Buffer.openFile("test/testfile.txt");
-      let line = Buffer.getLine(buffer, 1);
+      let line = Buffer.getLine(buffer, Index.fromZeroBased(1));
       expect.string(line).toEqual("This is the first line of a test file");
     })
   );

@@ -1,5 +1,5 @@
 {
-  "checksum": "731da7b922157116acbe4b25b58f04fe",
+  "checksum": "dda4e1bd9641198cd8699e6098b907ec",
   "root": "reason-libvim@link-dev:./package.json",
   "node": {
     "refmterr@3.2.2@d41d8cd9": {
@@ -34,8 +34,9 @@
       "overrides": [],
       "dependencies": [
         "refmterr@3.2.2@d41d8cd9", "ocaml@4.7.1004@d41d8cd9",
-        "libvim@8.10869.26@d41d8cd9", "@opam/dune@opam:1.11.4@a7ccb7ae",
-        "@esy-ocaml/reason@3.5.2@d41d8cd9"
+        "libvim@8.10869.26@d41d8cd9",
+        "editor-core-types@github:onivim/editor-core-types#3ee552a@d41d8cd9",
+        "@opam/dune@opam:1.11.4@a7ccb7ae", "@esy-ocaml/reason@3.5.2@d41d8cd9"
       ],
       "devDependencies": [ "ocaml@4.7.1004@d41d8cd9" ]
     },
@@ -66,6 +67,22 @@
       "overrides": [],
       "dependencies": [],
       "devDependencies": []
+    },
+    "editor-core-types@github:onivim/editor-core-types#3ee552a@d41d8cd9": {
+      "id":
+        "editor-core-types@github:onivim/editor-core-types#3ee552a@d41d8cd9",
+      "name": "editor-core-types",
+      "version": "github:onivim/editor-core-types#3ee552a",
+      "source": {
+        "type": "install",
+        "source": [ "github:onivim/editor-core-types#3ee552a" ]
+      },
+      "overrides": [],
+      "dependencies": [
+        "refmterr@3.2.2@d41d8cd9", "ocaml@4.7.1004@d41d8cd9",
+        "@opam/dune@opam:1.11.4@a7ccb7ae", "@esy-ocaml/reason@3.5.2@d41d8cd9"
+      ],
+      "devDependencies": [ "ocaml@4.7.1004@d41d8cd9" ]
     },
     "@reason-native/pastel@0.2.2@d41d8cd9": {
       "id": "@reason-native/pastel@0.2.2@d41d8cd9",

@@ -1,3 +1,5 @@
+open EditorCoreTypes;
+
 module AutoClosingPairs = AutoClosingPairs;
 module AutoCommands = AutoCommands;
 module Buffer = Buffer;
@@ -8,8 +10,6 @@ module CommandLine = CommandLine;
 module Cursor = Cursor;
 module Mode = Mode;
 module Options = Options;
-module Position = Position;
-module Range = Range;
 module Search = Search;
 module Types = Types;
 module Undo = Undo;
@@ -33,7 +33,7 @@ let flushQueue = () => {
 let checkAndUpdateState = f => {
   let oldBuf = Buffer.getCurrent();
   let prevMode = Mode.getCurrent();
-  let prevPosition = Cursor.getPosition();
+  let prevLocation = Cursor.getLocation();
   let prevRange = Visual.getRange();
   let prevTopLine = Window.getTopLine();
   let prevLeftColumn = Window.getLeftColumn();
@@ -43,7 +43,7 @@ let checkAndUpdateState = f => {
   let ret = f();
 
   let newBuf = Buffer.getCurrent();
-  let newPosition = Cursor.getPosition();
+  let newLocation = Cursor.getLocation();
   let newMode = Mode.getCurrent();
   let newRange = Visual.getRange();
   let newLeftColumn = Window.getLeftColumn();
@@ -71,8 +71,8 @@ let checkAndUpdateState = f => {
     );
   };
 
-  if (!Position.equals(prevPosition, newPosition)) {
-    Event.dispatch(newPosition, Listeners.cursorMoved);
+  if (!Location.(prevLocation == newLocation)) {
+    Event.dispatch(newLocation, Listeners.cursorMoved);
   };
 
   if (prevTopLine != newTopLine) {
@@ -184,8 +184,12 @@ let _clipboardGet = (regname: int) => {
 };
 
 let _onGoto = (line: int, column: int, gotoType: Types.gotoType) => {
-  let position = Position.create(~line, ~column);
-  queue(() => Event.dispatch2(position, gotoType, Listeners.goto));
+  let location =
+    Location.create(
+      ~line=Index.fromOneBased(line),
+      ~column=Index.fromZeroBased(column),
+    );
+  queue(() => Event.dispatch2(location, gotoType, Listeners.goto));
 };
 
 let init = () => {
@@ -208,13 +212,9 @@ let init = () => {
   BufferInternal.checkCurrentBufferForUpdate();
 };
 
-let _createCursorFromCurrent = () => {
-  Cursor.create(~line=Cursor.getLine(), ~column=Cursor.getColumn(), ());
-};
-
 let _getDefaultCursors = (cursors: list(Cursor.t)) =>
   if (cursors == []) {
-    [_createCursorFromCurrent()];
+    [Cursor.get()];
   } else {
     cursors;
   };
@@ -227,15 +227,15 @@ let input = (~cursors=[], v: string) => {
       Cursor.set(cursor);
       if (AutoClosingPairs.getEnabled() && Mode.getCurrent() == Types.Insert) {
         let isBetweenPairs = () => {
-          let position = Cursor.getPosition();
-          let line = Buffer.getLine(Buffer.getCurrent(), position.line);
-          AutoClosingPairs.isBetweenPairs(line, position.column);
+          let location = Cursor.getLocation();
+          let line = Buffer.getLine(Buffer.getCurrent(), location.line);
+          AutoClosingPairs.isBetweenPairs(line, location.column);
         };
 
         let doesNextCharacterMatch = s => {
-          let position = Cursor.getPosition();
-          let line = Buffer.getLine(Buffer.getCurrent(), position.line);
-          AutoClosingPairs.doesNextCharacterMatch(line, position.column, s);
+          let location = Cursor.getLocation();
+          let line = Buffer.getLine(Buffer.getCurrent(), location.line);
+          AutoClosingPairs.doesNextCharacterMatch(line, location.column, s);
         };
         if (v == "<BS>" && isBetweenPairs()) {
           Native.vimInput("<DEL>");
@@ -259,7 +259,7 @@ let input = (~cursors=[], v: string) => {
       } else {
         Native.vimInput(v);
       };
-      _createCursorFromCurrent();
+      Cursor.get();
     };
 
     let mode = Mode.getCurrent();

@@ -1,3 +1,5 @@
+open EditorCoreTypes;
+
 type t = Native.buffer;
 
 let openFile = (filePath: string) => {
@@ -27,8 +29,8 @@ let getLineCount = (buffer: t) => {
   Native.vimBufferGetLineCount(buffer);
 };
 
-let getLine = (buffer: t, line: int) => {
-  Native.vimBufferGetLine(buffer, line);
+let getLine = (buffer: t, line: Index.t) => {
+  Native.vimBufferGetLine(buffer, Index.toOneBased(line));
 };
 
 let getId = (buffer: t) => {

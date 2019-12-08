@@ -1,5 +1,6 @@
-open TestFramework;
+open EditorCoreTypes;
 open Vim;
+open TestFramework;
 
 let reset = () => Helpers.resetBuffer("test/testfile.txt");
 let input = s => ignore(Vim.input(s));
@@ -150,7 +151,7 @@ describe("CommandLine", ({describe, _}) => {
 
       expect.bool(Mode.getCurrent() == Normal).toBe(true);
 
-      let line = Buffer.getLine(buffer, 3);
+      let line = Buffer.getLine(buffer, Index.fromZeroBased(3));
       expect.string(line).toEqual("Dhis is the third line of a test file");
     });
 
@@ -160,7 +161,7 @@ describe("CommandLine", ({describe, _}) => {
       input("3");
       input("<cr>");
 
-      expect.int(Cursor.getLine()).toBe(3);
+      expect.int((Cursor.getLine() :> int)).toBe(3);
     });
   });
 
