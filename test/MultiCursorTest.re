@@ -13,9 +13,9 @@ describe("Multi-cursor", ({describe, _}) => {
 
         cursors1
         |> List.hd
-        |> (cursor => expect.int((cursor.line :> int)).toBe(2));
+        |> (cursor => expect.int((cursor.line :> int)).toBe(1));
 
-        expect.int((Cursor.getLine() :> int)).toBe(2);
+        expect.int((Cursor.getLine() :> int)).toBe(1);
 
         // set cursor, and move up
         let cursors2 =
@@ -28,9 +28,9 @@ describe("Multi-cursor", ({describe, _}) => {
 
         cursors2
         |> List.hd
-        |> (cursor => expect.int((cursor.line :> int)).toBe(2));
+        |> (cursor => expect.int((cursor.line :> int)).toBe(1));
 
-        expect.int((Cursor.getLine() :> int)).toBe(2);
+        expect.int((Cursor.getLine() :> int)).toBe(1);
       })
     })
   });

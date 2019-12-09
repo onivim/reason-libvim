@@ -72,26 +72,26 @@ describe("Cursor", ({describe, _}) => {
       let cursorMoves: ref(list(Location.t)) = ref([]);
       let dispose = Cursor.onMoved(p => cursorMoves := [p, ...cursorMoves^]);
 
-      expect.int((Cursor.getLine() :> int)).toBe(1);
+      expect.int((Cursor.getLine() :> int)).toBe(0);
       expect.int((Cursor.getColumn() :> int)).toBe(0);
       expect.int(List.length(cursorMoves^)).toBe(0);
 
       input("j");
 
-      expect.int((Cursor.getLine() :> int)).toBe(2);
+      expect.int((Cursor.getLine() :> int)).toBe(1);
       expect.int((Cursor.getColumn() :> int)).toBe(0);
       expect.int(List.length(cursorMoves^)).toBe(1);
 
       input("j");
 
-      expect.int((Cursor.getLine() :> int)).toBe(3);
+      expect.int((Cursor.getLine() :> int)).toBe(2);
       expect.int((Cursor.getColumn() :> int)).toBe(0);
       expect.int(List.length(cursorMoves^)).toBe(2);
 
       input("2");
       input("k");
 
-      expect.int((Cursor.getLine() :> int)).toBe(1);
+      expect.int((Cursor.getLine() :> int)).toBe(0);
       expect.int((Cursor.getColumn() :> int)).toBe(0);
       expect.int(List.length(cursorMoves^)).toBe(3);
 
@@ -104,20 +104,20 @@ describe("Cursor", ({describe, _}) => {
       let cursorMoves: ref(list(Location.t)) = ref([]);
       let dispose = Cursor.onMoved(p => cursorMoves := [p, ...cursorMoves^]);
 
-      expect.int((Cursor.getLine() :> int)).toBe(1);
+      expect.int((Cursor.getLine() :> int)).toBe(0);
       expect.int((Cursor.getColumn() :> int)).toBe(0);
       expect.int(List.length(cursorMoves^)).toBe(0);
 
       input("G");
 
-      expect.int((Cursor.getLine() :> int)).toBe(100);
+      expect.int((Cursor.getLine() :> int)).toBe(99);
       expect.int((Cursor.getColumn() :> int)).toBe(0);
       expect.int(List.length(cursorMoves^)).toBe(1);
 
       input("g");
       input("g");
 
-      expect.int((Cursor.getLine() :> int)).toBe(1);
+      expect.int((Cursor.getLine() :> int)).toBe(0);
       expect.int((Cursor.getColumn() :> int)).toBe(0);
       expect.int(List.length(cursorMoves^)).toBe(2);
 

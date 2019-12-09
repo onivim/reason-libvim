@@ -46,10 +46,10 @@ describe("Clipboard", ({describe, _}) => {
       input("y");
       input("P");
 
-      let line1 = Buffer.getLine(buf, Index.fromZeroBased(1));
-      let line2 = Buffer.getLine(buf, Index.fromZeroBased(2));
-      let line3 = Buffer.getLine(buf, Index.fromZeroBased(3));
-      let line4 = Buffer.getLine(buf, Index.fromZeroBased(4));
+      let line1 = Buffer.getLine(buf, Index.zero);
+      let line2 = Buffer.getLine(buf, Index.(zero + 1));
+      let line3 = Buffer.getLine(buf, Index.(zero + 2));
+      let line4 = Buffer.getLine(buf, Index.(zero + 3));
 
       expect.string(line1).toEqual("a");
       expect.string(line2).toEqual("b");

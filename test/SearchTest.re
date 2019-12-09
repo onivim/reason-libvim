@@ -23,9 +23,9 @@ describe("Search", ({describe, _}) => {
       expect.int(Array.length(highlights)).toBe(3);
 
       let secondHighlight = highlights[1];
-      expect.int((secondHighlight.start.line :> int)).toBe(2);
+      expect.int((secondHighlight.start.line :> int)).toBe(1);
       expect.int((secondHighlight.start.column :> int)).toBe(30);
-      expect.int((secondHighlight.stop.line :> int)).toBe(2);
+      expect.int((secondHighlight.stop.line :> int)).toBe(1);
       expect.int((secondHighlight.stop.column :> int)).toBe(32);
     });
 
@@ -70,7 +70,7 @@ describe("Search", ({describe, _}) => {
       switch (bracket) {
       | None => expect.int(0).toBe(1)
       | Some({line, column}) =>
-        expect.int((line :> int)).toBe(6);
+        expect.int((line :> int)).toBe(5);
         expect.int((column :> int)).toBe(0);
       };
     });
@@ -84,7 +84,7 @@ describe("Search", ({describe, _}) => {
       switch (bracket) {
       | None => expect.int(0).toBe(1)
       | Some({line, column}) =>
-        expect.int((line :> int)).toBe(4);
+        expect.int((line :> int)).toBe(3);
         expect.int((column :> int)).toBe(0);
       };
     });
