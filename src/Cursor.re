@@ -16,6 +16,7 @@ let show = cursor =>
   );
 
 let getLine = () => Index.fromOneBased(Native.vimCursorGetLine());
+
 let getColumn = () => Index.fromZeroBased(Native.vimCursorGetColumn());
 let get = () => create(~line=getLine(), ~column=getColumn());
 
