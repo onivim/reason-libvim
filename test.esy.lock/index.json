@@ -1,5 +1,5 @@
 {
-  "checksum": "3e1545facc49bcd7c098eb4eca41243b",
+  "checksum": "323d24395896c344c747d78352e07f89",
   "root": "reason-libvim@link-dev:./package.json",
   "node": {
     "refmterr@3.2.2@d41d8cd9": {
@@ -34,8 +34,10 @@
       "overrides": [ "test.json" ],
       "dependencies": [
         "refmterr@3.2.2@d41d8cd9", "ocaml@4.7.1004@d41d8cd9",
-        "libvim@8.10869.26@d41d8cd9", "@reason-native/rely@2.2.0@d41d8cd9",
-        "@opam/odoc@opam:1.4.2@6f058006", "@opam/dune@opam:1.11.4@a7ccb7ae",
+        "libvim@8.10869.26@d41d8cd9",
+        "editor-core-types@github:onivim/editor-core-types#3ee552a@d41d8cd9",
+        "@reason-native/rely@2.2.0@d41d8cd9",
+        "@opam/odoc@opam:1.4.2@1e72a4de", "@opam/dune@opam:1.11.4@a7ccb7ae",
         "@esy-ocaml/reason@3.5.2@d41d8cd9"
       ],
       "devDependencies": [ "ocaml@4.7.1004@d41d8cd9" ]
@@ -67,6 +69,22 @@
       "overrides": [],
       "dependencies": [],
       "devDependencies": []
+    },
+    "editor-core-types@github:onivim/editor-core-types#3ee552a@d41d8cd9": {
+      "id":
+        "editor-core-types@github:onivim/editor-core-types#3ee552a@d41d8cd9",
+      "name": "editor-core-types",
+      "version": "github:onivim/editor-core-types#3ee552a",
+      "source": {
+        "type": "install",
+        "source": [ "github:onivim/editor-core-types#3ee552a" ]
+      },
+      "overrides": [],
+      "dependencies": [
+        "refmterr@3.2.2@d41d8cd9", "ocaml@4.7.1004@d41d8cd9",
+        "@opam/dune@opam:1.11.4@a7ccb7ae", "@esy-ocaml/reason@3.5.2@d41d8cd9"
+      ],
+      "devDependencies": [ "ocaml@4.7.1004@d41d8cd9" ]
     },
     "@reason-native/rely@2.2.0@d41d8cd9": {
       "id": "@reason-native/rely@2.2.0@d41d8cd9",
@@ -397,8 +415,8 @@
         "ocaml@4.7.1004@d41d8cd9", "@opam/dune@opam:1.11.4@a7ccb7ae"
       ]
     },
-    "@opam/odoc@opam:1.4.2@6f058006": {
-      "id": "@opam/odoc@opam:1.4.2@6f058006",
+    "@opam/odoc@opam:1.4.2@1e72a4de": {
+      "id": "@opam/odoc@opam:1.4.2@1e72a4de",
       "name": "@opam/odoc",
       "version": "opam:1.4.2",
       "source": {

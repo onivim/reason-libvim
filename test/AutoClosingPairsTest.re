@@ -1,5 +1,6 @@
-open TestFramework;
+open EditorCoreTypes;
 open Vim;
+open TestFramework;
 
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 let input = s => ignore(Vim.input(s));
@@ -29,7 +30,7 @@ describe("AutoClosingPairs", ({test, _}) => {
     input("\"");
     input("{");
 
-    let line = Buffer.getLine(b, 1);
+    let line = Buffer.getLine(b, Index.zero);
     expect.string(line).toEqual("[(\"{");
   });
 
@@ -49,7 +50,7 @@ describe("AutoClosingPairs", ({test, _}) => {
     input("\"");
     input("{");
 
-    let line = Buffer.getLine(b, 1);
+    let line = Buffer.getLine(b, Index.zero);
     expect.string(line).toEqual("[(\"{]");
   });
 
@@ -66,9 +67,9 @@ describe("AutoClosingPairs", ({test, _}) => {
     input("O");
     input("[");
 
-    let line = Buffer.getLine(b, 1);
-    let position = Cursor.getPosition();
-    expect.bool(AutoClosingPairs.isBetweenPairs(line, position.column)).toBe(
+    let line = Buffer.getLine(b, Index.zero);
+    let location = Cursor.getLocation();
+    expect.bool(AutoClosingPairs.isBetweenPairs(line, location.column)).toBe(
       true,
     );
   });
@@ -87,7 +88,7 @@ describe("AutoClosingPairs", ({test, _}) => {
     input("[");
     input("<BS>");
 
-    let line = Buffer.getLine(b, 1);
+    let line = Buffer.getLine(b, Index.zero);
     expect.string(line).toEqual("");
   });
 
@@ -105,10 +106,10 @@ describe("AutoClosingPairs", ({test, _}) => {
     input("[");
     input("]");
 
-    let line = Buffer.getLine(b, 1);
-    let position = Cursor.getPosition();
+    let line = Buffer.getLine(b, Index.zero);
+    let location = Cursor.getLocation();
     expect.string(line).toEqual("[]");
-    expect.int(position.column).toBe(2);
+    expect.int((location.column :> int)).toBe(2);
   });
 
   test("pass-through not between pairs", ({expect}) => {
@@ -126,10 +127,10 @@ describe("AutoClosingPairs", ({test, _}) => {
     input("x");
     input(")");
 
-    let line = Buffer.getLine(b, 1);
-    let position = Cursor.getPosition();
+    let line = Buffer.getLine(b, Index.zero);
+    let location = Cursor.getLocation();
     expect.string(line).toEqual("(x)");
-    expect.int(position.column).toBe(3);
+    expect.int((location.column :> int)).toBe(3);
   });
 
   test(
@@ -149,10 +150,10 @@ describe("AutoClosingPairs", ({test, _}) => {
     input("x");
     input(quote);
 
-    let line = Buffer.getLine(b, 1);
-    let position = Cursor.getPosition();
+    let line = Buffer.getLine(b, Index.zero);
+    let location = Cursor.getLocation();
     expect.string(line).toEqual({|"x"|});
-    expect.int(position.column).toBe(3);
+    expect.int((location.column :> int)).toBe(3);
   });
 
   test("can insert closing pair", ({expect}) => {
@@ -168,7 +169,7 @@ describe("AutoClosingPairs", ({test, _}) => {
     input("O");
     input("]");
 
-    let line = Buffer.getLine(b, 1);
+    let line = Buffer.getLine(b, Index.zero);
     expect.string(line).toEqual("]");
   });
 
@@ -191,7 +192,7 @@ describe("AutoClosingPairs", ({test, _}) => {
     input("\"");
     input("{");
 
-    let line = Buffer.getLine(b, 1);
+    let line = Buffer.getLine(b, Index.zero);
     expect.string(line).toEqual("[(\"{}\")]");
   });
 });

@@ -1,3 +1,5 @@
+open EditorCoreTypes;
+
 type t = Native.buffer;
 
 /**
@@ -35,7 +37,7 @@ let getLineCount: t => int;
 /**
 [getline(buffer, line)] returns the text content at the one-based line number [line] for buffer [buffer].
 */
-let getLine: (t, int) => string;
+let getLine: (t, Index.t) => string;
 
 /**
 [getId(buffer)] returns the id of buffer [buffer];

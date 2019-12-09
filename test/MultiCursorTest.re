@@ -1,5 +1,6 @@
-open TestFramework;
+open EditorCoreTypes;
 open Vim;
+open TestFramework;
 
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 
@@ -10,17 +11,26 @@ describe("Multi-cursor", ({describe, _}) => {
         let _ = resetBuffer();
         let cursors1 = Vim.input("j");
 
-        cursors1 |> List.hd |> (cursor => expect.int(cursor.line).toBe(2));
+        cursors1
+        |> List.hd
+        |> (cursor => expect.int((cursor.line :> int)).toBe(1));
 
-        expect.int(Cursor.getLine()).toBe(2);
+        expect.int((Cursor.getLine() :> int)).toBe(1);
 
         // set cursor, and move up
         let cursors2 =
-          Vim.input(~cursors=[Cursor.create(~line=3, ~column=0, ())], "k");
+          Vim.input(
+            ~cursors=[
+              Cursor.create(~line=Index.fromOneBased(3), ~column=Index.zero),
+            ],
+            "k",
+          );
 
-        cursors2 |> List.hd |> (cursor => expect.int(cursor.line).toBe(2));
+        cursors2
+        |> List.hd
+        |> (cursor => expect.int((cursor.line :> int)).toBe(1));
 
-        expect.int(Cursor.getLine()).toBe(2);
+        expect.int((Cursor.getLine() :> int)).toBe(1);
       })
     })
   });
@@ -45,16 +55,16 @@ describe("Multi-cursor", ({describe, _}) => {
       let cursors =
         Vim.input(
           ~cursors=[
-            Cursor.create(~line=1, ~column=0, ()),
-            Cursor.create(~line=2, ~column=0, ()),
-            Cursor.create(~line=3, ~column=0, ()),
+            Cursor.create(~line=Index.zero, ~column=Index.zero),
+            Cursor.create(~line=Index.(zero + 1), ~column=Index.zero),
+            Cursor.create(~line=Index.(zero + 2), ~column=Index.zero),
           ],
           "{",
         );
 
-      let line1 = Buffer.getLine(buf, 1);
-      let line2 = Buffer.getLine(buf, 2);
-      let line3 = Buffer.getLine(buf, 3);
+      let line1 = Buffer.getLine(buf, Index.zero);
+      let line2 = Buffer.getLine(buf, Index.(zero + 1));
+      let line3 = Buffer.getLine(buf, Index.(zero + 2));
 
       expect.string(line1).toEqual(
         "{}This is the first line of a test file",
@@ -68,9 +78,9 @@ describe("Multi-cursor", ({describe, _}) => {
 
       let _ = Vim.input(~cursors, "a");
 
-      let line1 = Buffer.getLine(buf, 1);
-      let line2 = Buffer.getLine(buf, 2);
-      let line3 = Buffer.getLine(buf, 3);
+      let line1 = Buffer.getLine(buf, Index.zero);
+      let line2 = Buffer.getLine(buf, Index.(zero + 1));
+      let line3 = Buffer.getLine(buf, Index.(zero + 2));
 
       expect.string(line1).toEqual(
         "{a}This is the first line of a test file",
@@ -96,16 +106,16 @@ describe("Multi-cursor", ({describe, _}) => {
       let cursors =
         Vim.input(
           ~cursors=[
-            Cursor.create(~line=1, ~column=0, ()),
-            Cursor.create(~line=2, ~column=0, ()),
-            Cursor.create(~line=3, ~column=0, ()),
+            Cursor.create(~line=Index.zero, ~column=Index.zero),
+            Cursor.create(~line=Index.(zero + 1), ~column=Index.zero),
+            Cursor.create(~line=Index.(zero + 2), ~column=Index.zero),
           ],
           "a",
         );
 
-      let line1 = Buffer.getLine(buf, 1);
-      let line2 = Buffer.getLine(buf, 2);
-      let line3 = Buffer.getLine(buf, 3);
+      let line1 = Buffer.getLine(buf, Index.zero);
+      let line2 = Buffer.getLine(buf, Index.(zero + 1));
+      let line3 = Buffer.getLine(buf, Index.(zero + 2));
 
       expect.string(line1).toEqual("aThis is the first line of a test file");
       expect.string(line2).toEqual(
@@ -115,9 +125,9 @@ describe("Multi-cursor", ({describe, _}) => {
 
       let cursors = Vim.input(~cursors, "b");
 
-      let line1 = Buffer.getLine(buf, 1);
-      let line2 = Buffer.getLine(buf, 2);
-      let line3 = Buffer.getLine(buf, 3);
+      let line1 = Buffer.getLine(buf, Index.zero);
+      let line2 = Buffer.getLine(buf, Index.(zero + 1));
+      let line3 = Buffer.getLine(buf, Index.(zero + 2));
 
       expect.string(line1).toEqual(
         "abThis is the first line of a test file",
@@ -131,9 +141,9 @@ describe("Multi-cursor", ({describe, _}) => {
 
       let _ = Vim.input(~cursors, "<bs>");
 
-      let line1 = Buffer.getLine(buf, 1);
-      let line2 = Buffer.getLine(buf, 2);
-      let line3 = Buffer.getLine(buf, 3);
+      let line1 = Buffer.getLine(buf, Index.zero);
+      let line2 = Buffer.getLine(buf, Index.(zero + 1));
+      let line3 = Buffer.getLine(buf, Index.(zero + 2));
 
       expect.string(line1).toEqual("aThis is the first line of a test file");
       expect.string(line2).toEqual(

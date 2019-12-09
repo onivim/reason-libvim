@@ -1,5 +1,6 @@
-open TestFramework;
+open EditorCoreTypes;
 open Vim;
+open TestFramework;
 
 let resetBuffer = () => Helpers.resetBuffer("test/lines_100.txt");
 let input = s => ignore(Vim.input(s));
@@ -23,7 +24,10 @@ describe("Window", ({describe, _}) => {
 
       Window.setWidth(3);
       Window.setHeight(3);
-      Cursor.setPosition(2, 4);
+      Cursor.setLocation(
+        ~line=Index.fromOneBased(2),
+        ~column=Index.fromZeroBased(4),
+      );
       Window.setTopLeft(2, 3);
 
       expect.int(Window.getTopLine()).toBe(2);

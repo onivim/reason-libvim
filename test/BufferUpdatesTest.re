@@ -1,5 +1,6 @@
-open TestFramework;
+open EditorCoreTypes;
 open Vim;
+open TestFramework;
 
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 let input = s => ignore(Vim.input(s));
@@ -36,16 +37,13 @@ describe("Buffer.onUpdate", ({describe, _}) => {
     test("add line", ({expect}) => {
       let buf = resetBuffer();
 
-      let lc = Buffer.getLineCount(buf);
-      let i = ref(1);
-      while (i^ <= lc) {
-        prerr_endline(
-          "Buffer line: "
-          ++ string_of_int(i^)
-          ++ ": "
-          ++ Buffer.getLine(buf, i^),
+      for (i in 1 to Buffer.getLineCount(buf)) {
+        Printf.fprintf(
+          stderr,
+          "Buffer line: %n: %s",
+          i,
+          Buffer.getLine(buf, Index.fromZeroBased(i)),
         );
-        incr(i);
       };
 
       let updates: ref(list(BufferUpdate.t)) = ref([]);

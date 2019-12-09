@@ -1,5 +1,6 @@
-open TestFramework;
+open EditorCoreTypes;
 open Vim;
+open TestFramework;
 open Range;
 
 let resetBrackets = () => Helpers.resetBuffer("test/brackets.txt");
@@ -22,10 +23,10 @@ describe("Search", ({describe, _}) => {
       expect.int(Array.length(highlights)).toBe(3);
 
       let secondHighlight = highlights[1];
-      expect.int(secondHighlight.startPos.line).toBe(2);
-      expect.int(secondHighlight.startPos.column).toBe(30);
-      expect.int(secondHighlight.endPos.line).toBe(2);
-      expect.int(secondHighlight.endPos.column).toBe(32);
+      expect.int((secondHighlight.start.line :> int)).toBe(1);
+      expect.int((secondHighlight.start.column :> int)).toBe(30);
+      expect.int((secondHighlight.stop.line :> int)).toBe(1);
+      expect.int((secondHighlight.stop.column :> int)).toBe(32);
     });
 
     test("gets highlights", ({expect}) => {
@@ -68,9 +69,9 @@ describe("Search", ({describe, _}) => {
       let bracket = Search.getMatchingPair();
       switch (bracket) {
       | None => expect.int(0).toBe(1)
-      | Some(v) =>
-        expect.int(v.line).toBe(6);
-        expect.int(v.column).toBe(0);
+      | Some({line, column}) =>
+        expect.int((line :> int)).toBe(5);
+        expect.int((column :> int)).toBe(0);
       };
     });
 
@@ -82,9 +83,9 @@ describe("Search", ({describe, _}) => {
       let bracket = Search.getMatchingPair();
       switch (bracket) {
       | None => expect.int(0).toBe(1)
-      | Some(v) =>
-        expect.int(v.line).toBe(4);
-        expect.int(v.column).toBe(0);
+      | Some({line, column}) =>
+        expect.int((line :> int)).toBe(3);
+        expect.int((column :> int)).toBe(0);
       };
     });
 
