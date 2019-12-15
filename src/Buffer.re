@@ -50,6 +50,20 @@ let setCurrent = (buffer: t) => {
   BufferInternal.checkCurrentBufferForUpdate();
 };
 
+let setLines = (~start=None, ~stop=None, ~lines, buffer) => {
+  let startLine = switch(start) {
+  | Some(v) => Index.toOneBased(v)
+  | None => 0
+  }; 
+  
+  let endLine = switch(stop) {
+  | Some(v) => Index.toOneBased(v);
+  | None => getLineCount(buffer);
+  }
+
+  Native.vimBufferSetLines(buffer, startLine, endLine, lines);
+};
+
 let onEnter = (f: Listeners.bufferListener) => {
   Event.add(f, Listeners.bufferEnter);
 };
