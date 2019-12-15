@@ -6,6 +6,17 @@ let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 let input = s => ignore(Vim.input(s));
 
 describe("Buffer", ({describe, _}) => {
+  describe("setLines", ({test, _}) =>
+    test("add a line at beginning", ({expect}) => {
+      let buffer = resetBuffer();
+
+      Buffer.setLines(~start=Index.zero, ~stop=Index.zero, ~lines=[|"abc"|], buffer);
+      let line0 = Buffer.getLine(buffer, Index.zero);
+      let line1 = Buffer.getLine(buffer, Index.(zero+1));
+      expect.string(line0).toEqual("abc");
+      expect.string(line1).toEqual("This is the first line of a test file");
+    })
+  );
   describe("getLine", ({test, _}) =>
     test("single file", ({expect}) => {
       let _ = resetBuffer();

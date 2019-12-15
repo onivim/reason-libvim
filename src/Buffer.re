@@ -50,7 +50,7 @@ let setCurrent = (buffer: t) => {
   BufferInternal.checkCurrentBufferForUpdate();
 };
 
-let setLines = (~start=None, ~stop=None, ~lines, buffer) => {
+let setLines = (~start=?, ~stop=?, ~lines, buffer) => {
   let startLine = switch(start) {
   | Some(v) => Index.toOneBased(v)
   | None => 0
