@@ -6,17 +6,59 @@ let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 let input = s => ignore(Vim.input(s));
 
 describe("Buffer", ({describe, _}) => {
-  describe("setLines", ({test, _}) =>
+  describe("setLines", ({test, _}) => {
     test("add a line at beginning", ({expect}) => {
       let buffer = resetBuffer();
 
-      Buffer.setLines(~start=Index.zero, ~stop=Index.zero, ~lines=[|"abc"|], buffer);
+      Buffer.setLines(~lines=[|"abc"|], buffer);
       let line0 = Buffer.getLine(buffer, Index.zero);
       let line1 = Buffer.getLine(buffer, Index.(zero+1));
+      let lineCount = Buffer.getLineCount(buffer);
+      expect.int(lineCount).toBe(4);
       expect.string(line0).toEqual("abc");
       expect.string(line1).toEqual("This is the first line of a test file");
+    });
+    test("change line in middle", ({expect}) => {
+      let buffer = resetBuffer();
+  
+      let line1Index = Index.(zero + 1);
+      let line2Index = Index.(zero + 2);
+
+
+      let lines=[|"abc"|];
+      Buffer.setLines(~start=line1Index, ~stop=line2Index, ~lines, buffer);
+      let lineCount = Buffer.getLineCount(buffer);
+      let line0 = Buffer.getLine(buffer, Index.zero);
+      let line1 = Buffer.getLine(buffer, Index.(zero+1));
+      let line2 = Buffer.getLine(buffer, Index.(zero+2));
+      expect.int(lineCount).toBe(3);
+      expect.string(line0).toEqual("This is the first line of a test file");
+      expect.string(line1).toEqual("abc");
+      expect.string(line2).toEqual("This is the third line of a test file");
+    });
+    test("replace whole buffer", ({expect}) => {
+      let buffer = resetBuffer();
+
+      Buffer.setLines(~start=Index.zero, ~stop=Index.(zero + 4), ~lines=[|"abc"|], buffer);
+      let lineCount = Buffer.getLineCount(buffer);
+      let line0 = Buffer.getLine(buffer, Index.zero);
+      expect.int(lineCount).toBe(1);
+      expect.string(line0).toEqual("abc");
+    });
+    test("add a line at end", ({expect}) => {
+      let buffer = resetBuffer();
+
+      let endPoint = Buffer.getLineCount(buffer) |> Index.fromZeroBased;
+
+      Buffer.setLines(~start=endPoint, ~lines=[|"abc"|], buffer);
+      let line3 = Buffer.getLine(buffer, Index.(zero+2));
+      let line4 = Buffer.getLine(buffer, Index.(zero+3));
+      let lineCount = Buffer.getLineCount(buffer);
+      expect.int(lineCount).toBe(4);
+      expect.string(line3).toEqual("This is the third line of a test file");
+      expect.string(line4).toEqual("abc");
     })
-  );
+  });
   describe("getLine", ({test, _}) =>
     test("single file", ({expect}) => {
       let _ = resetBuffer();

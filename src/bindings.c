@@ -456,22 +456,21 @@ CAMLprim value libvim_vimBufferGetLine(value vBuf, value vLine) {
   CAMLreturn(ret);
 }
 
-CAMLprim value libvim_vimBufferSetLines(value vBuf, value vStart, value vEnd, value vLines) {
-  CAMLparam4(vBuf, vStart, vEnd, vLines); 
+CAMLprim value libvim_vimBufferSetLines(value vBuf, value vStart, value vEnd,
+                                        value vLines) {
+  CAMLparam4(vBuf, vStart, vEnd, vLines);
 
-  buf_T *buf = (buf_T *)buf;
+  buf_T *buf = (buf_T *)vBuf;
   int start = Int_val(vStart);
   int end = Int_val(vEnd);
 
-  long len = Wosize_val(vLines);
+  int len = Wosize_val(vLines);
 
-  char_u **newLines = malloc(sizeof(char_u) * len);
-  for (long i = 0; i < len; i++) {
-    char *sz = String_val(Field(vLines, i)); 
-    newLines[i] = malloc((sizeof(char) * strlen(sz)) + 1);
-    strcpy((char *)newLines[i], sz);
+  char_u **newLines = malloc(sizeof(char_u *) * len);
+  for (int i = 0; i < len; i++) {
+    char *sz = String_val(Field(vLines, i));
+    newLines[i] = sz;
   }
-
   vimBufferSetLines(buf, start, end, newLines, len);
 
   CAMLreturn(Val_unit);
