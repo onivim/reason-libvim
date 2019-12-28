@@ -6,15 +6,26 @@ module AutoClosingPair = {
     closing: string,
   };
 
-  let create = (~opening, ~closing, ()) => {opening, closing};
+  let create = (~closeBefore=[], ~opening, ~closing, ()) => {
+    let hash = Hashtbl.create(16);
+    List.iter(item => Hashtbl.add(hash, item, true), closeBefore);
+
+    {opening, closing};
+  };
 };
 
-type t = {pairs: list(AutoClosingPair.t)};
+type t = {
+  pairs: list(AutoClosingPair.t),
+  before: Hashtbl.t(string, bool),
+};
 
-let empty: t = {pairs: []};
+let empty: t = {pairs: [], before: Hashtbl.create(0)};
 
-let create: list(AutoClosingPair.t) => t =
-  (p: list(AutoClosingPair.t)) => {pairs: p};
+let create = (~allowBefore=[], p: list(AutoClosingPair.t)) => {
+  let hash = Hashtbl.create(16);
+  List.iter(item => Hashtbl.add(hash, item, true), allowBefore);
+  {pairs: p, before: hash};
+};
 
 let closingPairs = ref(empty);
 let enabled = ref(false);
@@ -66,6 +77,24 @@ let isBetweenPairs = (line, index) => {
     );
   } else {
     false;
+  };
+};
+
+let _exists = (key, hashtbl) =>
+  switch (Hashtbl.find_opt(hashtbl, key)) {
+  | Some(_) => true
+  | None => false
+  };
+
+let canCloseBefore = (line, index) => {
+  let index = Index.toZeroBased(index);
+  let len = String.length(line);
+  if (index > 0 && index < len) {
+    let nextChar = String.sub(line, index, 1);
+    _exists(nextChar, closingPairs^.before);
+  } else {
+    true;
+        // No character past cursor, always allow
   };
 };
 

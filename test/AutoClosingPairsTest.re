@@ -177,6 +177,7 @@ describe("AutoClosingPairs", ({test, _}) => {
     let b = resetBuffer();
     Options.setAutoClosingPairs(true);
     AutoClosingPairs.create(
+      ~allowBefore=["]", "}", ")", "\""],
       AutoClosingPairs.[
         AutoClosingPair.create(~opening="[", ~closing="]", ()),
         AutoClosingPair.create(~opening="{", ~closing="}", ()),
