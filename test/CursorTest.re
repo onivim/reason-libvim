@@ -8,6 +8,8 @@ let input = s => ignore(Vim.input(s));
 describe("Cursor", ({describe, _}) => {
   describe("setLocation", ({test, _}) => {
     test("cursor location gets updated", ({expect}) => {
+      let _ = resetBuffer();
+
       Cursor.setLocation(~line=Index.zero, ~column=Index.(zero + 1));
       expect.int((Cursor.getLine() :> int)).toBe(0);
       expect.int((Cursor.getColumn() :> int)).toBe(1);
