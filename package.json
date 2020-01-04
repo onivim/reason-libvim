@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@opam/dune": "*",
+    "@opam/dune-configurator": "*",
     "@esy-ocaml/reason": "^3.4.0",
     "refmterr": "*",
     "ocaml": ">=4.7.0 <4.9.0",
