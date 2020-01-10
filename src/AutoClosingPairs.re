@@ -27,16 +27,6 @@ let create = (~allowBefore=[], p: list(AutoClosingPair.t)) => {
   {pairs: p, before: hash};
 };
 
-/*let closingPairs = ref(empty);
-  let enabled = ref(false);
-
-  let setEnabled = e => enabled := e;
-  let getEnabled = () => enabled^;
-
-  let setPairs = (acp: t) => {
-    closingPairs := acp;
-  };*/
-
 let isMatchingPair = (c, closingPairs: t) => {
   List.exists((p: AutoClosingPair.t) => p.opening == c, closingPairs.pairs);
 };
