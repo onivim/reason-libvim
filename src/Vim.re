@@ -220,18 +220,22 @@ let _getDefaultCursors = (cursors: list(Cursor.t)) =>
     cursors;
   };
 
-let input = (~cursors=[], v: string) => {
+let input = (~autoClosingPairs=AutoClosingPairs.empty, ~cursors=[], v: string) => {
   checkAndUpdateState(() => {
     // Special auto-closing pairs handling...
 
     let runCursor = cursor => {
       Cursor.set(cursor);
-      if (AutoClosingPairs.getEnabled() && Mode.getCurrent() == Types.Insert) {
+      if (Mode.getCurrent() == Types.Insert) {
         let location = Cursor.getLocation();
         let line = Buffer.getLine(Buffer.getCurrent(), location.line);
 
         let isBetweenPairs = () => {
-          AutoClosingPairs.isBetweenPairs(line, location.column);
+          AutoClosingPairs.isBetweenPairs(
+            line,
+            location.column,
+            autoClosingPairs,
+          );
         };
 
         let doesNextCharacterMatch = s => {
@@ -239,7 +243,11 @@ let input = (~cursors=[], v: string) => {
         };
 
         let canCloseBefore = () =>
-          AutoClosingPairs.canCloseBefore(line, location.column);
+          AutoClosingPairs.canCloseBefore(
+            line,
+            location.column,
+            autoClosingPairs,
+          );
 
         if (v == "<BS>" && isBetweenPairs()) {
           Native.vimInput("<DEL>");
@@ -249,11 +257,12 @@ let input = (~cursors=[], v: string) => {
           Native.vimInput("<CR>");
           Native.vimInput("<UP>");
           Native.vimInput("<TAB>");
-        } else if (AutoClosingPairs.isClosingPair(v)
+        } else if (AutoClosingPairs.isClosingPair(v, autoClosingPairs)
                    && doesNextCharacterMatch(v)) {
           Native.vimInput("<RIGHT>");
-        } else if (AutoClosingPairs.isOpeningPair(v) && canCloseBefore()) {
-          let pair = AutoClosingPairs.getByOpeningPair(v);
+        } else if (AutoClosingPairs.isOpeningPair(v, autoClosingPairs)
+                   && canCloseBefore()) {
+          let pair = AutoClosingPairs.getByOpeningPair(v, autoClosingPairs);
           Native.vimInput(v);
           Native.vimInput(pair.closing);
           Native.vimInput("<LEFT>");
@@ -269,7 +278,7 @@ let input = (~cursors=[], v: string) => {
     let mode = Mode.getCurrent();
     let cursors = _getDefaultCursors(cursors);
     if (mode == Types.Insert) {
-      // Run first command, verify we don't go back to insert mode
+      // Run first command, verify we don't go back to normal mode
       switch (cursors) {
       | [hd, ...tail] =>
         let newHead = runCursor(hd);

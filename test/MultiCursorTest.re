@@ -38,13 +38,12 @@ describe("Multi-cursor", ({describe, _}) => {
     test("multi-cursor auto-closing paris", ({expect}) => {
       let buf = resetBuffer();
 
-      Options.setAutoClosingPairs(true);
-      AutoClosingPairs.create(
-        AutoClosingPairs.[
-          AutoClosingPair.create(~opening="{", ~closing="}", ()),
-        ],
-      )
-      |> AutoClosingPairs.setPairs;
+      let autoClosingPairs =
+        AutoClosingPairs.create(
+          AutoClosingPairs.[
+            AutoClosingPair.create(~opening="{", ~closing="}", ()),
+          ],
+        );
 
       let updates: ref(list(BufferUpdate.t)) = ref([]);
       let dispose = Buffer.onUpdate(upd => updates := [upd, ...updates^]);
@@ -54,6 +53,7 @@ describe("Multi-cursor", ({describe, _}) => {
 
       let cursors =
         Vim.input(
+          ~autoClosingPairs,
           ~cursors=[
             Cursor.create(~line=Index.zero, ~column=Index.zero),
             Cursor.create(~line=Index.(zero + 1), ~column=Index.zero),
@@ -76,7 +76,7 @@ describe("Multi-cursor", ({describe, _}) => {
         "{}This is the third line of a test file",
       );
 
-      let _ = Vim.input(~cursors, "a");
+      let _ = Vim.input(~autoClosingPairs, ~cursors, "a");
 
       let line1 = Buffer.getLine(buf, Index.zero);
       let line2 = Buffer.getLine(buf, Index.(zero + 1));

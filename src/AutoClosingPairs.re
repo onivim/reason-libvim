@@ -27,36 +27,23 @@ let create = (~allowBefore=[], p: list(AutoClosingPair.t)) => {
   {pairs: p, before: hash};
 };
 
-let closingPairs = ref(empty);
-let enabled = ref(false);
-
-let setEnabled = e => enabled := e;
-let getEnabled = () => enabled^;
-
-let setPairs = (acp: t) => {
-  closingPairs := acp;
+let isMatchingPair = (c, closingPairs: t) => {
+  List.exists((p: AutoClosingPair.t) => p.opening == c, closingPairs.pairs);
 };
 
-let isMatchingPair = c => {
-  List.exists((p: AutoClosingPair.t) => p.opening == c, closingPairs^.pairs);
+let isOpeningPair = (c, closingPairs: t) => {
+  List.exists((p: AutoClosingPair.t) => p.opening == c, closingPairs.pairs);
 };
 
-let isOpeningPair = c => {
-  let currentPairs = closingPairs^;
-  List.exists((p: AutoClosingPair.t) => p.opening == c, currentPairs.pairs);
+let isClosingPair = (c, closingPairs: t) => {
+  List.exists((p: AutoClosingPair.t) => p.closing == c, closingPairs.pairs);
 };
 
-let isClosingPair = c => {
-  let currentPairs = closingPairs^;
-  List.exists((p: AutoClosingPair.t) => p.closing == c, currentPairs.pairs);
-};
-
-let getByOpeningPair = c => {
-  let currentPairs = closingPairs^;
+let getByOpeningPair = (c, closingPairs: t) => {
   let matches =
     List.filter(
       (p: AutoClosingPair.t) => p.opening == c,
-      currentPairs.pairs,
+      closingPairs.pairs,
     );
 
   switch (matches) {
@@ -65,7 +52,7 @@ let getByOpeningPair = c => {
   };
 };
 
-let isBetweenPairs = (line, index) => {
+let isBetweenPairs = (line, index, closingPairs) => {
   let index = Index.toZeroBased(index);
   let len = String.length(line);
   if (index > 0 && index < len) {
@@ -73,7 +60,7 @@ let isBetweenPairs = (line, index) => {
       (p: AutoClosingPair.t) =>
         p.opening == String.sub(line, index - 1, 1)
         && p.closing == String.sub(line, index, 1),
-      closingPairs^.pairs,
+      closingPairs.pairs,
     );
   } else {
     false;
@@ -86,12 +73,12 @@ let _exists = (key, hashtbl) =>
   | None => false
   };
 
-let canCloseBefore = (line, index) => {
+let canCloseBefore = (line, index, closingPairs) => {
   let index = Index.toZeroBased(index);
   let len = String.length(line);
   if (index > 0 && index < len) {
     let nextChar = String.sub(line, index, 1);
-    _exists(nextChar, closingPairs^.before);
+    _exists(nextChar, closingPairs.before);
   } else {
     true;
         // No character past cursor, always allow
