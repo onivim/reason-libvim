@@ -93,6 +93,7 @@ module BufferUpdate = BufferUpdate;
 module Clipboard = Clipboard;
 module CommandLine = CommandLine;
 module Cursor = Cursor;
+module Event = Event;
 module Mode = Mode;
 module Options = Options;
 module Search = Search;
