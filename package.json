@@ -13,21 +13,21 @@
         "esy-installer libvim.install"
     ]
   },
-  "resolutions": {
-    "@opam/ocaml-migrate-parsetree": "1.3.1",
-    "@opam/biniou": "1.2.0",
-    "@opam/easy-format": "1.3.1"
-  },
   "dependencies": {
     "@opam/dune": "*",
     "@opam/dune-configurator": "*",
     "@esy-ocaml/reason": "^3.4.0",
     "refmterr": "*",
-    "ocaml": ">=4.7.0 <4.9.0",
+    "ocaml": ">=4.7.0 <4.10.0",
     "libvim": "8.10869.29",
-    "editor-core-types": "onivim/editor-core-types#3ee552a"
+    "editor-core-types": "onivim/editor-core-types#0832813"
+  },
+  "resolutions": {
+    "@opam/ocaml-migrate-parsetree": "1.5.0",
+    "@opam/biniou": "1.2.0",
+    "@opam/easy-format": "1.3.1"
   },
   "devDependencies": {
-    "ocaml": "~4.7.0"
+    "ocaml": "~4.9.0"
   }
 }
