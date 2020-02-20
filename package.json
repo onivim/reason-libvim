@@ -8,7 +8,6 @@
   },
   "esy": {
     "build": ["refmterr dune build -p libvim"],
-    "buildsInSource": "_build",
     "install": [
         "esy-installer libvim.install"
     ]

@@ -4,7 +4,7 @@
     (package libvim-test)
     (flags (:include flags_with_sanitize.sexp))
     (libraries
-        LibvimTest
+        libvim-test
             ))
 
 (rule
