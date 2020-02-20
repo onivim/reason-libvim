@@ -5,7 +5,7 @@ type autocmdListener = (autocmd, Native.buffer) => unit;
 type bufferListener = Native.buffer => unit;
 type bufferModifiedChangedListener = (int, bool) => unit;
 type bufferMetadataChangedListener = BufferMetadata.t => unit;
-type bufferWriteListener = (int) => unit;
+type bufferWriteListener = int => unit;
 type bufferUpdateListener = BufferUpdate.t => unit;
 type commandLineUpdateListener = Types.cmdline => unit;
 type cursorMovedListener = Location.t => unit;

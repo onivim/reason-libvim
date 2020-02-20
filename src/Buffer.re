@@ -73,4 +73,3 @@ let onFiletypeChanged = (f: Listeners.bufferMetadataChangedListener) => {
 let onWrite = (f: Listeners.bufferWriteListener) => {
   Event.add(f, Listeners.bufferWrite);
 };
-

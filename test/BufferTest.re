@@ -194,20 +194,17 @@ describe("Buffer", ({describe, _}) => {
     });
   });
   describe("onWrite", ({test, _}) => {
-    test(
-      "saving the file should trigger an onWrite event",
-      ({expect}) => {
+    test("saving the file should trigger an onWrite event", ({expect}) => {
       let _ = resetBuffer();
 
       let writes = ref([]);
-      let dispose =
-        Buffer.onWrite(id => writes := [id, ...writes^]);
+      let dispose = Buffer.onWrite(id => writes := [id, ...writes^]);
 
       command("w! some-new-file-again-write.txt");
 
       expect.int(List.length(writes^)).toBe(1);
 
       dispose();
-    });
+    })
   });
 });

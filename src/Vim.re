@@ -107,10 +107,10 @@ let _onAutocommand = (autoCommand: Types.autocmd, buffer: Buffer.t) => {
 
   switch (autoCommand) {
   | BufWritePost
-  | FileWritePost => 
+  | FileWritePost =>
     let id = Buffer.getId(buffer);
     queue(() => Event.dispatch(id, Listeners.bufferWrite));
-  | _ => ();
+  | _ => ()
   };
 };
 
