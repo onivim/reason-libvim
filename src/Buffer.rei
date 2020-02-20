@@ -102,3 +102,11 @@ Returns a function that can be called to unsubscribe.
 */
 let onFiletypeChanged:
   Listeners.bufferMetadataChangedListener => Event.unsubscribe;
+
+/**
+[onWrite(f)] adds a listener [f] that is called whenever the buffer is written
+to disk, whether partially or fully. This could happen with `:w`.
+
+Returns a function that can be called to unsubscribe.
+*/
+let onWrite: Listeners.bufferWriteListener => Event.unsubscribe;
