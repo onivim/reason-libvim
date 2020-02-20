@@ -104,6 +104,14 @@ let checkAndUpdateState = f => {
 
 let _onAutocommand = (autoCommand: Types.autocmd, buffer: Buffer.t) => {
   Event.dispatch2(autoCommand, buffer, Listeners.autocmd);
+
+  switch (autoCommand) {
+  | BufWritePost
+  | FileWritePost =>
+    let id = Buffer.getId(buffer);
+    queue(() => Event.dispatch(id, Listeners.bufferWrite));
+  | _ => ()
+  };
 };
 
 let _onBufferChanged =

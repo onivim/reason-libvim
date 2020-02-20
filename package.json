@@ -8,7 +8,6 @@
   },
   "esy": {
     "build": ["refmterr dune build -p libvim"],
-    "buildsInSource": "_build",
     "install": [
         "esy-installer libvim.install"
     ]
@@ -20,7 +19,7 @@
     "refmterr": "*",
     "ocaml": ">=4.7.0 <4.10.0",
     "libvim": "8.10869.29",
-    "editor-core-types": "onivim/editor-core-types#0832813"
+    "editor-core-types": "onivim/editor-core-types#6a8afaf"
   },
   "resolutions": {
     "@opam/ocaml-migrate-parsetree": "1.5.0",
