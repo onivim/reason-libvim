@@ -22,6 +22,7 @@
     "editor-core-types": "onivim/editor-core-types#6a8afaf"
   },
   "resolutions": {
+    "libvim": "../libvim/src",
     "@opam/ocaml-migrate-parsetree": "1.5.0",
     "@opam/biniou": "1.2.0",
     "@opam/easy-format": "1.3.1"
