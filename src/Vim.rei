@@ -78,6 +78,16 @@ The default Vim behavior was to 'beep', but UIs might want to handle this differ
 let onUnhandledEscape: Listeners.noopListener => Event.unsubscribe;
 
 /**
+[onVersionCallback(f)] registers a handler when the :version command is used
+*/
+let onVersion: Listeners.noopListener => Event.unsubscribe;
+
+/**
+[onIntroCallback(f)] registers a handler when the :intro command is used
+*/
+let onIntro: Listeners.noopListener => Event.unsubscribe;
+
+/**
 [onYank(f)] registers a yank listener [f]
 
 [f] is called whenever a value is 'yanked' to a register -

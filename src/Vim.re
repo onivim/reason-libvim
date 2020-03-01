@@ -327,6 +327,10 @@ let onGoto = f => {
   Event.add2(f, Listeners.goto);
 };
 
+let onIntro = f => {
+  Event.add(f, Listeners.intro);
+};
+
 let onMessage = f => {
   Event.add3(f, Listeners.message);
 };
@@ -337,6 +341,10 @@ let onQuit = f => {
 
 let onUnhandledEscape = f => {
   Event.add(f, Listeners.unhandledEscape);
+};
+
+let onVersion = f => {
+  Event.add(f, Listeners.version);
 };
 
 let onYank = f => {
