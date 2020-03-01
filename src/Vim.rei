@@ -78,6 +78,13 @@ The default Vim behavior was to 'beep', but UIs might want to handle this differ
 let onUnhandledEscape: Listeners.noopListener => Event.unsubscribe;
 
 /**
+[onTerminalStart(f)] registers a handler for a ":term" session.
+
+[f] is called whenever ":term" is used to initiate a terminal session.
+*/
+let onTerminalStart: Listeners.terminalStartListener => Event.unsubscribe;
+
+/**
 [onYank(f)] registers a yank listener [f]
 
 [f] is called whenever a value is 'yanked' to a register -

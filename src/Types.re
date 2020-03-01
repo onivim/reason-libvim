@@ -26,6 +26,12 @@ type cmdline = {
   position: int,
 };
 
+type terminalStartRequest = {
+  cmd: string,
+  curwin: bool,
+  hidden: bool,
+};
+
 type visualType =
   | Character
   | Line
