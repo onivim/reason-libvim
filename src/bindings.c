@@ -295,11 +295,11 @@ CAMLprim value libvim_vimGetMode(value unit) {
   int val = 0;
 
   if ((mode & INSERT) == INSERT) {
-      if ((mode & REPLACE_FLAG) == REPLACE_FLAG) {
-        val = 3;
-      } else {
-        val = 1;
-      }
+    if ((mode & REPLACE_FLAG) == REPLACE_FLAG) {
+      val = 3;
+    } else {
+      val = 1;
+    }
   } else if ((mode & CMDLINE) == CMDLINE) {
     val = 2;
   } else if ((mode & VISUAL) == VISUAL) {
