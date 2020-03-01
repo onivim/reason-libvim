@@ -168,7 +168,7 @@ describe("CommandLine", ({describe, _}) => {
       let _ = reset();
       let hit = ref(false);
 
-      let _ = Vim.onVersion(() => hit := true);
+      let _: Event.unsubscribe = Vim.onVersion(() => hit := true);
       input(":");
       input("version");
       input("<cr>");
@@ -180,7 +180,7 @@ describe("CommandLine", ({describe, _}) => {
       let _ = reset();
       let hit = ref(false);
 
-      let _ = Vim.onVersion(() => hit := true);
+      let _: Event.unsubscribe = Vim.onVersion(() => hit := true);
       input(":");
       input("version");
       input("<cr>");
