@@ -163,14 +163,14 @@ describe("CommandLine", ({describe, _}) => {
 
       expect.int((Cursor.getLine() :> int)).toBe(2);
     });
-    
+
     test(":intro", ({expect}) => {
       let _ = reset();
       let hit = ref(false);
 
-      let _: Event.unsubscribe = Vim.onVersion(() => hit := true);
+      let _: Event.unsubscribe = Vim.onIntro(() => hit := true);
       input(":");
-      input("version");
+      input("intro");
       input("<cr>");
 
       expect.equal(hit^, true);
