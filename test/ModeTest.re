@@ -6,7 +6,7 @@ let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 
 describe("Mode", ({describe, _}) => {
   describe("replace mode", ({test, _}) => {
-      test("set cursor works as expected", ({expect}) => {
+      test("replace mode is reported correctly", ({expect}) => {
         let _ = resetBuffer();
 
         // Enter replace mode
