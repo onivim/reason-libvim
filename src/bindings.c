@@ -170,6 +170,32 @@ void onWindowMovement(windowMovement_T movementType, int count) {
   CAMLreturn0;
 }
 
+void onIntro() {
+  CAMLparam0();
+
+  static value *lv_onIntro = NULL;
+
+  if (lv_onIntro == NULL) {
+    lv_onIntro = caml_named_value("lv_onIntro");
+  }
+
+  caml_callback(*lv_onIntro, Val_unit);
+  CAMLreturn0;
+}
+
+void onVersion() {
+  CAMLparam0();
+
+  static value *lv_onVersion = NULL;
+
+  if (lv_onVersion == NULL) {
+    lv_onVersion = caml_named_value("lv_onVersion");
+  }
+
+  caml_callback(*lv_onVersion, Val_unit);
+  CAMLreturn0;
+}
+
 void onWindowSplit(windowSplit_T splitType, char_u *path) {
   CAMLparam0();
   CAMLlocal1(pathString);
@@ -261,6 +287,8 @@ CAMLprim value libvim_vimInit(value unit) {
   vimSetBufferUpdateCallback(&onBufferChanged);
   vimSetClipboardGetCallback(&getClipboardCallback);
   vimSetDirectoryChangedCallback(&onDirectoryChanged);
+  vimSetDisplayIntroCallback(&onIntro);
+  vimSetDisplayVersionCallback(&onVersion);
   vimSetGotoCallback(&onGoto);
   vimSetMessageCallback(&onMessage);
   vimSetQuitCallback(&onQuit);
