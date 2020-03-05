@@ -64,8 +64,12 @@ let onMessage: Listeners.messageListener => Event.unsubscribe;
 [f] is called whenever a quit is requested, for example,
 by [command(":q")] or [ZZ].
 */
-
 let onQuit: Listeners.quitListener => Event.unsubscribe;
+
+/**
+[onTerminal(f)] registers a handler for the :term command.
+*/
+let onTerminal: (Types.terminalRequest => unit) => Event.unsubscribe;
 
 /**
 [onUnhandledEscape(f)] registers an unhandled escape listener [f].
