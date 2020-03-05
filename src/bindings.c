@@ -111,6 +111,30 @@ void onMessage(char_u *title, char_u *contents, msgPriority_T priority) {
   CAMLreturn0;
 }
 
+void onTerminal(terminalRequest_t *pRequest) {
+  CAMLparam0();
+  CAMLlocal2(ret, commandString);
+
+  static value *lv_onTerminal = NULL;
+
+  if (lv_onTerminal == NULL) {
+    lv_onTerminal = caml_named_value("lv_onTerminal");
+  }
+
+  commandString = caml_copy_string(pRequest->cmd);
+
+  ret = caml_alloc(6, 0);
+  Store_field(ret, 0, Val_int(pRequest->rows));
+  Store_field(ret, 1, Val_int(pRequest->cols));
+  Store_field(ret, 2, Val_bool(pRequest->finish));
+  Store_field(ret, 3, Val_bool(pRequest->curwin));
+  Store_field(ret, 4, Val_bool(pRequest->hidden));
+  Store_field(ret, 5, commandString);
+
+  caml_callback(*lv_onTerminal, ret);
+  CAMLreturn0;
+}
+
 void onQuit(buf_T *buf, int isForced) {
   CAMLparam0();
   CAMLlocal1(quitResult);
@@ -292,6 +316,7 @@ CAMLprim value libvim_vimInit(value unit) {
   vimSetGotoCallback(&onGoto);
   vimSetMessageCallback(&onMessage);
   vimSetQuitCallback(&onQuit);
+  vimSetTerminalCallback(&onTerminal);
   vimSetStopSearchHighlightCallback(&onStopSearch);
   vimSetUnhandledEscapeCallback(&onUnhandledEscape);
   vimSetWindowMovementCallback(&onWindowMovement);
