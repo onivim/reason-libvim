@@ -205,7 +205,7 @@ let _onGoto = (line: int, column: int, gotoType: Types.gotoType) => {
   queue(() => Event.dispatch2(location, gotoType, Listeners.goto));
 };
 
-let _onTerminal = (terminalRequest) => {
+let _onTerminal = terminalRequest => {
   queue(() => Event.dispatch(terminalRequest, Listeners.terminalRequested));
 };
 
