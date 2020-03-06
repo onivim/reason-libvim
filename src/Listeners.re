@@ -45,6 +45,8 @@ let message: ref(list(messageListener)) = ref([]);
 let modeChanged: ref(list(modeChangedListener)) = ref([]);
 let quit: ref(list(quitListener)) = ref([]);
 let stopSearchHighlight: ref(list(noopListener)) = ref([]);
+let terminalRequested: Event.t(Types.terminalRequest => unit) =
+  Event.create();
 let topLineChanged: ref(list(topLineChangedListener)) = ref([]);
 let unhandledEscape: ref(list(noopListener)) = ref([]);
 let version: ref(list(noopListener)) = ref([]);

@@ -205,6 +205,10 @@ let _onGoto = (line: int, column: int, gotoType: Types.gotoType) => {
   queue(() => Event.dispatch2(location, gotoType, Listeners.goto));
 };
 
+let _onTerminal = terminalRequest => {
+  queue(() => Event.dispatch(terminalRequest, Listeners.terminalRequested));
+};
+
 let _onVersion = () => {
   queue(() => Event.dispatch((), Listeners.version));
 };
@@ -220,6 +224,7 @@ let init = () => {
   Callback.register("lv_onQuit", _onQuit);
   Callback.register("lv_onUnhandledEscape", _onUnhandledEscape);
   Callback.register("lv_onStopSearch", _onStopSearch);
+  Callback.register("lv_onTerminal", _onTerminal);
   Callback.register("lv_onWindowMovement", _onWindowMovement);
   Callback.register("lv_onWindowSplit", _onWindowSplit);
   Callback.register("lv_onVersion", _onVersion);
@@ -343,6 +348,10 @@ let onIntro = f => {
 
 let onMessage = f => {
   Event.add3(f, Listeners.message);
+};
+
+let onTerminal = f => {
+  Event.add(f, Listeners.terminalRequested);
 };
 
 let onQuit = f => {

@@ -61,6 +61,15 @@ type windowMovementType =
   | RotateDownwards
   | RotateUpwards;
 
+type terminalRequest = {
+  rows: int,
+  columns: int,
+  finish: bool,
+  curwin: bool,
+  hidden: bool,
+  cmd: string,
+};
+
 /**
  * NOTE: This type must be kept in sync with the `auto_event` enum in `vim.h`!
  *
