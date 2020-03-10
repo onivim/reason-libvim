@@ -527,6 +527,7 @@ CAMLprim value libvim_vimBufferSetLines(value vBuf, value vStart, value vEnd,
     newLines[i] = sz;
   }
   vimBufferSetLines(buf, start, end, newLines, len);
+  free(newLines);
 
   CAMLreturn(Val_unit);
 };
