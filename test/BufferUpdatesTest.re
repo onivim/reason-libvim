@@ -35,16 +35,7 @@ describe("Buffer.onUpdate", ({describe, _}) => {
 
   describe("normal mode", ({test, _}) => {
     test("add line", ({expect}) => {
-      let buf = resetBuffer();
-
-      for (i in 1 to Buffer.getLineCount(buf)) {
-        Printf.fprintf(
-          stderr,
-          "Buffer line: %n: %s",
-          i,
-          Buffer.getLine(buf, Index.fromZeroBased(i)),
-        );
-      };
+      let _buf = resetBuffer();
 
       let updates: ref(list(BufferUpdate.t)) = ref([]);
       let dispose = Buffer.onUpdate(upd => updates := [upd, ...updates^]);
@@ -107,8 +98,8 @@ describe("Buffer.onUpdate", ({describe, _}) => {
       let updates: ref(list(BufferUpdate.t)) = ref([]);
       let dispose =
         Buffer.onUpdate(upd => {
-          print_endline(BufferUpdate.show(upd));
-          updates := [upd, ...updates^];
+          // print_endline(BufferUpdate.show(upd));
+          updates := [upd, ...updates^]
         });
 
       input("J");

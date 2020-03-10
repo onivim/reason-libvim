@@ -10,7 +10,7 @@ describe("Buffer", ({describe, _}) => {
     test("add a line at beginning", ({expect}) => {
       let buffer = resetBuffer();
 
-      Buffer.setLines(~lines=[|"abc"|], buffer);
+      Buffer.setLines(~stop=Index.zero, ~lines=[|"abc"|], buffer);
       let line0 = Buffer.getLine(buffer, Index.zero);
       let line1 = Buffer.getLine(buffer, Index.(zero + 1));
       let lineCount = Buffer.getLineCount(buffer);
@@ -35,7 +35,7 @@ describe("Buffer", ({describe, _}) => {
       expect.string(line1).toEqual("abc");
       expect.string(line2).toEqual("This is the third line of a test file");
     });
-    test("replace whole buffer", ({expect}) => {
+    test("replace whole buffer - set both start / stop", ({expect}) => {
       let buffer = resetBuffer();
 
       Buffer.setLines(
@@ -44,6 +44,24 @@ describe("Buffer", ({describe, _}) => {
         ~lines=[|"abc"|],
         buffer,
       );
+      let lineCount = Buffer.getLineCount(buffer);
+      let line0 = Buffer.getLine(buffer, Index.zero);
+      expect.int(lineCount).toBe(1);
+      expect.string(line0).toEqual("abc");
+    });
+    test("replace whole buffer - set just start", ({expect}) => {
+      let buffer = resetBuffer();
+
+      Buffer.setLines(~start=Index.zero, ~lines=[|"abc"|], buffer);
+      let lineCount = Buffer.getLineCount(buffer);
+      let line0 = Buffer.getLine(buffer, Index.zero);
+      expect.int(lineCount).toBe(1);
+      expect.string(line0).toEqual("abc");
+    });
+    test("replace whole buffer - not setting start / stop", ({expect}) => {
+      let buffer = resetBuffer();
+
+      Buffer.setLines(~lines=[|"abc"|], buffer);
       let lineCount = Buffer.getLineCount(buffer);
       let line0 = Buffer.getLine(buffer, Index.zero);
       expect.int(lineCount).toBe(1);
