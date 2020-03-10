@@ -68,7 +68,8 @@ let setCurrent: t => unit;
 - If [stop] is not specified, or [None], the entire buffer will be replaced with [lines]
 - If neither [start] or [stop] are specified, the lines will be added at the beginning.
 */
-let setLines: (~start: Index.t=?, ~stop: Index.t=?, ~lines: array(string), t) => unit;
+let setLines:
+  (~start: Index.t=?, ~stop: Index.t=?, ~lines: array(string), t) => unit;
 
 /**
 [onEnter(f)] adds a listener [f] that is called whenever a new buffer is entered.
@@ -111,3 +112,11 @@ Returns a function that can be called to unsubscribe.
 */
 let onFiletypeChanged:
   Listeners.bufferMetadataChangedListener => Event.unsubscribe;
+
+/**
+[onWrite(f)] adds a listener [f] that is called whenever the buffer is written
+to disk, whether partially or fully. This could happen with `:w`.
+
+Returns a function that can be called to unsubscribe.
+*/
+let onWrite: Listeners.bufferWriteListener => Event.unsubscribe;

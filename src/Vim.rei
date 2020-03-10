@@ -15,7 +15,13 @@ The value [s] may be of the following form:
 
 The keystroke is processed synchronously.
 */
-let input: (~cursors: list(Cursor.t)=?, string) => list(Cursor.t);
+let input:
+  (
+    ~autoClosingPairs: AutoClosingPairs.t=?,
+    ~cursors: list(Cursor.t)=?,
+    string
+  ) =>
+  list(Cursor.t);
 
 /**
 [command(cmd)] executes [cmd] as an Ex command.
@@ -58,8 +64,12 @@ let onMessage: Listeners.messageListener => Event.unsubscribe;
 [f] is called whenever a quit is requested, for example,
 by [command(":q")] or [ZZ].
 */
-
 let onQuit: Listeners.quitListener => Event.unsubscribe;
+
+/**
+[onTerminal(f)] registers a handler for the :term command.
+*/
+let onTerminal: (Types.terminalRequest => unit) => Event.unsubscribe;
 
 /**
 [onUnhandledEscape(f)] registers an unhandled escape listener [f].
@@ -70,6 +80,16 @@ if the user presses <esc> while in normal mode, but there is no pending operator
 The default Vim behavior was to 'beep', but UIs might want to handle this differently.
 */
 let onUnhandledEscape: Listeners.noopListener => Event.unsubscribe;
+
+/**
+[onVersionCallback(f)] registers a handler when the :version command is used
+*/
+let onVersion: Listeners.noopListener => Event.unsubscribe;
+
+/**
+[onIntroCallback(f)] registers a handler when the :intro command is used
+*/
+let onIntro: Listeners.noopListener => Event.unsubscribe;
 
 /**
 [onYank(f)] registers a yank listener [f]
@@ -87,6 +107,7 @@ module BufferUpdate = BufferUpdate;
 module Clipboard = Clipboard;
 module CommandLine = CommandLine;
 module Cursor = Cursor;
+module Event = Event;
 module Mode = Mode;
 module Options = Options;
 module Search = Search;

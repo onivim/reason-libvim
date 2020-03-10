@@ -4,7 +4,7 @@
     "run": "esy '@test' x LibvimUnitTestRunner"
   },
   "override": {
-      "build": ["dune build --root . -j4"],
+      "build": ["dune build -p libvim,libvim-test -j4"],
       "dependencies": {
 	  "@opam/odoc": "*",
           "@reason-native/rely": "2.2.0"

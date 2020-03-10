@@ -20,7 +20,8 @@ external vimBufferGetModified: buffer => bool = "libvim_vimBufferGetModified";
 external vimBufferGetChangedTick: buffer => int =
   "libvim_vimBufferGetChangedTick";
 external vimBufferSetCurrent: buffer => unit = "libvim_vimBufferSetCurrent";
-external vimBufferSetLines: (buffer, int, int, array(string)) => unit = "libvim_vimBufferSetLines";
+external vimBufferSetLines: (buffer, int, int, array(string)) => unit =
+  "libvim_vimBufferSetLines";
 
 external vimCommandLineGetCompletions: unit => array(string) =
   "libvim_vimCommandLineGetCompletions";

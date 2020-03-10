@@ -51,15 +51,17 @@ let setCurrent = (buffer: t) => {
 };
 
 let setLines = (~start=?, ~stop=?, ~lines, buffer) => {
-  let startLine = switch(start) {
-  | Some(v) => Index.toOneBased(v) - 1;
-  | None => 0
-  }; 
-  
-  let endLine = switch(stop) {
-  | Some(v) => Index.toOneBased(v) - 1;
-  | None => 0
-  }
+  let startLine =
+    switch (start) {
+    | Some(v) => Index.toOneBased(v) - 1
+    | None => 0
+    };
+
+  let endLine =
+    switch (stop) {
+    | Some(v) => Index.toOneBased(v) - 1
+    | None => 0
+    };
 
   Native.vimBufferSetLines(buffer, startLine, endLine, lines);
 };
@@ -82,4 +84,8 @@ let onFilenameChanged = (f: Listeners.bufferMetadataChangedListener) => {
 
 let onFiletypeChanged = (f: Listeners.bufferMetadataChangedListener) => {
   Event.add(f, Listeners.bufferFiletypeChanged);
+};
+
+let onWrite = (f: Listeners.bufferWriteListener) => {
+  Event.add(f, Listeners.bufferWrite);
 };

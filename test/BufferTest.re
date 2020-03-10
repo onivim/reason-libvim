@@ -12,7 +12,7 @@ describe("Buffer", ({describe, _}) => {
 
       Buffer.setLines(~lines=[|"abc"|], buffer);
       let line0 = Buffer.getLine(buffer, Index.zero);
-      let line1 = Buffer.getLine(buffer, Index.(zero+1));
+      let line1 = Buffer.getLine(buffer, Index.(zero + 1));
       let lineCount = Buffer.getLineCount(buffer);
       expect.int(lineCount).toBe(4);
       expect.string(line0).toEqual("abc");
@@ -20,17 +20,16 @@ describe("Buffer", ({describe, _}) => {
     });
     test("change line in middle", ({expect}) => {
       let buffer = resetBuffer();
-  
+
       let line1Index = Index.(zero + 1);
       let line2Index = Index.(zero + 2);
 
-
-      let lines=[|"abc"|];
+      let lines = [|"abc"|];
       Buffer.setLines(~start=line1Index, ~stop=line2Index, ~lines, buffer);
       let lineCount = Buffer.getLineCount(buffer);
       let line0 = Buffer.getLine(buffer, Index.zero);
-      let line1 = Buffer.getLine(buffer, Index.(zero+1));
-      let line2 = Buffer.getLine(buffer, Index.(zero+2));
+      let line1 = Buffer.getLine(buffer, Index.(zero + 1));
+      let line2 = Buffer.getLine(buffer, Index.(zero + 2));
       expect.int(lineCount).toBe(3);
       expect.string(line0).toEqual("This is the first line of a test file");
       expect.string(line1).toEqual("abc");
@@ -39,7 +38,12 @@ describe("Buffer", ({describe, _}) => {
     test("replace whole buffer", ({expect}) => {
       let buffer = resetBuffer();
 
-      Buffer.setLines(~start=Index.zero, ~stop=Index.(zero + 4), ~lines=[|"abc"|], buffer);
+      Buffer.setLines(
+        ~start=Index.zero,
+        ~stop=Index.(zero + 4),
+        ~lines=[|"abc"|],
+        buffer,
+      );
       let lineCount = Buffer.getLineCount(buffer);
       let line0 = Buffer.getLine(buffer, Index.zero);
       expect.int(lineCount).toBe(1);
@@ -51,13 +55,13 @@ describe("Buffer", ({describe, _}) => {
       let endPoint = Buffer.getLineCount(buffer) |> Index.fromZeroBased;
 
       Buffer.setLines(~start=endPoint, ~lines=[|"abc"|], buffer);
-      let line3 = Buffer.getLine(buffer, Index.(zero+2));
-      let line4 = Buffer.getLine(buffer, Index.(zero+3));
+      let line3 = Buffer.getLine(buffer, Index.(zero + 2));
+      let line4 = Buffer.getLine(buffer, Index.(zero + 3));
       let lineCount = Buffer.getLineCount(buffer);
       expect.int(lineCount).toBe(4);
       expect.string(line3).toEqual("This is the third line of a test file");
       expect.string(line4).toEqual("abc");
-    })
+    });
   });
   describe("getLine", ({test, _}) =>
     test("single file", ({expect}) => {
@@ -245,5 +249,19 @@ describe("Buffer", ({describe, _}) => {
 
       dispose();
     });
+  });
+  describe("onWrite", ({test, _}) => {
+    test("saving the file should trigger an onWrite event", ({expect}) => {
+      let _ = resetBuffer();
+
+      let writes = ref([]);
+      let dispose = Buffer.onWrite(id => writes := [id, ...writes^]);
+
+      command("w! some-new-file-again-write.txt");
+
+      expect.int(List.length(writes^)).toBe(1);
+
+      dispose();
+    })
   });
 });

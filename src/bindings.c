@@ -111,6 +111,30 @@ void onMessage(char_u *title, char_u *contents, msgPriority_T priority) {
   CAMLreturn0;
 }
 
+void onTerminal(terminalRequest_t *pRequest) {
+  CAMLparam0();
+  CAMLlocal2(ret, commandString);
+
+  static value *lv_onTerminal = NULL;
+
+  if (lv_onTerminal == NULL) {
+    lv_onTerminal = caml_named_value("lv_onTerminal");
+  }
+
+  commandString = caml_copy_string(pRequest->cmd);
+
+  ret = caml_alloc(6, 0);
+  Store_field(ret, 0, Val_int(pRequest->rows));
+  Store_field(ret, 1, Val_int(pRequest->cols));
+  Store_field(ret, 2, Val_bool(pRequest->finish));
+  Store_field(ret, 3, Val_bool(pRequest->curwin));
+  Store_field(ret, 4, Val_bool(pRequest->hidden));
+  Store_field(ret, 5, commandString);
+
+  caml_callback(*lv_onTerminal, ret);
+  CAMLreturn0;
+}
+
 void onQuit(buf_T *buf, int isForced) {
   CAMLparam0();
   CAMLlocal1(quitResult);
@@ -167,6 +191,32 @@ void onWindowMovement(windowMovement_T movementType, int count) {
   }
 
   caml_callback2(*lv_onWindowMovement, Val_int(movementType), Val_int(count));
+  CAMLreturn0;
+}
+
+void onIntro() {
+  CAMLparam0();
+
+  static value *lv_onIntro = NULL;
+
+  if (lv_onIntro == NULL) {
+    lv_onIntro = caml_named_value("lv_onIntro");
+  }
+
+  caml_callback(*lv_onIntro, Val_unit);
+  CAMLreturn0;
+}
+
+void onVersion() {
+  CAMLparam0();
+
+  static value *lv_onVersion = NULL;
+
+  if (lv_onVersion == NULL) {
+    lv_onVersion = caml_named_value("lv_onVersion");
+  }
+
+  caml_callback(*lv_onVersion, Val_unit);
   CAMLreturn0;
 }
 
@@ -261,9 +311,12 @@ CAMLprim value libvim_vimInit(value unit) {
   vimSetBufferUpdateCallback(&onBufferChanged);
   vimSetClipboardGetCallback(&getClipboardCallback);
   vimSetDirectoryChangedCallback(&onDirectoryChanged);
+  vimSetDisplayIntroCallback(&onIntro);
+  vimSetDisplayVersionCallback(&onVersion);
   vimSetGotoCallback(&onGoto);
   vimSetMessageCallback(&onMessage);
   vimSetQuitCallback(&onQuit);
+  vimSetTerminalCallback(&onTerminal);
   vimSetStopSearchHighlightCallback(&onStopSearch);
   vimSetUnhandledEscapeCallback(&onUnhandledEscape);
   vimSetWindowMovementCallback(&onWindowMovement);
@@ -295,11 +348,13 @@ CAMLprim value libvim_vimGetMode(value unit) {
   int val = 0;
 
   if ((mode & INSERT) == INSERT) {
-    val = 1;
+    if ((mode & REPLACE_FLAG) == REPLACE_FLAG) {
+      val = 3;
+    } else {
+      val = 1;
+    }
   } else if ((mode & CMDLINE) == CMDLINE) {
     val = 2;
-  } else if ((mode & REPLACE_FLAG) == REPLACE_FLAG) {
-    val = 3;
   } else if ((mode & VISUAL) == VISUAL) {
     val = 4;
   } else if ((mode & OP_PENDING) == OP_PENDING) {

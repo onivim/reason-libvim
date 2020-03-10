@@ -3,6 +3,10 @@ type handler2('a, 'b) = ('a, 'b) => unit;
 type handler3('a, 'b, 'c) = ('a, 'b, 'c) => unit;
 type unsubscribe = unit => unit;
 
+type t('a) = ref(list('a));
+
+let create = () => ref([]);
+
 let dispatch = (v: 'a, handlers: ref(list(handler('a)))) => {
   List.iter(f => f(v), handlers^);
 };
