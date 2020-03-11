@@ -1,5 +1,5 @@
 {
-  "checksum": "4b1dd4ede4233d53c5ba0e4bc085c23b",
+  "checksum": "227ed52abace453187bff3cc938660ec",
   "root": "reason-libvim@link-dev:./package.json",
   "node": {
     "wordwrap@0.0.3@d41d8cd9": {
@@ -113,7 +113,7 @@
       ],
       "devDependencies": [
         "ocaml@4.9.0@d41d8cd9",
-        "@opam/ocaml-lsp-server@github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#04733ed@d41d8cd9"
+        "@opam/ocaml-lsp-server@github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#5782d1d@d41d8cd9"
       ]
     },
     "qs@6.9.1@d41d8cd9": {
@@ -1070,14 +1070,14 @@
         "@opam/dune@opam:2.4.0@639d28a3"
       ]
     },
-    "@opam/ocaml-lsp-server@github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#04733ed@d41d8cd9": {
+    "@opam/ocaml-lsp-server@github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#5782d1d@d41d8cd9": {
       "id":
-        "@opam/ocaml-lsp-server@github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#04733ed@d41d8cd9",
+        "@opam/ocaml-lsp-server@github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#5782d1d@d41d8cd9",
       "name": "@opam/ocaml-lsp-server",
-      "version": "github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#04733ed",
+      "version": "github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#5782d1d",
       "source": {
         "type": "install",
-        "source": [ "github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#04733ed" ]
+        "source": [ "github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#5782d1d" ]
       },
       "overrides": [],
       "dependencies": [

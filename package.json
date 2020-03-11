@@ -28,6 +28,6 @@
   },
   "devDependencies": {
     "ocaml": "~4.9.0",
-    "@opam/ocaml-lsp-server": "github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#04733ed"
+    "@opam/ocaml-lsp-server": "github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#5782d1d"
   }
 }
