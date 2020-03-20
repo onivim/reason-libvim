@@ -62,6 +62,16 @@ This will trigger dispatching of autocommands, like [BufEnter].
 let setCurrent: t => unit;
 
 /**
+[setLines(~start, ~stop, ~lines, buffer)] sets lines between [start] (inclusive) and [stop] (exclusive).
+
+- If [start] is not specified, or [None], the lines will be added at the beginning at the before.
+- If [stop] is not specified, or [None], the buffer after [start] will be replaced with [lines]
+- If neither [start] or [stop] are specified, the lines in the buffer will be replaced with [lines]
+*/
+let setLines:
+  (~start: Index.t=?, ~stop: Index.t=?, ~lines: array(string), t) => unit;
+
+/**
 [onEnter(f)] adds a listener [f] that is called whenever a new buffer is entered.
 
 This is more reliable than autocommands, as it will dispatch in any case the buffer

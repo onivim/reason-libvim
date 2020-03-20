@@ -18,7 +18,7 @@
     "@esy-ocaml/reason": "^3.4.0",
     "refmterr": "*",
     "ocaml": ">=4.7.0 <4.10.0",
-    "libvim": "8.10869.31",
+    "libvim": "8.10869.32",
     "editor-core-types": "onivim/editor-core-types#6a8afaf"
   },
   "resolutions": {
@@ -27,6 +27,7 @@
     "@opam/easy-format": "1.3.1"
   },
   "devDependencies": {
-    "ocaml": "~4.9.0"
+    "ocaml": "~4.9.0",
+    "@opam/ocaml-lsp-server": "github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#5782d1d"
   }
 }
