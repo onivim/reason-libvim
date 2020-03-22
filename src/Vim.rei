@@ -1,21 +1,31 @@
 open EditorCoreTypes;
 
 module AutoClosingPairs: {
-
-  module AutoClosingPair: {
+  module AutoPair: {
     type t = {
       opening: string,
       closing: string,
     };
-  }
+  };
+
+  type passThroughCharacter = string;
 
   type t;
 
   let empty: t;
 
-  let create: (~allowBefore: list(string)=?, list(AutoClosingPair.t)) => t;
+  let create:
+    (
+      ~allowBefore: list(string)=?,
+      //~passThrough: list(passThroughCharacter)=?,
+      ~deletionPairs: list(AutoPair.t)=?,
+      list(AutoPair.t)
+    ) =>
+    t;
 
-  let isBetweenPairs: (string, Index.t, t) => bool;
+  let isBetweenClosingPairs: (string, Index.t, t) => bool;
+
+  let isBetweenDeletionPairs: (string, Index.t, t) => bool;
 };
 
 /**

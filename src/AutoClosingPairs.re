@@ -1,50 +1,49 @@
 open EditorCoreTypes;
 
-module AutoClosingPair = {
+type passThroughCharacter = string;
+
+module AutoPair = {
   type t = {
     opening: string,
     closing: string,
   };
-
-  let create = (~closeBefore=[], ~opening, ~closing, ()) => {
-    let hash = Hashtbl.create(16);
-    List.iter(item => Hashtbl.add(hash, item, true), closeBefore);
-
-    {opening, closing};
-  };
 };
 
 type t = {
-  pairs: list(AutoClosingPair.t),
+  pairs: list(AutoPair.t),
+  deletionPairs: list(AutoPair.t),
   before: Hashtbl.t(string, bool),
 };
 
-let empty: t = {pairs: [], before: Hashtbl.create(0)};
+let empty: t = {deletionPairs: [], pairs: [], before: Hashtbl.create(0)};
 
-let create = (~allowBefore=[], p: list(AutoClosingPair.t)) => {
+let create = (~allowBefore=[], ~deletionPairs=?, p: list(AutoPair.t)) => {
+  let deletionPairs =
+    switch (deletionPairs) {
+    | None => p
+    | Some(pairs) => pairs
+    };
+
   let hash = Hashtbl.create(16);
   List.iter(item => Hashtbl.add(hash, item, true), allowBefore);
-  {pairs: p, before: hash};
+  {deletionPairs, pairs: p, before: hash};
 };
 
 let isMatchingPair = (c, closingPairs: t) => {
-  List.exists((p: AutoClosingPair.t) => p.opening == c, closingPairs.pairs);
+  List.exists((p: AutoPair.t) => p.opening == c, closingPairs.pairs);
 };
 
 let isOpeningPair = (c, closingPairs: t) => {
-  List.exists((p: AutoClosingPair.t) => p.opening == c, closingPairs.pairs);
+  List.exists((p: AutoPair.t) => p.opening == c, closingPairs.pairs);
 };
 
 let isClosingPair = (c, closingPairs: t) => {
-  List.exists((p: AutoClosingPair.t) => p.closing == c, closingPairs.pairs);
+  List.exists((p: AutoPair.t) => p.closing == c, closingPairs.pairs);
 };
 
 let getByOpeningPair = (c, closingPairs: t) => {
   let matches =
-    List.filter(
-      (p: AutoClosingPair.t) => p.opening == c,
-      closingPairs.pairs,
-    );
+    List.filter((p: AutoPair.t) => p.opening == c, closingPairs.pairs);
 
   switch (matches) {
   | [hd, ..._] => hd
@@ -52,19 +51,27 @@ let getByOpeningPair = (c, closingPairs: t) => {
   };
 };
 
-let isBetweenPairs = (line, index, closingPairs) => {
+let isBetweenPairs = (line, index, pairs) => {
   let index = Index.toZeroBased(index);
   let len = String.length(line);
   if (index > 0 && index < len) {
     List.exists(
-      (p: AutoClosingPair.t) =>
+      (p: AutoPair.t) =>
         p.opening == String.sub(line, index - 1, 1)
         && p.closing == String.sub(line, index, 1),
-      closingPairs.pairs,
+      pairs,
     );
   } else {
     false;
   };
+};
+
+let isBetweenClosingPairs = (line, index, closingPairs) => {
+  isBetweenPairs(line, index, closingPairs.pairs);
+};
+
+let isBetweenDeletionPairs = (line, index, closingPairs) => {
+  isBetweenPairs(line, index, closingPairs.deletionPairs);
 };
 
 let _exists = (key, hashtbl) =>

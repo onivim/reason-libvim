@@ -253,8 +253,8 @@ let input = (~autoClosingPairs=AutoClosingPairs.empty, ~cursors=[], v: string) =
         let location = Cursor.getLocation();
         let line = Buffer.getLine(Buffer.getCurrent(), location.line);
 
-        let isBetweenPairs = () => {
-          AutoClosingPairs.isBetweenPairs(
+        let isBetweenClosingPairs = () => {
+          AutoClosingPairs.isBetweenClosingPairs(
             line,
             location.column,
             autoClosingPairs,
@@ -272,10 +272,15 @@ let input = (~autoClosingPairs=AutoClosingPairs.empty, ~cursors=[], v: string) =
             autoClosingPairs,
           );
 
-        if (v == "<BS>" && isBetweenPairs()) {
+        if (v == "<BS>"
+            && AutoClosingPairs.isBetweenDeletionPairs(
+                 line,
+                 location.column,
+                 autoClosingPairs,
+               )) {
           Native.vimInput("<DEL>");
           Native.vimInput("<BS>");
-        } else if (v == "<CR>" && isBetweenPairs()) {
+        } else if (v == "<CR>" && isBetweenClosingPairs()) {
           Native.vimInput("<CR>");
           Native.vimInput("<CR>");
           Native.vimInput("<UP>");

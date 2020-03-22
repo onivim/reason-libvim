@@ -8,10 +8,10 @@ let input = (~autoClosingPairs=AutoClosingPairs.empty, s) =>
 
 open AutoClosingPairs;
 let quote = {|"|};
-let parenthesesPair = AutoClosingPair.{opening: "(", closing: ")"};
-let squareBracketPair = AutoClosingPair.{opening:"[", closing: "]"};
-let curlyBracketPair = AutoClosingPair.{opening:"{", closing: "}"};
-let quotePair = AutoClosingPair.{opening: quote, closing: quote};
+let parenthesesPair = AutoPair.{opening: "(", closing: ")"};
+let squareBracketPair = AutoPair.{opening: "[", closing: "]"};
+let curlyBracketPair = AutoPair.{opening: "{", closing: "}"};
+let quotePair = AutoPair.{opening: quote, closing: quote};
 
 describe("AutoClosingPairs", ({test, _}) => {
   test("no auto-closing pairs", ({expect}) => {
@@ -29,12 +29,7 @@ describe("AutoClosingPairs", ({test, _}) => {
 
   test("single acp", ({expect}) => {
     let b = resetBuffer();
-    let autoClosingPairs =
-      AutoClosingPairs.create(
-        [
-          squareBracketPair
-        ],
-      );
+    let autoClosingPairs = AutoClosingPairs.create([squareBracketPair]);
 
     input(~autoClosingPairs, "O");
     input(~autoClosingPairs, "[");
@@ -46,14 +41,9 @@ describe("AutoClosingPairs", ({test, _}) => {
     expect.string(line).toEqual("[(\"{]");
   });
 
-  test("isBetweenPairs", ({expect}) => {
+  test("isBetweenClosingPairs", ({expect}) => {
     let b = resetBuffer();
-    let autoClosingPairs =
-      AutoClosingPairs.create(
-        [
-          squareBracketPair
-        ],
-      );
+    let autoClosingPairs = AutoClosingPairs.create([squareBracketPair]);
 
     input(~autoClosingPairs, "O");
     input(~autoClosingPairs, "[");
@@ -61,7 +51,7 @@ describe("AutoClosingPairs", ({test, _}) => {
     let line = Buffer.getLine(b, Index.zero);
     let location = Cursor.getLocation();
     expect.bool(
-      AutoClosingPairs.isBetweenPairs(
+      AutoClosingPairs.isBetweenClosingPairs(
         line,
         location.column,
         autoClosingPairs,
@@ -75,11 +65,23 @@ describe("AutoClosingPairs", ({test, _}) => {
   test("backspace between pairs", ({expect}) => {
     let b = resetBuffer();
 
+    let autoClosingPairs = AutoClosingPairs.create([squareBracketPair]);
+
+    input(~autoClosingPairs, "O");
+    input(~autoClosingPairs, "[");
+    input(~autoClosingPairs, "<BS>");
+
+    let line = Buffer.getLine(b, Index.zero);
+    expect.string(line).toEqual("");
+  });
+
+  test("backspace between pairs, override deletion pairs", ({expect}) => {
+    let b = resetBuffer();
+
     let autoClosingPairs =
       AutoClosingPairs.create(
-        [
-          squareBracketPair
-        ],
+        ~deletionPairs=[squareBracketPair],
+        [quotePair],
       );
 
     input(~autoClosingPairs, "O");
@@ -93,12 +95,7 @@ describe("AutoClosingPairs", ({test, _}) => {
   test("pass-through between pairs", ({expect}) => {
     let b = resetBuffer();
 
-    let autoClosingPairs =
-      AutoClosingPairs.create(
-        [
-          squareBracketPair
-        ],
-      );
+    let autoClosingPairs = AutoClosingPairs.create([squareBracketPair]);
 
     input(~autoClosingPairs, "O");
     input(~autoClosingPairs, "[");
@@ -112,12 +109,7 @@ describe("AutoClosingPairs", ({test, _}) => {
 
   test("pass-through not between pairs", ({expect}) => {
     let b = resetBuffer();
-    let autoClosingPairs =
-      AutoClosingPairs.create(
-        [
-          quotePair
-        ],
-      );
+    let autoClosingPairs = AutoClosingPairs.create([quotePair]);
 
     input(~autoClosingPairs, "O");
     input(~autoClosingPairs, "(");
@@ -133,12 +125,7 @@ describe("AutoClosingPairs", ({test, _}) => {
   test(
     "pass-through not between pairs, with same begin/end pair", ({expect}) => {
     let b = resetBuffer();
-    let autoClosingPairs =
-      AutoClosingPairs.create(
-        [
-          quotePair
-        ],
-      );
+    let autoClosingPairs = AutoClosingPairs.create([quotePair]);
 
     input(~autoClosingPairs, "O");
     input(~autoClosingPairs, quote);
@@ -153,12 +140,7 @@ describe("AutoClosingPairs", ({test, _}) => {
 
   test("can insert closing pair", ({expect}) => {
     let b = resetBuffer();
-    let autoClosingPairs =
-      AutoClosingPairs.create(
-        [
-          quotePair
-        ],
-      );
+    let autoClosingPairs = AutoClosingPairs.create([quotePair]);
 
     input(~autoClosingPairs, "O");
     input(~autoClosingPairs, "]");
