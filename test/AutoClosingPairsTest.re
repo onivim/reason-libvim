@@ -107,6 +107,24 @@ describe("AutoClosingPairs", ({test, _}) => {
     expect.int((location.column :> int)).toBe(2);
   });
 
+  test("pass-through between pairs, overridden", ({expect}) => {
+    let b = resetBuffer();
+
+    let autoClosingPairs = AutoClosingPairs.create([squareBracketPair]);
+
+    input(~autoClosingPairs, "O");
+    input(~autoClosingPairs, "[");
+
+    let autoClosingPairs =
+      AutoClosingPairs.create(~passThrough=["]"], [squareBracketPair]);
+    input(~autoClosingPairs, "]");
+
+    let line = Buffer.getLine(b, Index.zero);
+    let location = Cursor.getLocation();
+    expect.string(line).toEqual("[]");
+    expect.int((location.column :> int)).toBe(2);
+  });
+
   test("pass-through not between pairs", ({expect}) => {
     let b = resetBuffer();
     let autoClosingPairs = AutoClosingPairs.create([quotePair]);

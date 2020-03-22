@@ -16,14 +16,22 @@ type t = {
   before: Hashtbl.t(string, bool),
 };
 
-let empty: t = {passThrough: [], deletionPairs: [], pairs: [], before: Hashtbl.create(0)};
+let empty: t = {
+  passThrough: [],
+  deletionPairs: [],
+  pairs: [],
+  before: Hashtbl.create(0),
+};
 
-let create = (~allowBefore=[], ~passThrough=?, ~deletionPairs=?, p: list(AutoPair.t)) => {
-  let deletionPairs =
-     Option.value(deletionPairs, ~default=p);
+let create =
+    (~allowBefore=[], ~passThrough=?, ~deletionPairs=?, p: list(AutoPair.t)) => {
+  let deletionPairs = Option.value(deletionPairs, ~default=p);
 
   let passThrough =
-    Option.value(passThrough, ~default=List.map((pair: AutoPair.t) => pair.closing, p));
+    Option.value(
+      passThrough,
+      ~default=List.map((pair: AutoPair.t) => pair.closing, p),
+    );
 
   let hash = Hashtbl.create(16);
   List.iter(item => Hashtbl.add(hash, item, true), allowBefore);
@@ -43,7 +51,7 @@ let isClosingPair = (c, closingPairs: t) => {
 };
 
 let isPassThroughPair = (c, closingPairs: t) => {
-  List.exists((str) => str == c, closingPairs.passThrough);
+  List.exists(str => str == c, closingPairs.passThrough);
 };
 
 let getByOpeningPair = (c, closingPairs: t) => {
@@ -109,5 +117,5 @@ let doesNextCharacterMatch = (line, index, s) => {
 
 let isPassThrough = (character, line, index, autoClosingPairs) => {
   isPassThroughPair(character, autoClosingPairs)
-   && doesNextCharacterMatch(line, index, character);
+  && doesNextCharacterMatch(line, index, character);
 };
