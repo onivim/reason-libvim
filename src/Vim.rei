@@ -1,3 +1,31 @@
+open EditorCoreTypes;
+
+module AutoClosingPairs: {
+  module AutoPair: {
+    type t = {
+      opening: string,
+      closing: string,
+    };
+  };
+
+  type t;
+
+  let empty: t;
+
+  let create:
+    (
+      ~allowBefore: list(string)=?,
+      ~passThrough: list(string)=?,
+      ~deletionPairs: list(AutoPair.t)=?,
+      list(AutoPair.t)
+    ) =>
+    t;
+
+  let isBetweenClosingPairs: (string, Index.t, t) => bool;
+
+  let isBetweenDeletionPairs: (string, Index.t, t) => bool;
+};
+
 /**
 [init] must be called prior to [input] or [command], and must only be called once.
 
@@ -99,7 +127,6 @@ this could happen as a result of a yank or a delete command.
 */
 let onYank: Listeners.yankListener => Event.unsubscribe;
 
-module AutoClosingPairs = AutoClosingPairs;
 module AutoCommands = AutoCommands;
 module Buffer = Buffer;
 module BufferMetadata = BufferMetadata;

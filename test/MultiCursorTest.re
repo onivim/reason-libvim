@@ -40,9 +40,7 @@ describe("Multi-cursor", ({describe, _}) => {
 
       let autoClosingPairs =
         AutoClosingPairs.create(
-          AutoClosingPairs.[
-            AutoClosingPair.create(~opening="{", ~closing="}", ()),
-          ],
+          AutoClosingPairs.[AutoPair.{opening: "{", closing: "}"}],
         );
 
       let updates: ref(list(BufferUpdate.t)) = ref([]);
