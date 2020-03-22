@@ -261,10 +261,6 @@ let input = (~autoClosingPairs=AutoClosingPairs.empty, ~cursors=[], v: string) =
           );
         };
 
-        let doesNextCharacterMatch = s => {
-          AutoClosingPairs.doesNextCharacterMatch(line, location.column, s);
-        };
-
         let canCloseBefore = () =>
           AutoClosingPairs.canCloseBefore(
             line,
@@ -285,8 +281,7 @@ let input = (~autoClosingPairs=AutoClosingPairs.empty, ~cursors=[], v: string) =
           Native.vimInput("<CR>");
           Native.vimInput("<UP>");
           Native.vimInput("<TAB>");
-        } else if (AutoClosingPairs.isClosingPair(v, autoClosingPairs)
-                   && doesNextCharacterMatch(v)) {
+        } else if (AutoClosingPairs.isPassThrough(v, line, location.column, autoClosingPairs)) {
           Native.vimInput("<RIGHT>");
         } else if (AutoClosingPairs.isOpeningPair(v, autoClosingPairs)
                    && canCloseBefore()) {

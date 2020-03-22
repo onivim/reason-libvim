@@ -8,8 +8,6 @@ module AutoClosingPairs: {
     };
   };
 
-  type passThroughCharacter = string;
-
   type t;
 
   let empty: t;
@@ -17,7 +15,7 @@ module AutoClosingPairs: {
   let create:
     (
       ~allowBefore: list(string)=?,
-      //~passThrough: list(passThroughCharacter)=?,
+      ~passThrough: list(string)=?,
       ~deletionPairs: list(AutoPair.t)=?,
       list(AutoPair.t)
     ) =>
