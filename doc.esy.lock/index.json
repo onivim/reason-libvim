@@ -1,5 +1,5 @@
 {
-  "checksum": "227ed52abace453187bff3cc938660ec",
+  "checksum": "af4cc383c96207a72c1d91e941a9678d",
   "root": "reason-libvim@link-dev:./package.json",
   "node": {
     "wordwrap@0.0.3@d41d8cd9": {
@@ -41,7 +41,7 @@
         ]
       },
       "overrides": [],
-      "dependencies": [ "qs@6.9.1@d41d8cd9" ],
+      "dependencies": [ "qs@6.9.2@d41d8cd9" ],
       "devDependencies": []
     },
     "secure-compare@3.0.1@d41d8cd9": {
@@ -104,7 +104,7 @@
       "overrides": [ "doc.json" ],
       "dependencies": [
         "refmterr@3.3.0@d41d8cd9", "ocaml@4.9.0@d41d8cd9",
-        "libvim@8.10869.32@d41d8cd9", "http-server@0.12.1@d41d8cd9",
+        "libvim@8.10869.33@d41d8cd9", "http-server@0.12.1@d41d8cd9",
         "editor-core-types@github:onivim/editor-core-types#6a8afaf@d41d8cd9",
         "@reason-native/rely@2.2.0@d41d8cd9",
         "@opam/odoc@opam:1.5.0@35218f5f",
@@ -116,14 +116,14 @@
         "@opam/ocaml-lsp-server@github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#5782d1d@d41d8cd9"
       ]
     },
-    "qs@6.9.1@d41d8cd9": {
-      "id": "qs@6.9.1@d41d8cd9",
+    "qs@6.9.2@d41d8cd9": {
+      "id": "qs@6.9.2@d41d8cd9",
       "name": "qs",
-      "version": "6.9.1",
+      "version": "6.9.2",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://registry.npmjs.org/qs/-/qs-6.9.1.tgz#sha1:20082c65cb78223635ab1a9eaca8875a29bf8ec9"
+          "archive:https://registry.npmjs.org/qs/-/qs-6.9.2.tgz#sha1:a27b695006544a04bf0e6c6a7e8120778926d5bd"
         ]
       },
       "overrides": [],
@@ -142,7 +142,7 @@
       },
       "overrides": [],
       "dependencies": [
-        "mkdirp@0.5.1@d41d8cd9", "debug@3.2.6@d41d8cd9",
+        "mkdirp@0.5.3@d41d8cd9", "debug@3.2.6@d41d8cd9",
         "async@2.6.3@d41d8cd9"
       ],
       "devDependencies": []
@@ -205,28 +205,28 @@
       "dependencies": [],
       "devDependencies": []
     },
-    "mkdirp@0.5.1@d41d8cd9": {
-      "id": "mkdirp@0.5.1@d41d8cd9",
+    "mkdirp@0.5.3@d41d8cd9": {
+      "id": "mkdirp@0.5.3@d41d8cd9",
       "name": "mkdirp",
-      "version": "0.5.1",
+      "version": "0.5.3",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.1.tgz#sha1:30057438eac6cf7f8c4767f38648d6697d75c903"
+          "archive:https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.3.tgz#sha1:5a514b7179259287952881e94410ec5465659f8c"
         ]
       },
       "overrides": [],
-      "dependencies": [ "minimist@0.0.8@d41d8cd9" ],
+      "dependencies": [ "minimist@1.2.5@d41d8cd9" ],
       "devDependencies": []
     },
-    "minimist@1.2.3@d41d8cd9": {
-      "id": "minimist@1.2.3@d41d8cd9",
+    "minimist@1.2.5@d41d8cd9": {
+      "id": "minimist@1.2.5@d41d8cd9",
       "name": "minimist",
-      "version": "1.2.3",
+      "version": "1.2.5",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://registry.npmjs.org/minimist/-/minimist-1.2.3.tgz#sha1:3db5c0765545ab8637be71f333a104a965a9ca3f"
+          "archive:https://registry.npmjs.org/minimist/-/minimist-1.2.5.tgz#sha1:67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
         ]
       },
       "overrides": [],
@@ -241,20 +241,6 @@
         "type": "install",
         "source": [
           "archive:https://registry.npmjs.org/minimist/-/minimist-0.0.10.tgz#sha1:de3f98543dbf96082be48ad1a0c7cda836301dcf"
-        ]
-      },
-      "overrides": [],
-      "dependencies": [],
-      "devDependencies": []
-    },
-    "minimist@0.0.8@d41d8cd9": {
-      "id": "minimist@0.0.8@d41d8cd9",
-      "name": "minimist",
-      "version": "0.0.8",
-      "source": {
-        "type": "install",
-        "source": [
-          "archive:https://registry.npmjs.org/minimist/-/minimist-0.0.8.tgz#sha1:857fcabfc3397d2625b8228262e86aa7a011b05d"
         ]
       },
       "overrides": [],
@@ -289,14 +275,14 @@
       "dependencies": [],
       "devDependencies": []
     },
-    "libvim@8.10869.32@d41d8cd9": {
-      "id": "libvim@8.10869.32@d41d8cd9",
+    "libvim@8.10869.33@d41d8cd9": {
+      "id": "libvim@8.10869.33@d41d8cd9",
       "name": "libvim",
-      "version": "8.10869.32",
+      "version": "8.10869.33",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://registry.npmjs.org/libvim/-/libvim-8.10869.32.tgz#sha1:29d13fa44b93efdaaef017806f88343cf95bc3df"
+          "archive:https://registry.npmjs.org/libvim/-/libvim-8.10869.33.tgz#sha1:b5e70eab2e856454071b1449432cabdc4d7f49e5"
         ]
       },
       "overrides": [],
@@ -411,7 +397,7 @@
       },
       "overrides": [],
       "dependencies": [
-        "url-join@2.0.5@d41d8cd9", "minimist@1.2.3@d41d8cd9",
+        "url-join@2.0.5@d41d8cd9", "minimist@1.2.5@d41d8cd9",
         "mime@1.6.0@d41d8cd9", "he@1.2.0@d41d8cd9"
       ],
       "devDependencies": []
@@ -1122,8 +1108,8 @@
         "ocaml@4.9.0@d41d8cd9", "@opam/dune@opam:2.4.0@639d28a3"
       ]
     },
-    "@opam/menhirSdk@opam:20200211@1b43927c": {
-      "id": "@opam/menhirSdk@opam:20200211@1b43927c",
+    "@opam/menhirSdk@opam:20200211@b2a79ec0": {
+      "id": "@opam/menhirSdk@opam:20200211@b2a79ec0",
       "name": "@opam/menhirSdk",
       "version": "opam:20200211",
       "source": {
@@ -1147,8 +1133,8 @@
         "ocaml@4.9.0@d41d8cd9", "@opam/dune@opam:2.4.0@639d28a3"
       ]
     },
-    "@opam/menhirLib@opam:20200211@99279102": {
-      "id": "@opam/menhirLib@opam:20200211@99279102",
+    "@opam/menhirLib@opam:20200211@93d0f001": {
+      "id": "@opam/menhirLib@opam:20200211@93d0f001",
       "name": "@opam/menhirLib",
       "version": "opam:20200211",
       "source": {
@@ -1195,14 +1181,14 @@
         }
       ],
       "dependencies": [
-        "ocaml@4.9.0@d41d8cd9", "@opam/menhirSdk@opam:20200211@1b43927c",
-        "@opam/menhirLib@opam:20200211@99279102",
+        "ocaml@4.9.0@d41d8cd9", "@opam/menhirSdk@opam:20200211@b2a79ec0",
+        "@opam/menhirLib@opam:20200211@93d0f001",
         "@opam/fix@opam:20200131@0ecd2f01", "@opam/dune@opam:2.4.0@639d28a3",
         "@esy-ocaml/substs@0.0.1@d41d8cd9"
       ],
       "devDependencies": [
-        "ocaml@4.9.0@d41d8cd9", "@opam/menhirSdk@opam:20200211@1b43927c",
-        "@opam/menhirLib@opam:20200211@99279102",
+        "ocaml@4.9.0@d41d8cd9", "@opam/menhirSdk@opam:20200211@b2a79ec0",
+        "@opam/menhirLib@opam:20200211@93d0f001",
         "@opam/dune@opam:2.4.0@639d28a3"
       ]
     },
