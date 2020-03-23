@@ -14,5 +14,16 @@ describe("Mode", ({describe, _}) => {
 
       expect.equal(Vim.Mode.getCurrent(), Vim.Types.Replace);
     })
-  })
+  });
+  describe("select mode", ({test, _}) => {
+    test("select mode is reported correctly", ({expect}) => {
+      let _ = resetBuffer();
+
+      // Enter replace mode
+      let _ = Vim.input("V");
+      let _ = Vim.input("<C-g>");
+
+      expect.equal(Vim.Mode.getCurrent(), Vim.Types.Select);
+    })
+  });
 });

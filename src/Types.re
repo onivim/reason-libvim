@@ -12,7 +12,8 @@ type mode =
   | CommandLine
   | Replace
   | Visual
-  | Operator;
+  | Operator
+  | Select;
 
 type cmdlineType =
   | Ex
