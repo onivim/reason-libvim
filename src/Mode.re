@@ -8,6 +8,7 @@ let show = (mode: t) => {
   | Replace => "Replace"
   | Operator => "Operator"
   | Insert => "Insert"
+  | Select => "Select"
   };
 };
 

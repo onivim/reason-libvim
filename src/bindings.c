@@ -357,6 +357,8 @@ CAMLprim value libvim_vimGetMode(value unit) {
     val = 2;
   } else if ((mode & VISUAL) == VISUAL) {
     val = 4;
+  } else if ((mode & SELECTMODE) == SELECTMODE) {
+    val = 6;
   } else if ((mode & OP_PENDING) == OP_PENDING) {
     val = 5;
   }
