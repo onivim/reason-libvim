@@ -1,5 +1,5 @@
 {
-  "checksum": "af4cc383c96207a72c1d91e941a9678d",
+  "checksum": "a656cba3da60fd88efe909f86be027be",
   "root": "reason-libvim@link-dev:./package.json",
   "node": {
     "wordwrap@0.0.3@d41d8cd9": {
@@ -104,7 +104,7 @@
       "overrides": [ "doc.json" ],
       "dependencies": [
         "refmterr@3.3.0@d41d8cd9", "ocaml@4.9.0@d41d8cd9",
-        "libvim@8.10869.33@d41d8cd9", "http-server@0.12.1@d41d8cd9",
+        "libvim@8.10869.34@d41d8cd9", "http-server@0.12.1@d41d8cd9",
         "editor-core-types@github:onivim/editor-core-types#6a8afaf@d41d8cd9",
         "@reason-native/rely@2.2.0@d41d8cd9",
         "@opam/odoc@opam:1.5.0@35218f5f",
@@ -142,7 +142,7 @@
       },
       "overrides": [],
       "dependencies": [
-        "mkdirp@0.5.3@d41d8cd9", "debug@3.2.6@d41d8cd9",
+        "mkdirp@0.5.4@d41d8cd9", "debug@3.2.6@d41d8cd9",
         "async@2.6.3@d41d8cd9"
       ],
       "devDependencies": []
@@ -205,14 +205,14 @@
       "dependencies": [],
       "devDependencies": []
     },
-    "mkdirp@0.5.3@d41d8cd9": {
-      "id": "mkdirp@0.5.3@d41d8cd9",
+    "mkdirp@0.5.4@d41d8cd9": {
+      "id": "mkdirp@0.5.4@d41d8cd9",
       "name": "mkdirp",
-      "version": "0.5.3",
+      "version": "0.5.4",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.3.tgz#sha1:5a514b7179259287952881e94410ec5465659f8c"
+          "archive:https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.4.tgz#sha1:fd01504a6797ec5c9be81ff43d204961ed64a512"
         ]
       },
       "overrides": [],
@@ -275,14 +275,14 @@
       "dependencies": [],
       "devDependencies": []
     },
-    "libvim@8.10869.33@d41d8cd9": {
-      "id": "libvim@8.10869.33@d41d8cd9",
+    "libvim@8.10869.34@d41d8cd9": {
+      "id": "libvim@8.10869.34@d41d8cd9",
       "name": "libvim",
-      "version": "8.10869.33",
+      "version": "8.10869.34",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://registry.npmjs.org/libvim/-/libvim-8.10869.33.tgz#sha1:b5e70eab2e856454071b1449432cabdc4d7f49e5"
+          "archive:https://registry.npmjs.org/libvim/-/libvim-8.10869.34.tgz#sha1:89d8ba2594bce71cdc66273200f483fd874c93f6"
         ]
       },
       "overrides": [],
