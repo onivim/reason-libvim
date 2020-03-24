@@ -90,6 +90,8 @@ describe("Buffer", ({describe, _}) => {
       expect.int(bu.endLine).toBe(4);
       expect.int(Array.length(bu.lines)).toBe(1);
       expect.string(bu.lines[0]).toEqual("abc");
+
+      dispose();
     });
     test("add a line at end", ({expect}) => {
       let buffer = resetBuffer();
