@@ -121,7 +121,8 @@ let _onBufferChanged =
 
   BufferInternal.notifyUpdate(buffer);
 
-  queue(() => Event.dispatch(update, Listeners.bufferUpdate));
+  // TODO: Fix this up
+  Event.dispatch(update, Listeners.bufferUpdate);
 };
 
 let _onDirectoryChanged = _ => {
