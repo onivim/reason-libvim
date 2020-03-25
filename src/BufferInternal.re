@@ -37,9 +37,7 @@ let doFullUpdate = (buffer: t) => {
   notifyUpdate(buffer);
   Event.dispatch(bu, Listeners.bufferUpdate);
 };
-
-let checkCurrentBufferForUpdate = () => {
-  let buffer = Native.vimBufferGetCurrent();
+let checkBufferForUpdate = buffer => {
   let id = Native.vimBufferGetId(buffer);
 
   switch (IntMap.find_opt(id, knownBuffers^)) {
@@ -90,4 +88,9 @@ let checkCurrentBufferForUpdate = () => {
       doFullUpdate(buffer);
     };
   };
+};
+
+let checkCurrentBufferForUpdate = () => {
+  let buffer = Native.vimBufferGetCurrent();
+  checkBufferForUpdate(buffer);
 };

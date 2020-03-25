@@ -10,6 +10,9 @@ describe("Buffer", ({describe, _}) => {
     test("add a line at beginning", ({expect}) => {
       let buffer = resetBuffer();
 
+      let updates: ref(list(BufferUpdate.t)) = ref([]);
+      let dispose = Buffer.onUpdate(upd => updates := [upd, ...updates^]);
+
       Buffer.setLines(~stop=Index.zero, ~lines=[|"abc"|], buffer);
       let line0 = Buffer.getLine(buffer, Index.zero);
       let line1 = Buffer.getLine(buffer, Index.(zero + 1));
@@ -17,6 +20,16 @@ describe("Buffer", ({describe, _}) => {
       expect.int(lineCount).toBe(4);
       expect.string(line0).toEqual("abc");
       expect.string(line1).toEqual("This is the first line of a test file");
+
+      expect.int(List.length(updates^)).toBe(1);
+      let bu: BufferUpdate.t = List.hd(updates^);
+
+      expect.int(bu.startLine).toBe(1);
+      expect.int(bu.endLine).toBe(1);
+      expect.int(Array.length(bu.lines)).toBe(1);
+      expect.string(bu.lines[0]).toEqual("abc");
+
+      dispose();
     });
     test("change line in middle", ({expect}) => {
       let buffer = resetBuffer();
@@ -61,11 +74,24 @@ describe("Buffer", ({describe, _}) => {
     test("replace whole buffer - not setting start / stop", ({expect}) => {
       let buffer = resetBuffer();
 
+      let updates: ref(list(BufferUpdate.t)) = ref([]);
+      let dispose = Buffer.onUpdate(upd => updates := [upd, ...updates^]);
+
       Buffer.setLines(~lines=[|"abc"|], buffer);
       let lineCount = Buffer.getLineCount(buffer);
       let line0 = Buffer.getLine(buffer, Index.zero);
       expect.int(lineCount).toBe(1);
       expect.string(line0).toEqual("abc");
+
+      expect.int(List.length(updates^)).toBe(1);
+      let bu: BufferUpdate.t = List.hd(updates^);
+
+      expect.int(bu.startLine).toBe(1);
+      expect.int(bu.endLine).toBe(4);
+      expect.int(Array.length(bu.lines)).toBe(1);
+      expect.string(bu.lines[0]).toEqual("abc");
+
+      dispose();
     });
     test("add a line at end", ({expect}) => {
       let buffer = resetBuffer();
