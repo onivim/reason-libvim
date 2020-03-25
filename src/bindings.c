@@ -47,7 +47,7 @@ void onBufferChanged(bufferUpdate_T bu) {
   free(pArgs);
 }
 
-void onGoto(gotoRequest_T gotoInfo) {
+int onGoto(gotoRequest_T gotoInfo) {
   static const value *lv_onGoto = NULL;
 
   if (lv_onGoto == NULL) {
