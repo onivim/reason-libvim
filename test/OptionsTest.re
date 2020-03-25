@@ -5,7 +5,7 @@ open TestFramework;
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 let input = s => ignore(Vim.input(s));
 
-describe("Options", ({describe, _}) =>
+describe("Options", ({describe, _}) => {
   describe("tabs / spaces", ({test, _}) => {
     test("get / set tab options", ({expect}) => {
       let _ = resetBuffer();
@@ -67,5 +67,39 @@ describe("Options", ({describe, _}) =>
         "\tThis is the first line of a test file",
       );
     });
-  })
-);
+  });
+
+  describe("line comment", ({test, _}) => {
+    test("toggle comment based on settings", ({expect}) => {
+      let b = resetBuffer();
+
+      Options.setLineComment("; ");
+
+      input("g");
+      input("c");
+      input("c");
+
+      expect.string(Buffer.getLine(b, Index.zero)).toEqual(
+        "; This is the first line of a test file",
+      );
+
+      input("g");
+      input("c");
+      input("c");
+
+      expect.string(Buffer.getLine(b, Index.zero)).toEqual(
+        "This is the first line of a test file",
+      );
+
+      Options.setLineComment("!!");
+
+      input("g");
+      input("c");
+      input("c");
+
+      expect.string(Buffer.getLine(b, Index.zero)).toEqual(
+        "!!This is the first line of a test file",
+      );
+    })
+  });
+});
