@@ -30,7 +30,7 @@ static value Val_highlight(searchHighlight_T hl) {
 }
 
 void onBufferChanged(bufferUpdate_T bu) {
-  static value *lv_onBufferChanged = NULL;
+  static const value *lv_onBufferChanged = NULL;
 
   if (lv_onBufferChanged == NULL) {
     lv_onBufferChanged = caml_named_value("lv_onBufferChanged");
@@ -47,8 +47,8 @@ void onBufferChanged(bufferUpdate_T bu) {
   free(pArgs);
 }
 
-void onGoto(gotoRequest_T gotoInfo) {
-  static value *lv_onGoto = NULL;
+int onGoto(gotoRequest_T gotoInfo) {
+  static const value *lv_onGoto = NULL;
 
   if (lv_onGoto == NULL) {
     lv_onGoto = caml_named_value("lv_onGoto");
@@ -72,7 +72,7 @@ void onGoto(gotoRequest_T gotoInfo) {
 }
 
 void onAutocommand(event_T event, buf_T *buf) {
-  static value *lv_onAutocmd = NULL;
+  static const value *lv_onAutocmd = NULL;
 
   if (lv_onAutocmd == NULL) {
     lv_onAutocmd = caml_named_value("lv_onAutocommand");
@@ -84,7 +84,7 @@ void onAutocommand(event_T event, buf_T *buf) {
 void onDirectoryChanged(char_u *path) {
   CAMLparam0();
   CAMLlocal1(pathString);
-  static value *lv_onDirectoryChanged = NULL;
+  static const value *lv_onDirectoryChanged = NULL;
 
   if (lv_onDirectoryChanged == NULL) {
     lv_onDirectoryChanged = caml_named_value("lv_onDirectoryChanged");
@@ -99,7 +99,7 @@ void onMessage(char_u *title, char_u *contents, msgPriority_T priority) {
   CAMLparam0();
   CAMLlocal2(titleString, contentsString);
 
-  static value *lv_onMessage = NULL;
+  static const value *lv_onMessage = NULL;
 
   if (lv_onMessage == NULL) {
     lv_onMessage = caml_named_value("lv_onMessage");
@@ -115,7 +115,7 @@ void onTerminal(terminalRequest_t *pRequest) {
   CAMLparam0();
   CAMLlocal2(ret, commandString);
 
-  static value *lv_onTerminal = NULL;
+  static const value *lv_onTerminal = NULL;
 
   if (lv_onTerminal == NULL) {
     lv_onTerminal = caml_named_value("lv_onTerminal");
@@ -139,7 +139,7 @@ void onQuit(buf_T *buf, int isForced) {
   CAMLparam0();
   CAMLlocal1(quitResult);
 
-  static value *lv_onQuit = NULL;
+  static const value *lv_onQuit = NULL;
 
   if (lv_onQuit == NULL) {
     lv_onQuit = caml_named_value("lv_onQuit");
@@ -159,7 +159,7 @@ void onQuit(buf_T *buf, int isForced) {
 void onUnhandledEscape() {
   CAMLparam0();
 
-  static value *lv_onUnhandledEscape = NULL;
+  static const value *lv_onUnhandledEscape = NULL;
 
   if (lv_onUnhandledEscape == NULL) {
     lv_onUnhandledEscape = caml_named_value("lv_onUnhandledEscape");
@@ -171,7 +171,7 @@ void onUnhandledEscape() {
 void onStopSearch(void) {
   CAMLparam0();
 
-  static value *lv_onStopSearch = NULL;
+  static const value *lv_onStopSearch = NULL;
 
   if (lv_onStopSearch == NULL) {
     lv_onStopSearch = caml_named_value("lv_onStopSearch");
@@ -184,7 +184,7 @@ void onStopSearch(void) {
 void onWindowMovement(windowMovement_T movementType, int count) {
   CAMLparam0();
 
-  static value *lv_onWindowMovement = NULL;
+  static const value *lv_onWindowMovement = NULL;
 
   if (lv_onWindowMovement == NULL) {
     lv_onWindowMovement = caml_named_value("lv_onWindowMovement");
@@ -197,7 +197,7 @@ void onWindowMovement(windowMovement_T movementType, int count) {
 void onIntro() {
   CAMLparam0();
 
-  static value *lv_onIntro = NULL;
+  static const value *lv_onIntro = NULL;
 
   if (lv_onIntro == NULL) {
     lv_onIntro = caml_named_value("lv_onIntro");
@@ -210,7 +210,7 @@ void onIntro() {
 void onVersion() {
   CAMLparam0();
 
-  static value *lv_onVersion = NULL;
+  static const value *lv_onVersion = NULL;
 
   if (lv_onVersion == NULL) {
     lv_onVersion = caml_named_value("lv_onVersion");
@@ -224,7 +224,7 @@ void onWindowSplit(windowSplit_T splitType, char_u *path) {
   CAMLparam0();
   CAMLlocal1(pathString);
 
-  static value *lv_onWindowSplit = NULL;
+  static const value *lv_onWindowSplit = NULL;
 
   if (lv_onWindowSplit == NULL) {
     lv_onWindowSplit = caml_named_value("lv_onWindowSplit");
@@ -239,7 +239,7 @@ int getClipboardCallback(int regname, int *num_lines, char_u ***lines) {
   CAMLparam0();
   CAMLlocal1(clipboardArray);
 
-  static value *lv_clipboardGet = NULL;
+  static const value *lv_clipboardGet = NULL;
 
   if (lv_clipboardGet == NULL) {
     lv_clipboardGet = caml_named_value("lv_clipboardGet");
@@ -276,7 +276,7 @@ void onYank(yankInfo_T *yankInfo) {
   CAMLparam0();
   CAMLlocal1(lines);
 
-  static value *lv_onYank = NULL;
+  static const value *lv_onYank = NULL;
   if (lv_onYank == NULL) {
     lv_onYank = caml_named_value("lv_onYank");
   }
