@@ -642,6 +642,12 @@ CAMLprim value libvim_vimOptionSetInsertSpaces(value v) {
   return Val_unit;
 }
 
+CAMLprim value libvim_vimOptionSetLineComment(value v) {
+  char *str = String_val(v);
+  vimOptionSetLineComment(str);
+  return Val_unit;
+}
+
 CAMLprim value libvim_vimOptionGetInsertSpaces(value unit) {
   int insertSpaces = vimOptionGetInsertSpaces();
   return Val_bool(insertSpaces);
