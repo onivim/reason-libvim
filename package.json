@@ -1,6 +1,6 @@
 {
   "name": "reason-libvim",
-  "version": "8.10869.26000",
+  "version": "8.10869.36000",
   "description": "Reason adapter for libvim",
   "license": "MIT",
   "scripts": {
@@ -18,7 +18,7 @@
     "@esy-ocaml/reason": "^3.4.0",
     "refmterr": "*",
     "ocaml": ">=4.7.0 <4.10.0",
-    "libvim": "8.10869.35",
+    "libvim": "8.10869.36",
     "editor-core-types": "onivim/editor-core-types#6a8afaf"
   },
   "resolutions": {
