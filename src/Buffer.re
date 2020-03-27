@@ -13,6 +13,12 @@ let getFilename = (buffer: t) => {
   Native.vimBufferGetFilename(buffer);
 };
 
+let isReadOnly = Native.vimBufferIsReadOnly;
+let setReadOnly = (~readOnly) => Native.vimBufferSetReadOnly(readOnly);
+let isModifiable = Native.vimBufferIsModifiable;
+let setModifiable = (~modifiable) =>
+  Native.vimBufferSetModifiable(modifiable);
+
 let getFiletype = (buffer: t) => {
   Native.vimBufferGetFiletype(buffer);
 };

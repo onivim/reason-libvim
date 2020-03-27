@@ -23,6 +23,14 @@ external vimBufferSetCurrent: buffer => unit = "libvim_vimBufferSetCurrent";
 external vimBufferSetLines: (buffer, int, int, array(string)) => unit =
   "libvim_vimBufferSetLines";
 
+external vimBufferIsReadOnly: buffer => bool = "libvim_vimBufferGetReadOnly";
+external vimBufferIsModifiable: buffer => bool =
+  "libvim_vimBufferGetModifiable";
+external vimBufferSetReadOnly: (bool, buffer) => unit =
+  "libvim_vimBufferSetReadOnly";
+external vimBufferSetModifiable: (bool, buffer) => unit =
+  "libvim_vimBufferSetModifiable";
+
 external vimCommandLineGetCompletions: unit => array(string) =
   "libvim_vimCommandLineGetCompletions";
 external vimCommandLineGetPosition: unit => int =
