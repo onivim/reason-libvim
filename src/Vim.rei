@@ -27,7 +27,7 @@ module AutoClosingPairs: {
 };
 
 module Buffer: {
-  type t;
+  type t = Native.buffer;
 
   /**
   [openFile(path)] opens a file, sets it as the active buffer, and returns a handle to the buffer.

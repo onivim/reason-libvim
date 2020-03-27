@@ -372,6 +372,32 @@ CAMLprim value libvim_vimBufferGetId(value v) {
   return Val_int(id);
 }
 
+CAMLprim value libvim_vimBufferGetReadOnly(value vBuf) {
+  buf_T *buf = (buf_T *)vBuf;
+  int readonly = vimBufferGetReadOnly(buf);
+  return Val_bool(readonly);
+}
+
+CAMLprim value libvim_vimBufferSetReadOnly(value vReadOnly, value vBuf) {
+  buf_T *buf = (buf_T *)vBuf;
+  int readOnly = Bool_val(vReadOnly);
+  vimBufferSetReadOnly(buf, readOnly);
+  return Val_unit;
+}
+
+CAMLprim value libvim_vimBufferGetModifiable(value vBuf) {
+  buf_T *buf = (buf_T *)vBuf;
+  int modifiable = vimBufferGetModifiable(buf);
+  return Val_bool(modifiable);
+}
+
+CAMLprim value libvim_vimBufferSetModifiable(value vMod, value vBuf) {
+  buf_T *buf = (buf_T *)vBuf;
+  int modifiable = Bool_val(vMod);
+  vimBufferSetModifiable(buf, modifiable);
+  return Val_unit;
+}
+
 CAMLprim value libvim_vimBufferOpen(value v) {
   CAMLparam1(v);
   char_u *s;

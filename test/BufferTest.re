@@ -6,6 +6,27 @@ let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 let input = s => ignore(Vim.input(s));
 
 describe("Buffer", ({describe, _}) => {
+  describe("read-only", ({test, _}) => {
+    test("get / set", ({expect}) => {
+      let buffer = resetBuffer();
+
+      Buffer.setReadOnly(~readOnly=true, buffer);
+      expect.equal(Buffer.isReadOnly(buffer), true);
+
+      Buffer.setReadOnly(~readOnly=false, buffer);
+      expect.equal(Buffer.isReadOnly(buffer), false);
+    })
+  });
+  describe("modifiable", ({test, _}) => {
+    test("get / set", ({expect}) => {
+      let buffer = resetBuffer();
+      Buffer.setModifiable(~modifiable=false, buffer);
+      expect.equal(Buffer.isModifiable(buffer), false);
+
+      Buffer.setModifiable(~modifiable=true, buffer);
+      expect.equal(Buffer.isModifiable(buffer), true);
+    })
+  });
   describe("setLines", ({test, _}) => {
     test("add a line at beginning", ({expect}) => {
       let buffer = resetBuffer();
