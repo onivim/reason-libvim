@@ -23,6 +23,12 @@ external vimBufferSetCurrent: buffer => unit = "libvim_vimBufferSetCurrent";
 external vimBufferSetLines: (buffer, int, int, array(string)) => unit =
   "libvim_vimBufferSetLines";
 
+let vimBufferIsReadOnly = buffer => failwith("Not implemented");
+let vimBufferSetReadOnly = (readOnly, buffer) => failwith("Not implemented");
+let vimBufferIsModifiable = buffer => failwith("Not implemented");
+let vimBufferSetModifiable = (modifiable, buffer) =>
+  failwith("Not implemented");
+
 external vimCommandLineGetCompletions: unit => array(string) =
   "libvim_vimCommandLineGetCompletions";
 external vimCommandLineGetPosition: unit => int =

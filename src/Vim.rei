@@ -27,7 +27,8 @@ module AutoClosingPairs: {
 };
 
 module Buffer: {
-  
+  type t;
+
   /**
   [openFile(path)] opens a file, sets it as the active buffer, and returns a handle to the buffer.
   */
@@ -79,6 +80,12 @@ module Buffer: {
   [getCurrent()] returns the currently active buffer.
   */
   let getCurrent: unit => t;
+
+  let isReadOnly: t => bool;
+  let setReadOnly: (~readOnly: bool, t) => unit;
+
+  let isModifiable: t => bool;
+  let setModifiable: (~modifiable: bool, t) => unit;
 
   /**
   [setCurrent(buffer)] sets the active buffer to [buffer].
@@ -146,7 +153,7 @@ module Buffer: {
   Returns a function that can be called to unsubscribe.
   */
   let onWrite: Listeners.bufferWriteListener => Event.unsubscribe;
-}
+};
 
 /**
 [init] must be called prior to [input] or [command], and must only be called once.
@@ -250,7 +257,6 @@ this could happen as a result of a yank or a delete command.
 let onYank: Listeners.yankListener => Event.unsubscribe;
 
 module AutoCommands = AutoCommands;
-module Buffer = Buffer;
 module BufferMetadata = BufferMetadata;
 module BufferUpdate = BufferUpdate;
 module Clipboard = Clipboard;
