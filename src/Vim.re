@@ -182,6 +182,10 @@ let _onYank =
   );
 };
 
+let _onWriteFailure = (reason, buffer) => {
+  queue(() => Event.dispatch2(reason, buffer, Listeners.writeFailure));
+};
+
 let _onStopSearch = () => {
   queue(() => Event.dispatch((), Listeners.stopSearchHighlight));
 };
@@ -230,6 +234,7 @@ let init = () => {
   Callback.register("lv_onWindowSplit", _onWindowSplit);
   Callback.register("lv_onVersion", _onVersion);
   Callback.register("lv_onYank", _onYank);
+  Callback.register("lv_onWriteFailure", _onWriteFailure);
 
   Native.vimInit();
 
@@ -374,4 +379,8 @@ let onVersion = f => {
 
 let onYank = f => {
   Event.add(f, Listeners.yank);
+};
+
+let onWriteFailure = f => {
+  Event.add2(f, Listeners.writeFailure);
 };

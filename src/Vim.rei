@@ -256,6 +256,13 @@ this could happen as a result of a yank or a delete command.
 */
 let onYank: Listeners.yankListener => Event.unsubscribe;
 
+/**
+[onWriteFailure(f)] registers a write failure listener [f]
+
+[f] is called whenever a buffer fails to write to disk.
+*/
+let onWriteFailure: Listeners.writeFailureListener => Event.unsubscribe;
+
 module AutoCommands = AutoCommands;
 module BufferMetadata = BufferMetadata;
 module BufferUpdate = BufferUpdate;
