@@ -1,5 +1,5 @@
 {
-  "checksum": "29ddb5496cde2f37f830332af260ef1b",
+  "checksum": "3aa12ac12af52f7df37314261c18e27a",
   "root": "reason-libvim@link-dev:./package.json",
   "node": {
     "wordwrap@0.0.3@d41d8cd9": {
@@ -104,7 +104,7 @@
       "overrides": [ "doc.json" ],
       "dependencies": [
         "refmterr@3.3.0@d41d8cd9", "ocaml@4.9.0@d41d8cd9",
-        "libvim@8.10869.38@d41d8cd9", "http-server@0.12.1@d41d8cd9",
+        "libvim@8.10869.39@d41d8cd9", "http-server@0.12.1@d41d8cd9",
         "editor-core-types@github:onivim/editor-core-types#6a8afaf@d41d8cd9",
         "@reason-native/rely@2.2.0@d41d8cd9",
         "@opam/odoc@opam:1.5.0@35218f5f",
@@ -275,14 +275,14 @@
       "dependencies": [],
       "devDependencies": []
     },
-    "libvim@8.10869.38@d41d8cd9": {
-      "id": "libvim@8.10869.38@d41d8cd9",
+    "libvim@8.10869.39@d41d8cd9": {
+      "id": "libvim@8.10869.39@d41d8cd9",
       "name": "libvim",
-      "version": "8.10869.38",
+      "version": "8.10869.39",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://registry.npmjs.org/libvim/-/libvim-8.10869.38.tgz#sha1:cc86d6427fd15c514a69576a23cb29daad752953"
+          "archive:https://registry.npmjs.org/libvim/-/libvim-8.10869.39.tgz#sha1:1c525b5e06314c6270175b99680c7b8d37ee3340"
         ]
       },
       "overrides": [],
@@ -321,7 +321,7 @@
       },
       "overrides": [],
       "dependencies": [
-        "requires-port@1.0.0@d41d8cd9", "follow-redirects@1.10.0@d41d8cd9",
+        "requires-port@1.0.0@d41d8cd9", "follow-redirects@1.11.0@d41d8cd9",
         "eventemitter3@4.0.0@d41d8cd9"
       ],
       "devDependencies": []
@@ -340,14 +340,14 @@
       "dependencies": [],
       "devDependencies": []
     },
-    "follow-redirects@1.10.0@d41d8cd9": {
-      "id": "follow-redirects@1.10.0@d41d8cd9",
+    "follow-redirects@1.11.0@d41d8cd9": {
+      "id": "follow-redirects@1.11.0@d41d8cd9",
       "name": "follow-redirects",
-      "version": "1.10.0",
+      "version": "1.11.0",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.10.0.tgz#sha1:01f5263aee921c6a54fb91667f08f4155ce169eb"
+          "archive:https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.11.0.tgz#sha1:afa14f08ba12a52963140fe43212658897bc0ecb"
         ]
       },
       "overrides": [],
