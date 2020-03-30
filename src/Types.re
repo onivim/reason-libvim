@@ -62,6 +62,9 @@ type windowMovementType =
   | RotateDownwards
   | RotateUpwards;
 
+type writeFailureReason =
+  | FileChanged;
+
 type terminalRequest = {
   rows: int,
   columns: int,

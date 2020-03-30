@@ -306,6 +306,19 @@ void onYank(yankInfo_T *yankInfo) {
   CAMLreturn0;
 }
 
+void onWriteFailure(writeFailureReason_T reason, buf_T *buf) {
+  CAMLparam0();
+
+  static const value *lv_onWriteFailure = NULL;
+  if (lv_onWriteFailure == NULL) {
+    lv_onWriteFailure = caml_named_value("lv_onWriteFailure");
+  }
+
+  caml_callback2(*lv_onWriteFailure, reason, (value)buf);
+
+  CAMLreturn0;
+}
+
 CAMLprim value libvim_vimInit(value unit) {
   vimSetAutoCommandCallback(&onAutocommand);
   vimSetBufferUpdateCallback(&onBufferChanged);
@@ -322,6 +335,7 @@ CAMLprim value libvim_vimInit(value unit) {
   vimSetWindowMovementCallback(&onWindowMovement);
   vimSetWindowSplitCallback(&onWindowSplit);
   vimSetYankCallback(&onYank);
+  vimSetFileWriteFailureCallback(&onWriteFailure);
 
   char *args[0];
   vimInit(0, args);
