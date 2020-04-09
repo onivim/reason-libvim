@@ -68,10 +68,10 @@ type writeFailureReason =
 type terminalRequest = {
   rows: int,
   columns: int,
-  finish: bool,
+  closeOnFinish: bool,
   curwin: bool,
   hidden: bool,
-  cmd: string,
+  cmd: option(string),
 };
 
 /**

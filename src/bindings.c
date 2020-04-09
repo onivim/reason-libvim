@@ -113,7 +113,7 @@ void onMessage(char_u *title, char_u *contents, msgPriority_T priority) {
 
 void onTerminal(terminalRequest_t *pRequest) {
   CAMLparam0();
-  CAMLlocal2(ret, commandString);
+  CAMLlocal3(ret, commandString, commandOpt);
 
   static const value *lv_onTerminal = NULL;
 
@@ -121,15 +121,20 @@ void onTerminal(terminalRequest_t *pRequest) {
     lv_onTerminal = caml_named_value("lv_onTerminal");
   }
 
-  commandString = caml_copy_string(pRequest->cmd);
+  if (pRequest->cmd != NULL) {
+    commandString = caml_copy_string(pRequest->cmd);
+    commandOpt = Val_some(commandString);
+  } else {
+    commandOpt = Val_none;
+  }
 
   ret = caml_alloc(6, 0);
   Store_field(ret, 0, Val_int(pRequest->rows));
   Store_field(ret, 1, Val_int(pRequest->cols));
-  Store_field(ret, 2, Val_bool(pRequest->finish));
+  Store_field(ret, 2, Val_bool(pRequest->finish == 'c'));
   Store_field(ret, 3, Val_bool(pRequest->curwin));
   Store_field(ret, 4, Val_bool(pRequest->hidden));
-  Store_field(ret, 5, commandString);
+  Store_field(ret, 5, commandOpt);
 
   caml_callback(*lv_onTerminal, ret);
   CAMLreturn0;
