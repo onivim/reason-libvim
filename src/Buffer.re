@@ -56,6 +56,14 @@ let setCurrent = (buffer: t) => {
   BufferInternal.checkCurrentBufferForUpdate();
 };
 
+let getLineEndings = (buffer: t) => {
+  None 
+};
+
+let setLineEndings = (buffer, lineEndings) => {
+  ();
+}
+
 let setLines = (~start=?, ~stop=?, ~lines, buffer) => {
   let startLine =
     switch (start) {
