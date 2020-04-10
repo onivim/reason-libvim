@@ -3,6 +3,7 @@ open Types;
 
 type autocmdListener = (autocmd, Native.buffer) => unit;
 type bufferListener = Native.buffer => unit;
+type bufferLineEndingsChangedListener = (int, lineEnding) => unit;
 type bufferModifiedChangedListener = (int, bool) => unit;
 type bufferMetadataChangedListener = BufferMetadata.t => unit;
 type bufferWriteListener = int => unit;
@@ -28,6 +29,8 @@ let bufferEnter: ref(list(bufferListener)) = ref([]);
 let bufferFilenameChanged: ref(list(bufferMetadataChangedListener)) =
   ref([]);
 let bufferFiletypeChanged: ref(list(bufferMetadataChangedListener)) =
+  ref([]);
+let bufferLineEndingsChanged: ref(list(bufferLineEndingsChangedListener)) =
   ref([]);
 let bufferModifiedChanged: ref(list(bufferModifiedChangedListener)) =
   ref([]);

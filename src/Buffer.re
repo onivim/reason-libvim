@@ -62,6 +62,12 @@ let getLineEndings = (buffer: t) => {
 
 let setLineEndings = (buffer, lineEnding) => {
   Native.vimBufferSetFileFormat(buffer, lineEnding);
+  let newLineEndings = getLineEndings(buffer);
+  let id = getId(buffer);
+  newLineEndings
+  |> Option.iter(lineEndings =>
+       Event.dispatch2(id, lineEndings, Listeners.bufferLineEndingsChanged)
+     );
 };
 
 let setLines = (~start=?, ~stop=?, ~lines, buffer) => {
@@ -98,6 +104,10 @@ let onFilenameChanged = (f: Listeners.bufferMetadataChangedListener) => {
 
 let onFiletypeChanged = (f: Listeners.bufferMetadataChangedListener) => {
   Event.add(f, Listeners.bufferFiletypeChanged);
+};
+
+let onLineEndingsChanged = (f: (int, Types.lineEnding) => unit) => {
+  Event.add2(f, Listeners.bufferLineEndingsChanged);
 };
 
 let onWrite = (f: Listeners.bufferWriteListener) => {

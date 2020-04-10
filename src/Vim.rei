@@ -123,6 +123,9 @@ module Buffer: {
   */
   let onEnter: Listeners.bufferListener => Event.unsubscribe;
 
+  let onLineEndingsChanged:
+    Listeners.bufferLineEndingsChangedListener => Event.unsubscribe;
+
   /**
   [onModifiedChanged(f)] adds a listener [f] that is called when a buffer's modified
   state _changes._ [f(id, modified)] is called where [id] is the [id] of the affected
