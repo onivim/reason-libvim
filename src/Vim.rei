@@ -1,9 +1,9 @@
 open EditorCoreTypes;
 
-type lineEndings = 
-| CR
-| LF
-| CRLF;
+type lineEnding =
+  | CR
+  | LF
+  | CRLF;
 
 module AutoClosingPairs: {
   module AutoPair: {
@@ -49,9 +49,9 @@ module Buffer: {
   */
   let getFiletype: t => option(string);
 
-  let getLineEndings: t => option(lineEndings);
+  let getLineEndings: t => option(lineEnding);
 
-  let setLineEndings: (t, lineEndings) => unit;
+  let setLineEndings: (t, lineEnding) => unit;
 
   /**
   [getVersion(buffer)] returns the latest changedtick of the buffer [buffer].

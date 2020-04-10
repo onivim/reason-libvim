@@ -455,6 +455,61 @@ CAMLprim value libvim_vimBufferGetFilename(value v) {
   CAMLreturn(ret);
 }
 
+CAMLprim value libvim_vimBufferGetFileFormat(value v) {
+  CAMLparam1(v);
+  CAMLlocal1(ret);
+  buf_T *buf = (buf_T *)v;
+
+  if (buf == NULL) {
+    ret = Val_none;
+  } else {
+    int format = vimBufferGetFileFormat(buf);
+    switch (format) {
+      case EOL_UNIX:
+        ret = Val_some(Val_int(1));
+        break;
+      case EOL_DOS:
+        ret = Val_some(Val_int(2));
+        break;
+      case EOL_MAC:
+        ret = Val_some(Val_int(0));
+        break;
+      default:
+        ret = Val_none;
+        break;
+    }
+  }
+  
+
+  CAMLreturn(ret);
+}
+
+CAMLprim value libvim_vimBufferSetFileFormat(value v, value vFormat) {
+  CAMLparam2(v, vFormat);
+  buf_T *buf = (buf_T *)v;
+
+  if (buf != NULL) {
+    int format = Int_val(vFormat);
+
+    switch (format) {
+    case 0:
+      vimBufferSetFileFormat(buf, EOL_MAC);
+      break;
+    case 1:
+      vimBufferSetFileFormat(buf, EOL_UNIX);
+      break;
+    case 2:
+      vimBufferSetFileFormat(buf, EOL_DOS);
+      break;
+    default:
+      // no-op
+      break;
+    }
+  }
+
+  CAMLreturn(Val_unit);
+}
+
 CAMLprim value libvim_vimBufferGetModified(value v) {
   buf_T *buf = (buf_T *)v;
 

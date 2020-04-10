@@ -2,10 +2,10 @@ type buffer;
 
 type clipboardProvider = int => option(array(string));
 
-type lineEndings =
-| CR
-| LF
-| CRLF;
+type lineEnding =
+  | CR
+  | LF
+  | CRLF;
 
 type gotoType =
   | Definition

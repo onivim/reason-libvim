@@ -57,12 +57,12 @@ let setCurrent = (buffer: t) => {
 };
 
 let getLineEndings = (buffer: t) => {
-  None 
+  Native.vimBufferGetFileFormat(buffer);
 };
 
-let setLineEndings = (buffer, lineEndings) => {
-  ();
-}
+let setLineEndings = (buffer, lineEnding) => {
+  Native.vimBufferSetFileFormat(buffer, lineEnding);
+};
 
 let setLines = (~start=?, ~stop=?, ~lines, buffer) => {
   let startLine =
