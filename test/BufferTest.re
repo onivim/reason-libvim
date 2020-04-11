@@ -6,6 +6,31 @@ let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 let input = s => ignore(Vim.input(s));
 
 describe("Buffer", ({describe, _}) => {
+  describe("fileformats", ({test, _}) => {
+    test("get / set", ({expect}) => {
+      let buffer = resetBuffer();
+
+      Buffer.setLineEndings(buffer, CRLF);
+      let lineEndings = Buffer.getLineEndings(buffer);
+      expect.equal(lineEndings, Some(CRLF));
+
+      Buffer.setLineEndings(buffer, LF);
+      let lineEndings = Buffer.getLineEndings(buffer);
+      expect.equal(lineEndings, Some(LF));
+    });
+    test("get: crlf", ({expect}) => {
+      let buffer = Helpers.resetBuffer("test/test.crlf");
+      let lineEndings = Buffer.getLineEndings(buffer);
+
+      expect.equal(lineEndings, Some(CRLF));
+    });
+    test("get: lf", ({expect}) => {
+      let buffer = Helpers.resetBuffer("test/test.lf");
+      let lineEndings = Buffer.getLineEndings(buffer);
+
+      expect.equal(lineEndings, Some(LF));
+    });
+  });
   describe("read-only", ({test, _}) => {
     test("get / set", ({expect}) => {
       let buffer = resetBuffer();

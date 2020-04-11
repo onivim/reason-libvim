@@ -1,5 +1,10 @@
 open EditorCoreTypes;
 
+type lineEnding =
+  | CR
+  | LF
+  | CRLF;
+
 module AutoClosingPairs: {
   module AutoPair: {
     type t = {
@@ -43,6 +48,10 @@ module Buffer: {
   [getFiletype(buffer)] returns the filetype of the buffer [buffer]
   */
   let getFiletype: t => option(string);
+
+  let getLineEndings: t => option(lineEnding);
+
+  let setLineEndings: (t, lineEnding) => unit;
 
   /**
   [getVersion(buffer)] returns the latest changedtick of the buffer [buffer].
@@ -113,6 +122,9 @@ module Buffer: {
   Returns a function that can be called to unsubscribe.
   */
   let onEnter: Listeners.bufferListener => Event.unsubscribe;
+
+  let onLineEndingsChanged:
+    Listeners.bufferLineEndingsChangedListener => Event.unsubscribe;
 
   /**
   [onModifiedChanged(f)] adds a listener [f] that is called when a buffer's modified

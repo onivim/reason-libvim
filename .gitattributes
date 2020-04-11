@@ -1,1 +1,4 @@
 *esy.lock/* linguist-generated
+
+test/test.crlf text eol=crlf
+test/test.lf text eol=lf

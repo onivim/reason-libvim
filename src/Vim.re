@@ -1,5 +1,7 @@
 open EditorCoreTypes;
 
+type lineEnding = Types.lineEnding = | CR | LF | CRLF;
+
 module AutoClosingPairs = AutoClosingPairs;
 module AutoCommands = AutoCommands;
 module Buffer = Buffer;
@@ -40,6 +42,7 @@ let checkAndUpdateState = f => {
   let prevLeftColumn = Window.getLeftColumn();
   let prevVisualMode = Visual.getType();
   let prevModified = Buffer.isModified(oldBuf);
+  let prevLineEndings = Buffer.getLineEndings(oldBuf);
 
   let ret = f();
 
@@ -51,6 +54,7 @@ let checkAndUpdateState = f => {
   let newTopLine = Window.getTopLine();
   let newVisualMode = Visual.getType();
   let newModified = Buffer.isModified(newBuf);
+  let newLineEndings = Buffer.getLineEndings(newBuf);
 
   BufferInternal.checkCurrentBufferForUpdate();
 
@@ -93,9 +97,16 @@ let checkAndUpdateState = f => {
     Event.dispatch(vr, Listeners.visualRangeChanged);
   };
 
+  let id = Buffer.getId(newBuf);
   if (prevModified != newModified) {
-    let id = Buffer.getId(newBuf);
     Event.dispatch2(id, newModified, Listeners.bufferModifiedChanged);
+  };
+
+  if (newLineEndings != prevLineEndings) {
+    newLineEndings
+    |> Option.iter(lineEndings =>
+         Event.dispatch2(id, lineEndings, Listeners.bufferLineEndingsChanged)
+       );
   };
 
   flushQueue();
