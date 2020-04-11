@@ -465,21 +465,20 @@ CAMLprim value libvim_vimBufferGetFileFormat(value v) {
   } else {
     int format = vimBufferGetFileFormat(buf);
     switch (format) {
-      case EOL_UNIX:
-        ret = Val_some(Val_int(1));
-        break;
-      case EOL_DOS:
-        ret = Val_some(Val_int(2));
-        break;
-      case EOL_MAC:
-        ret = Val_some(Val_int(0));
-        break;
-      default:
-        ret = Val_none;
-        break;
+    case EOL_UNIX:
+      ret = Val_some(Val_int(1));
+      break;
+    case EOL_DOS:
+      ret = Val_some(Val_int(2));
+      break;
+    case EOL_MAC:
+      ret = Val_some(Val_int(0));
+      break;
+    default:
+      ret = Val_none;
+      break;
     }
   }
-  
 
   CAMLreturn(ret);
 }
