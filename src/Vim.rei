@@ -1,9 +1,6 @@
 open EditorCoreTypes;
 
-type lineEnding =
-  | CR
-  | LF
-  | CRLF;
+type lineEnding = Types.lineEnding;
 
 module AutoClosingPairs: {
   module AutoPair: {
