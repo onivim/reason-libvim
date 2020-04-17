@@ -4,16 +4,15 @@ open TestFramework;
 
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 
-let input = (~autoClosingPairs=AutoClosingPairs.empty,
-~cursors=[], key) => {
-  let (out, _eff) = Vim.input(~context={
-    ...Context.default(),
-    autoClosingPairs,
-    cursors
-  }, key);
+let input = (~autoClosingPairs=AutoClosingPairs.empty, ~cursors=[], key) => {
+  let (out, _eff) =
+    Vim.input(
+      ~context={...Context.default(), autoClosingPairs, cursors},
+      key,
+    );
 
-  Context.(out.cursors)
-}
+  Context.(out.cursors);
+};
 
 describe("Multi-cursor", ({describe, _}) => {
   describe("normal mode", ({describe, _}) => {

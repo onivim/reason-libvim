@@ -32,8 +32,8 @@ module Context: {
   type t = {
     autoClosingPairs: AutoClosingPairs.t,
     bufferId: int,
-    width:int,
-    height:int,
+    width: int,
+    height: int,
     leftColumn: int,
     topLine: int,
     cursors: list(Cursor.t),
@@ -47,8 +47,8 @@ module Context: {
 
 module Effect: {
   type t =
-  | BufferUpdate;
-}
+    | BufferUpdate;
+};
 
 module Buffer: {
   type t = Native.buffer;
@@ -203,12 +203,7 @@ The value [s] may be of the following form:
 
 The keystroke is processed synchronously.
 */
-let input:
-  (
-    ~context: Context.t=?,
-    string
-  ) => (Context.t, list(Effect.t))
-  
+let input: (~context: Context.t=?, string) => (Context.t, list(Effect.t));
 
 /**
 [command(cmd)] executes [cmd] as an Ex command.
