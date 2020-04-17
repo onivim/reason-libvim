@@ -37,6 +37,9 @@ module Context: {
     leftColumn: int,
     topLine: int,
     cursors: list(Cursor.t),
+    lineComment: option(string),
+    tabSize: int,
+    insertSpaces: bool,
   };
 
   let default: unit => t;

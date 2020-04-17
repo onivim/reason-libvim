@@ -6,6 +6,9 @@
     leftColumn: int,
     topLine: int,
     cursors: list(Cursor.t),
+    lineComment: option(string),
+    tabSize: int,
+    insertSpaces: bool,
   };
 
   let default = () => {
@@ -16,4 +19,7 @@
     leftColumn: Window.getLeftColumn(),
     topLine: Window.getTopLine(),
     cursors: [Cursor.get()],
+    tabSize: Options.getTabSize(),
+    insertSpaces: Options.getInsertSpaces(),
+    lineComment: None,
   };

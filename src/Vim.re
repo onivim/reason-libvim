@@ -64,6 +64,12 @@ let synchronizeAndUpdateState = (~context: Context.t, f) => {
     Window.setTopLeft(context.topLine, context.leftColumn);
   }
 
+  Options.setTabSize(context.tabSize);
+  Options.setInsertSpaces(context.insertSpaces);
+
+  context.lineComment
+  |> Option.iter(Options.setLineComment);
+
   let oldBuf = Buffer.getCurrent();
   let prevMode = Mode.getCurrent();
   let prevLocation = Cursor.getLocation();
