@@ -28,6 +28,25 @@ module AutoClosingPairs: {
   let isBetweenDeletionPairs: (string, Index.t, t) => bool;
 };
 
+module Context: {
+  type t = {
+    autoClosingPairs: AutoClosingPairs.t,
+    bufferId: int,
+    width:int,
+    height:int,
+    leftColumn: int,
+    topLine: int,
+    cursors: list(Cursor.t),
+  };
+
+  let default: unit => t;
+};
+
+module Effect: {
+  type t =
+  | BufferUpdate;
+}
+
 module Buffer: {
   type t = Native.buffer;
 
@@ -183,11 +202,10 @@ The keystroke is processed synchronously.
 */
 let input:
   (
-    ~autoClosingPairs: AutoClosingPairs.t=?,
-    ~cursors: list(Cursor.t)=?,
+    ~context: Context.t=?,
     string
-  ) =>
-  list(Cursor.t);
+  ) => (Context.t, list(Effect.t))
+  
 
 /**
 [command(cmd)] executes [cmd] as an Ex command.
@@ -198,7 +216,7 @@ You may use any valid Ex command, although you must omit the leading semicolon.
 
 The command [cmd] is processed synchronously.
 */
-let command: string => unit;
+let command: string => (Context.t, list(Effect.t));
 
 /**
 [onDirectoryChanged(f)] registers a directory changed listener [f].

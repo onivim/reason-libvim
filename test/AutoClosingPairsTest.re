@@ -4,7 +4,10 @@ open TestFramework;
 
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 let input = (~autoClosingPairs=AutoClosingPairs.empty, s) =>
-  ignore(Vim.input(~autoClosingPairs, s));
+  ignore(Vim.input(~context={
+  ...Context.default(),
+  autoClosingPairs
+  }, s));
 
 open AutoClosingPairs;
 let quote = {|"|};

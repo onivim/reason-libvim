@@ -9,6 +9,7 @@ module BufferMetadata = BufferMetadata;
 module BufferUpdate = BufferUpdate;
 module Clipboard = Clipboard;
 module CommandLine = CommandLine;
+module Context = Context;
 module Cursor = Cursor;
 module Event = Event;
 module Mode = Mode;
@@ -20,6 +21,11 @@ module Visual = Visual;
 module VisualRange = VisualRange;
 module Window = Window;
 module Yank = Yank;
+
+module Effect = {
+  type t =
+  | BufferUpdate;
+}
 
 type fn = unit => unit;
 
@@ -33,7 +39,31 @@ let flushQueue = () => {
   queuedFunctions := [];
 };
 
-let checkAndUpdateState = f => {
+let synchronizeAndUpdateState = (~context: Context.t, f) => {
+
+  let currentBufferId = Buffer.getCurrent() |> Buffer.getId;
+
+  if (currentBufferId != context.bufferId) {
+    let currentBuffer = Buffer.getById(context.bufferId);
+
+    // TODO: Turn to result?
+    currentBuffer
+    |> Option.iter(Buffer.setCurrent);
+  };
+
+  if (Window.getWidth() != context.width) {
+      Window.setWidth(context.width);
+  }
+
+  if (Window.getHeight() != context.height) {
+      Window.setHeight(context.height);
+  }
+
+  if (Window.getTopLine() != context.topLine
+      || Window.getLeftColumn() != context.leftColumn) {
+    Window.setTopLeft(context.topLine, context.leftColumn);
+  }
+
   let oldBuf = Buffer.getCurrent();
   let prevMode = Mode.getCurrent();
   let prevLocation = Cursor.getLocation();
@@ -44,7 +74,7 @@ let checkAndUpdateState = f => {
   let prevModified = Buffer.isModified(oldBuf);
   let prevLineEndings = Buffer.getLineEndings(oldBuf);
 
-  let ret = f();
+  let cursors = f();
 
   let newBuf = Buffer.getCurrent();
   let newLocation = Cursor.getLocation();
@@ -110,7 +140,12 @@ let checkAndUpdateState = f => {
   };
 
   flushQueue();
-  ret;
+  let outContext = {
+    ...Context.default(),
+    cursors,
+    autoClosingPairs: context.autoClosingPairs,
+  };
+  (outContext, []);
 };
 
 let _onAutocommand = (autoCommand: Types.autocmd, buffer: Buffer.t) => {
@@ -260,8 +295,9 @@ let _getDefaultCursors = (cursors: list(Cursor.t)) =>
     cursors;
   };
 
-let input = (~autoClosingPairs=AutoClosingPairs.empty, ~cursors=[], v: string) => {
-  checkAndUpdateState(() => {
+let input = (~context=Context.default(), v: string) => {
+  let { autoClosingPairs, cursors, _}: Context.t = context;
+  synchronizeAndUpdateState(~context, () => {
     // Special auto-closing pairs handling...
 
     let runCursor = cursor => {
@@ -353,7 +389,11 @@ let input = (~autoClosingPairs=AutoClosingPairs.empty, ~cursors=[], v: string) =
 };
 
 let command = v => {
-  checkAndUpdateState(() => Native.vimCommand(v));
+  synchronizeAndUpdateState(~context=Context.default(),
+  () => {
+  Native.vimCommand(v);
+  [];
+  });
 };
 
 let onDirectoryChanged = f => {
