@@ -5,3 +5,7 @@ type t =
       message: string,
     })
   | BufferUpdate;
+
+let matches = (~f, effects) => 
+effects
+|> List.exists(f);

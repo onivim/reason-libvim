@@ -7,45 +7,28 @@ let input = s => ignore(Vim.input(s));
 describe("Messages", ({test, _}) => {
   test("echo dispatches message", ({expect}) => {
     let _ = reset();
+    let (_context, effects) = command("echo 'hello'");
 
-    let messages = ref([]);
-    let dispose =
-      onMessage((priority, title, contents) =>
-        messages := [(priority, title, contents), ...messages^]
-      );
-
-    command("echo 'hello'");
-
-    expect.int(List.length(messages^)).toBe(1);
-
-    let (priority, title, contents) = List.hd(messages^);
-
-    expect.string(title).toEqual("");
-    expect.string(contents).toEqual("hello");
-    expect.bool(priority == Types.Info).toBe(true);
-
-    dispose();
+    expect.bool(
+      effects
+      |> Effect.matches(~f=msg => msg == Effect.Message({
+        priority: Types.Info,
+        title: "",
+        message: "hello",
+      }))
+    ).toBe(true);
   });
   test("echoerr dispatches error message", ({expect}) => {
     let _ = reset();
+    let (_context, effects) = command("echoerr 'aproblem'");
 
-    let messages = ref([]);
-    let dispose =
-      onMessage((priority, title, contents) =>
-        messages := [(priority, title, contents), ...messages^]
-      );
-
-    command("echoerr 'aproblem'");
-
-    /* TODO: Fix this! */
-    /* expect.int(List.length(messages^)).toBe(1); */
-
-    let (priority, title, contents) = List.hd(messages^);
-
-    expect.string(title).toEqual("");
-    expect.string(contents).toEqual("aproblem");
-    expect.bool(priority == Types.Error).toBe(true);
-
-    dispose();
+    expect.bool(
+      effects
+      |> Effect.matches(~f=msg => msg == Effect.Message({
+        priority: Types.Error,
+        title: "",
+        message: "aproblem",
+      }))
+    ).toBe(true);
   });
 });

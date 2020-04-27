@@ -28,6 +28,18 @@ module AutoClosingPairs: {
   let isBetweenDeletionPairs: (string, Index.t, t) => bool;
 };
 
+module Effect: {
+  type t =
+    | Message({
+        priority: Types.msgPriority,
+        title: string,
+        message: string,
+      })
+    | BufferUpdate;
+
+  let matches: (~f: t => bool, list(t)) => bool;
+};
+
 module Context: {
   type t = {
     autoClosingPairs: AutoClosingPairs.t,

@@ -37,6 +37,8 @@ let flushQueue = () => {
 };
 
 let synchronizeAndUpdateState = (~context: Context.t, f) => {
+  EffectWatcher.runAndTrackEffects(() => {
+  
   let currentBufferId = Buffer.getCurrent() |> Buffer.getId;
 
   if (currentBufferId != context.bufferId) {
@@ -145,7 +147,8 @@ let synchronizeAndUpdateState = (~context: Context.t, f) => {
     cursors,
     autoClosingPairs: context.autoClosingPairs,
   };
-  (outContext, []);
+  outContext;
+  });
 };
 
 let _onAutocommand = (autoCommand: Types.autocmd, buffer: Buffer.t) => {
