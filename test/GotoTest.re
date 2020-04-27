@@ -15,7 +15,7 @@ describe("Goto", ({test, _}) => {
     }
     | _ => false;
 
-    expect.equal(effects |> Effect.matches(~f=isExpectedEffect), true);
+    expect.equal(effects |> Effect.matches(isExpectedEffect), true);
   });
   test("gD", ({expect}) => {
     let _ = resetBuffer();
@@ -27,6 +27,6 @@ describe("Goto", ({test, _}) => {
     }
     | _ => false;
 
-    expect.equal(effects |> Effect.matches(~f=isExpectedEffect), true);
+    expect.equal(effects |> Effect.matches(isExpectedEffect), true);
   });
 });

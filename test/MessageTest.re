@@ -11,7 +11,7 @@ describe("Messages", ({test, _}) => {
 
     expect.bool(
       effects
-      |> Effect.matches(~f=msg =>
+      |> Effect.matches(msg =>
            msg
            == Effect.Message({
                 priority: Types.Info,
@@ -30,7 +30,7 @@ describe("Messages", ({test, _}) => {
 
     expect.bool(
       effects
-      |> Effect.matches(~f=msg =>
+      |> Effect.matches(msg =>
            msg
            == Effect.Message({
                 priority: Types.Error,

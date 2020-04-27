@@ -30,6 +30,8 @@ module AutoClosingPairs: {
 
 module Effect: {
   type t =
+    | ShowIntro
+    | ShowVersion
     | Goto({
       location: Location.t,
       gotoType: Types.gotoType,
@@ -41,7 +43,7 @@ module Effect: {
       })
     | BufferUpdate;
 
-  let matches: (~f: t => bool, list(t)) => bool;
+  let matches: (t => bool, list(t)) => bool;
 };
 
 module Context: {
@@ -258,16 +260,6 @@ if the user presses <esc> while in normal mode, but there is no pending operator
 The default Vim behavior was to 'beep', but UIs might want to handle this differently.
 */
 let onUnhandledEscape: Listeners.noopListener => Event.unsubscribe;
-
-/**
-[onVersionCallback(f)] registers a handler when the :version command is used
-*/
-let onVersion: Listeners.noopListener => Event.unsubscribe;
-
-/**
-[onIntroCallback(f)] registers a handler when the :intro command is used
-*/
-let onIntro: Listeners.noopListener => Event.unsubscribe;
 
 /**
 [onYank(f)] registers a yank listener [f]

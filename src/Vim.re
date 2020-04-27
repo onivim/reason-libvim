@@ -182,7 +182,7 @@ let _onDirectoryChanged = _ => {
 };
 
 let _onIntro = () => {
-  queue(() => Event.dispatch((), Listeners.intro));
+  EffectWatcher.notifyEffect(Effect.ShowIntro);
 };
 
 let _onMessage = (priority, title, message) => {
@@ -267,7 +267,7 @@ let _onTerminal = terminalRequest => {
 };
 
 let _onVersion = () => {
-  queue(() => Event.dispatch((), Listeners.version));
+  EffectWatcher.notifyEffect(Effect.ShowVersion);
 };
 
 let init = () => {
@@ -411,10 +411,6 @@ let onDirectoryChanged = f => {
   Event.add(f, Listeners.directoryChanged);
 };
 
-let onIntro = f => {
-  Event.add(f, Listeners.intro);
-};
-
 let onTerminal = f => {
   Event.add(f, Listeners.terminalRequested);
 };
@@ -425,10 +421,6 @@ let onQuit = f => {
 
 let onUnhandledEscape = f => {
   Event.add(f, Listeners.unhandledEscape);
-};
-
-let onVersion = f => {
-  Event.add(f, Listeners.version);
 };
 
 let onYank = f => {

@@ -40,7 +40,6 @@ let commandLineUpdate: ref(list(commandLineUpdateListener)) = ref([]);
 let commandLineLeave: ref(list(noopListener)) = ref([]);
 let directoryChanged: ref(list(directoryChangedListener)) = ref([]);
 let cursorMoved: ref(list(cursorMovedListener)) = ref([]);
-let intro: ref(list(noopListener)) = ref([]);
 let leftColumnChanged: ref(list(leftColumnChangedListener)) = ref([]);
 let modeChanged: ref(list(modeChangedListener)) = ref([]);
 let quit: ref(list(quitListener)) = ref([]);
@@ -49,7 +48,6 @@ let terminalRequested: Event.t(Types.terminalRequest => unit) =
   Event.create();
 let topLineChanged: ref(list(topLineChangedListener)) = ref([]);
 let unhandledEscape: ref(list(noopListener)) = ref([]);
-let version: ref(list(noopListener)) = ref([]);
 let visualRangeChanged: ref(list(visualRangeChangedListener)) = ref([]);
 let windowMovement: ref(list(windowMovementListener)) = ref([]);
 let windowSplit: ref(list(windowSplitListener)) = ref([]);

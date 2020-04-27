@@ -1,5 +1,7 @@
 open EditorCoreTypes;
 type t =
+  | ShowIntro
+  | ShowVersion
   | Goto({
     location: Location.t,
     gotoType: Types.gotoType,
@@ -11,4 +13,4 @@ type t =
     })
   | BufferUpdate;
 
-let matches = (~f, effects) => effects |> List.exists(f);
+let matches = (f, effects) => effects |> List.exists(f);
