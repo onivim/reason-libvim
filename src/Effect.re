@@ -1,4 +1,9 @@
+open EditorCoreTypes;
 type t =
+  | Goto({
+    location: Location.t,
+    gotoType: Types.gotoType,
+  })
   | Message({
       priority: Types.msgPriority,
       title: string,

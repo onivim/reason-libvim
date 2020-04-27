@@ -2,39 +2,31 @@ open TestFramework;
 open Vim;
 
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
-let input = s => ignore(Vim.input(s));
 
 describe("Goto", ({test, _}) => {
   test("gd", ({expect}) => {
     let _ = resetBuffer();
 
-    let updates = ref([]);
+    let (_context, effects) = Vim.input("gd");
 
-    let dispose =
-      onGoto((_location, gotoType) => updates := [gotoType, ...updates^]);
+    let isExpectedEffect = fun
+    | Vim.Effect.Goto({location, gotoType}) => {
+      gotoType == Types.Definition 
+    }
+    | _ => false;
 
-    input("gd");
-    let gotoType = List.hd(updates^);
-
-    expect.int(List.length(updates^)).toBe(1);
-    expect.equal(gotoType, Types.Definition);
-
-    dispose();
+    expect.equal(effects |> Effect.matches(~f=isExpectedEffect), true);
   });
   test("gD", ({expect}) => {
     let _ = resetBuffer();
 
-    let updates = ref([]);
+    let (_context, effects) = Vim.input("gD");
+    let isExpectedEffect = fun
+    | Vim.Effect.Goto({location, gotoType}) => {
+      gotoType == Types.Declaration 
+    }
+    | _ => false;
 
-    let dispose =
-      onGoto((_location, gotoType) => updates := [gotoType, ...updates^]);
-
-    input("gD");
-    let gotoType = List.hd(updates^);
-
-    expect.int(List.length(updates^)).toBe(1);
-    expect.equal(gotoType, Types.Declaration);
-
-    dispose();
+    expect.equal(effects |> Effect.matches(~f=isExpectedEffect), true);
   });
 });

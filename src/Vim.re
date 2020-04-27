@@ -259,7 +259,7 @@ let _onGoto = (line: int, column: int, gotoType: Types.gotoType) => {
       ~line=Index.fromOneBased(line),
       ~column=Index.fromZeroBased(column),
     );
-  queue(() => Event.dispatch2(location, gotoType, Listeners.goto));
+  EffectWatcher.notifyEffect(Effect.Goto({location, gotoType}));
 };
 
 let _onTerminal = terminalRequest => {
@@ -409,10 +409,6 @@ let command = v => {
 
 let onDirectoryChanged = f => {
   Event.add(f, Listeners.directoryChanged);
-};
-
-let onGoto = f => {
-  Event.add2(f, Listeners.goto);
 };
 
 let onIntro = f => {

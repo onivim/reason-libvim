@@ -30,6 +30,10 @@ module AutoClosingPairs: {
 
 module Effect: {
   type t =
+    | Goto({
+      location: Location.t,
+      gotoType: Types.gotoType,
+    })
     | Message({
         priority: Types.msgPriority,
         title: string,
@@ -231,14 +235,6 @@ via a [command("cd some-new-directory")].
 */
 let onDirectoryChanged:
   Listeners.directoryChangedListener => Event.unsubscribe;
-
-/**
-[onGoto(f)] registers a handler for the goto command [f].
-
-[f] is called whenever a goto command is executed, for example,
-"gd" (go-to definition) or "gD" (go-to declaration)
-*/
-let onGoto: Listeners.gotoListener => Event.unsubscribe;
 
 /**
 [onQuit(f)] registers a quit listener [f].
