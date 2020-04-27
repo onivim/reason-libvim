@@ -7,7 +7,7 @@
       "build": ["dune build -p libvim,libvim-test -j4"],
       "dependencies": {
 	  "@opam/odoc": "*",
-          "@reason-native/rely": "2.2.0"
+          "@reason-native/rely": "^3.2.1"
       },
       "install": [
           "esy-installer libvim.install",
