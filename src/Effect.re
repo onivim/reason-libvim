@@ -6,6 +6,4 @@ type t =
     })
   | BufferUpdate;
 
-let matches = (~f, effects) => 
-effects
-|> List.exists(f);
+let matches = (~f, effects) => effects |> List.exists(f);

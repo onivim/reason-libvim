@@ -11,12 +11,18 @@ describe("Messages", ({test, _}) => {
 
     expect.bool(
       effects
-      |> Effect.matches(~f=msg => msg == Effect.Message({
-        priority: Types.Info,
-        title: "",
-        message: "hello",
-      }))
-    ).toBe(true);
+      |> Effect.matches(~f=msg =>
+           msg
+           == Effect.Message({
+                priority: Types.Info,
+                title: "",
+                message: "hello",
+              })
+         ),
+    ).
+      toBe(
+      true,
+    );
   });
   test("echoerr dispatches error message", ({expect}) => {
     let _ = reset();
@@ -24,11 +30,17 @@ describe("Messages", ({test, _}) => {
 
     expect.bool(
       effects
-      |> Effect.matches(~f=msg => msg == Effect.Message({
-        priority: Types.Error,
-        title: "",
-        message: "aproblem",
-      }))
-    ).toBe(true);
+      |> Effect.matches(~f=msg =>
+           msg
+           == Effect.Message({
+                priority: Types.Error,
+                title: "",
+                message: "aproblem",
+              })
+         ),
+    ).
+      toBe(
+      true,
+    );
   });
 });
