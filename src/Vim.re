@@ -22,10 +22,7 @@ module VisualRange = VisualRange;
 module Window = Window;
 module Yank = Yank;
 
-module Effect = {
-  type t =
-    | BufferUpdate;
-};
+module Effect = Effect;
 
 type fn = unit => unit;
 
@@ -182,8 +179,8 @@ let _onIntro = () => {
   queue(() => Event.dispatch((), Listeners.intro));
 };
 
-let _onMessage = (priority, title, contents) => {
-  queue(() => Event.dispatch3(priority, title, contents, Listeners.message));
+let _onMessage = (priority, title, message) => {
+  EffectWatcher.notifyEffect(Effect.Message({priority, title, message}));
 };
 
 let _onQuit = (q, f) => {
@@ -414,10 +411,6 @@ let onGoto = f => {
 
 let onIntro = f => {
   Event.add(f, Listeners.intro);
-};
-
-let onMessage = f => {
-  Event.add3(f, Listeners.message);
 };
 
 let onTerminal = f => {

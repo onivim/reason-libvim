@@ -45,11 +45,6 @@ module Context: {
   let default: unit => t;
 };
 
-module Effect: {
-  type t =
-    | BufferUpdate;
-};
-
 module Buffer: {
   type t = Native.buffer;
 
@@ -232,13 +227,6 @@ let onDirectoryChanged:
 "gd" (go-to definition) or "gD" (go-to declaration)
 */
 let onGoto: Listeners.gotoListener => Event.unsubscribe;
-
-/**
-[onMessage(f)] registers a message listener [f].
-
-[f] is called whenever a message is emitted from Vim.
-*/
-let onMessage: Listeners.messageListener => Event.unsubscribe;
 
 /**
 [onQuit(f)] registers a quit listener [f].
