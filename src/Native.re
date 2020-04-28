@@ -1,4 +1,5 @@
 type buffer = Types.buffer;
+type lineEnding = Types.lineEnding;
 
 external vimInit: unit => unit = "libvim_vimInit";
 external vimInput: string => unit = "libvim_vimInput";
@@ -14,6 +15,11 @@ external vimBufferGetFilename: buffer => option(string) =
   "libvim_vimBufferGetFilename";
 external vimBufferGetFiletype: buffer => option(string) =
   "libvim_vimBufferGetFiletype";
+
+external vimBufferGetFileFormat: buffer => option(lineEnding) =
+  "libvim_vimBufferGetFileFormat";
+external vimBufferSetFileFormat: (buffer, lineEnding) => unit =
+  "libvim_vimBufferSetFileFormat";
 external vimBufferGetLine: (buffer, int) => string = "libvim_vimBufferGetLine";
 external vimBufferGetLineCount: buffer => int = "libvim_vimBufferGetLineCount";
 external vimBufferGetModified: buffer => bool = "libvim_vimBufferGetModified";

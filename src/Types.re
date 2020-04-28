@@ -2,6 +2,11 @@ type buffer;
 
 type clipboardProvider = int => option(array(string));
 
+type lineEnding =
+  | CR
+  | LF
+  | CRLF;
+
 type gotoType =
   | Definition
   | Declaration;
