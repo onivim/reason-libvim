@@ -1,11 +1,9 @@
-open EditorCoreTypes;
-open Vim;
 open TestFramework;
 
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 
 describe("Terminal", ({test, _}) => {
-  test("Empty command works", ({expect}) => {
+  test("Empty command works", ({expect, _}) => {
     let _ = resetBuffer();
 
     let hitCount = ref(0);
@@ -23,7 +21,7 @@ describe("Terminal", ({test, _}) => {
 
     unsubscribe();
   });
-  test("Command is reported correctly", ({expect}) => {
+  test("Command is reported correctly", ({expect, _}) => {
     let _ = resetBuffer();
 
     let hitCount = ref(0);
@@ -43,7 +41,7 @@ describe("Terminal", ({test, _}) => {
     unsubscribe();
   });
 
-  test("Curwin flag is set", ({expect}) => {
+  test("Curwin flag is set", ({expect, _}) => {
     let _ = resetBuffer();
 
     let hitCount = ref(0);
@@ -62,7 +60,7 @@ describe("Terminal", ({test, _}) => {
 
     unsubscribe();
   });
-  test("GC stress test", ({expect}) => {
+  test("GC stress test", ({expect, _}) => {
     let _ = resetBuffer();
 
     let hitCount = ref(0);

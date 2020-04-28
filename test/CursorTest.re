@@ -7,7 +7,7 @@ let input = s => ignore(Vim.input(s));
 
 describe("Cursor", ({describe, _}) => {
   describe("setLocation", ({test, _}) => {
-    test("cursor location gets updated", ({expect}) => {
+    test("cursor location gets updated", ({expect, _}) => {
       Cursor.setLocation(~line=Index.zero, ~column=Index.(zero + 1));
       expect.int((Cursor.getLine() :> int)).toBe(0);
       expect.int((Cursor.getColumn() :> int)).toBe(1);
@@ -22,7 +22,7 @@ describe("Cursor", ({describe, _}) => {
 
     test(
       "topline should be updated when moving outside the viewport",
-      ({expect}) => {
+      ({expect, _}) => {
       let _ = resetBuffer();
 
       let topLineEvents = ref([]);
@@ -50,7 +50,7 @@ describe("Cursor", ({describe, _}) => {
 
     test(
       "topline should not be updated when moving inside the viewport",
-      ({expect}) => {
+      ({expect, _}) => {
       Window.setWidth(80);
       Window.setHeight(40);
 
@@ -66,7 +66,7 @@ describe("Cursor", ({describe, _}) => {
     });
   });
   describe("normal mode", ({test, _}) => {
-    test("j / k", ({expect}) => {
+    test("j / k", ({expect, _}) => {
       let _ = resetBuffer();
 
       let cursorMoves: ref(list(Location.t)) = ref([]);
@@ -98,7 +98,7 @@ describe("Cursor", ({describe, _}) => {
       dispose();
     });
 
-    test("gg / G", ({expect}) => {
+    test("gg / G", ({expect, _}) => {
       let _ = resetBuffer();
 
       let cursorMoves: ref(list(Location.t)) = ref([]);

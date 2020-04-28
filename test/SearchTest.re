@@ -9,7 +9,7 @@ let input = s => ignore(Vim.input(s));
 
 describe("Search", ({describe, _}) => {
   describe("getSearchHighlights", ({test, _}) => {
-    test("gets highlights", ({expect}) => {
+    test("gets highlights", ({expect, _}) => {
       let _ = reset();
 
       input("/");
@@ -29,7 +29,7 @@ describe("Search", ({describe, _}) => {
       expect.int((secondHighlight.stop.column :> int)).toBe(32);
     });
 
-    test("gets highlights", ({expect}) => {
+    test("gets highlights", ({expect, _}) => {
       let _ = reset();
 
       input("/");
@@ -47,14 +47,15 @@ describe("Search", ({describe, _}) => {
   describe("onStopSearchHighlight", ({test, _}) =>
     test(
       "onStopSearchHighlight dispatches when nohlsearch is called",
-      ({expect}) => {
+      ({expect, _}) => {
       let _ = reset();
 
       let callCount = ref(0);
       let unsubscribe =
         Vim.Search.onStopSearchHighlight(() => incr(callCount));
 
-      Vim.command("nohlsearch");
+      let (_context: Context.t, _effects: list(Effect.t)) =
+        Vim.command("nohlsearch");
 
       expect.int(callCount^).toBe(1);
 
@@ -63,7 +64,7 @@ describe("Search", ({describe, _}) => {
   );
 
   describe("getMatchingPair", ({test, _}) => {
-    test("get matching bracket for initial character", ({expect}) => {
+    test("get matching bracket for initial character", ({expect, _}) => {
       let _ = resetBrackets();
 
       let bracket = Search.getMatchingPair();
@@ -75,7 +76,7 @@ describe("Search", ({describe, _}) => {
       };
     });
 
-    test("get matching bracket after moving", ({expect}) => {
+    test("get matching bracket after moving", ({expect, _}) => {
       let _ = resetBrackets();
 
       input("l");
@@ -89,7 +90,7 @@ describe("Search", ({describe, _}) => {
       };
     });
 
-    test("matching bracket is none when there is no match", ({expect}) => {
+    test("matching bracket is none when there is no match", ({expect, _}) => {
       let _ = resetBrackets();
 
       input("j");

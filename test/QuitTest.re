@@ -5,7 +5,7 @@ let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 let input = s => ignore(Vim.input(s));
 
 describe("Quit", ({test, _}) => {
-  test("q command", ({expect}) => {
+  test("q command", ({expect, _}) => {
     let b = resetBuffer();
 
     let updates = ref([]);
@@ -15,7 +15,7 @@ describe("Quit", ({test, _}) => {
         updates := [(quitType, forced), ...updates^]
       );
 
-    command("q");
+    let (_context: Context.t, _effects: list(Effect.t)) = command("q");
     let (qt, forced) = List.hd(updates^);
 
     expect.int(List.length(updates^)).toBe(1);
@@ -29,7 +29,7 @@ describe("Quit", ({test, _}) => {
 
     dispose();
   });
-  test("q input", ({expect}) => {
+  test("q input", ({expect, _}) => {
     let b = resetBuffer();
 
     let updates = ref([]);
@@ -55,7 +55,7 @@ describe("Quit", ({test, _}) => {
 
     dispose();
   });
-  test("q!", ({expect}) => {
+  test("q!", ({expect, _}) => {
     let b = resetBuffer();
 
     let updates = ref([]);
@@ -65,7 +65,7 @@ describe("Quit", ({test, _}) => {
         updates := [(quitType, forced), ...updates^]
       );
 
-    command("q!");
+    let (_context: Context.t, _effects: list(Effect.t)) = command("q!");
     let (qt, forced) = List.hd(updates^);
 
     expect.int(List.length(updates^)).toBe(1);
@@ -79,7 +79,7 @@ describe("Quit", ({test, _}) => {
 
     dispose();
   });
-  test("qall", ({expect}) => {
+  test("qall", ({expect, _}) => {
     let _ = resetBuffer();
 
     let updates = ref([]);
@@ -89,7 +89,7 @@ describe("Quit", ({test, _}) => {
         updates := [(quitType, forced), ...updates^]
       );
 
-    command("qall");
+    let (_context: Context.t, _effects: list(Effect.t)) = command("qall");
     let (qt, forced) = List.hd(updates^);
 
     expect.int(List.length(updates^)).toBe(1);

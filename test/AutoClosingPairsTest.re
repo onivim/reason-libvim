@@ -14,7 +14,7 @@ let curlyBracketPair = AutoPair.{opening: "{", closing: "}"};
 let quotePair = AutoPair.{opening: quote, closing: quote};
 
 describe("AutoClosingPairs", ({test, _}) => {
-  test("no auto-closing pairs", ({expect}) => {
+  test("no auto-closing pairs", ({expect, _}) => {
     let b = resetBuffer();
 
     input("O");
@@ -27,7 +27,7 @@ describe("AutoClosingPairs", ({test, _}) => {
     expect.string(line).toEqual("[(\"{");
   });
 
-  test("single acp", ({expect}) => {
+  test("single acp", ({expect, _}) => {
     let b = resetBuffer();
     let autoClosingPairs = AutoClosingPairs.create([squareBracketPair]);
 
@@ -41,7 +41,7 @@ describe("AutoClosingPairs", ({test, _}) => {
     expect.string(line).toEqual("[(\"{]");
   });
 
-  test("isBetweenClosingPairs", ({expect}) => {
+  test("isBetweenClosingPairs", ({expect, _}) => {
     let b = resetBuffer();
     let autoClosingPairs = AutoClosingPairs.create([squareBracketPair]);
 
@@ -62,7 +62,7 @@ describe("AutoClosingPairs", ({test, _}) => {
     );
   });
 
-  test("backspace between pairs", ({expect}) => {
+  test("backspace between pairs", ({expect, _}) => {
     let b = resetBuffer();
 
     let autoClosingPairs = AutoClosingPairs.create([squareBracketPair]);
@@ -75,7 +75,7 @@ describe("AutoClosingPairs", ({test, _}) => {
     expect.string(line).toEqual("");
   });
 
-  test("backspace between pairs, override deletion pairs", ({expect}) => {
+  test("backspace between pairs, override deletion pairs", ({expect, _}) => {
     let b = resetBuffer();
 
     let autoClosingPairs =
@@ -92,7 +92,7 @@ describe("AutoClosingPairs", ({test, _}) => {
     expect.string(line).toEqual("");
   });
 
-  test("pass-through between pairs", ({expect}) => {
+  test("pass-through between pairs", ({expect, _}) => {
     let b = resetBuffer();
 
     let autoClosingPairs = AutoClosingPairs.create([squareBracketPair]);
@@ -107,7 +107,7 @@ describe("AutoClosingPairs", ({test, _}) => {
     expect.int((location.column :> int)).toBe(2);
   });
 
-  test("pass-through between pairs, overridden", ({expect}) => {
+  test("pass-through between pairs, overridden", ({expect, _}) => {
     let b = resetBuffer();
 
     let autoClosingPairs = AutoClosingPairs.create([squareBracketPair]);
@@ -125,7 +125,7 @@ describe("AutoClosingPairs", ({test, _}) => {
     expect.int((location.column :> int)).toBe(2);
   });
 
-  test("pass-through not between pairs", ({expect}) => {
+  test("pass-through not between pairs", ({expect, _}) => {
     let b = resetBuffer();
     let autoClosingPairs = AutoClosingPairs.create([quotePair]);
 
@@ -141,7 +141,7 @@ describe("AutoClosingPairs", ({test, _}) => {
   });
 
   test(
-    "pass-through not between pairs, with same begin/end pair", ({expect}) => {
+    "pass-through not between pairs, with same begin/end pair", ({expect, _}) => {
     let b = resetBuffer();
     let autoClosingPairs = AutoClosingPairs.create([quotePair]);
 
@@ -156,7 +156,7 @@ describe("AutoClosingPairs", ({test, _}) => {
     expect.int((location.column :> int)).toBe(3);
   });
 
-  test("can insert closing pair", ({expect}) => {
+  test("can insert closing pair", ({expect, _}) => {
     let b = resetBuffer();
     let autoClosingPairs = AutoClosingPairs.create([quotePair]);
 
@@ -167,17 +167,12 @@ describe("AutoClosingPairs", ({test, _}) => {
     expect.string(line).toEqual("]");
   });
 
-  test("multiple acp", ({expect}) => {
+  test("multiple acp", ({expect, _}) => {
     let b = resetBuffer();
     let autoClosingPairs =
       AutoClosingPairs.create(
         ~allowBefore=["]", "}", ")", "\""],
-        AutoClosingPairs.[
-          squareBracketPair,
-          curlyBracketPair,
-          parenthesesPair,
-          quotePair,
-        ],
+        [squareBracketPair, curlyBracketPair, parenthesesPair, quotePair],
       );
 
     input(~autoClosingPairs, "O");

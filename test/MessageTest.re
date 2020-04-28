@@ -5,7 +5,7 @@ let reset = () => Helpers.resetBuffer("test/testfile.txt");
 let input = s => ignore(Vim.input(s));
 
 describe("Messages", ({test, _}) => {
-  test("echo dispatches message", ({expect}) => {
+  test("echo dispatches message", ({expect, _}) => {
     let _ = reset();
     let (_context, effects) = command("echo 'hello'");
 
@@ -24,7 +24,7 @@ describe("Messages", ({test, _}) => {
       true,
     );
   });
-  test("echoerr dispatches error message", ({expect}) => {
+  test("echoerr dispatches error message", ({expect, _}) => {
     let _ = reset();
     let (_context, effects) = command("echoerr 'aproblem'");
 

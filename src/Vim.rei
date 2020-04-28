@@ -33,9 +33,9 @@ module Effect: {
     | ShowIntro
     | ShowVersion
     | Goto({
-      location: Location.t,
-      gotoType: Types.gotoType,
-    })
+        location: Location.t,
+        gotoType: Types.gotoType,
+      })
     | Message({
         priority: Types.msgPriority,
         title: string,

@@ -7,7 +7,7 @@ let input = s => ignore(Vim.input(s));
 
 describe("Visual", ({describe, _}) => {
   describe("getRange", ({test, _}) =>
-    test("simple range", ({expect}) => {
+    test("simple range", ({expect, _}) => {
       let _ = resetBuffer();
 
       input("v");
@@ -38,7 +38,7 @@ describe("Visual", ({describe, _}) => {
   );
 
   describe("getType", ({test, _}) =>
-    test("simple range", ({expect}) => {
+    test("simple range", ({expect, _}) => {
       let _ = resetBuffer();
 
       let vt = Visual.getType();
@@ -65,7 +65,7 @@ describe("Visual", ({describe, _}) => {
   );
 
   describe("onRangeChanged", ({test, _}) =>
-    test("dispatches on change", ({expect}) => {
+    test("dispatches on change", ({expect, _}) => {
       let _ = resetBuffer();
 
       let rangeChanges: ref(list(Range.t)) = ref([]);

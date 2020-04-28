@@ -4,7 +4,7 @@ let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 let input = s => ignore(Vim.input(s));
 
 describe("onUnhandledEscape", ({test, _}) => {
-  test("unhandled escape called with no pending operator", ({expect}) => {
+  test("unhandled escape called with no pending operator", ({expect, _}) => {
     let _ = resetBuffer();
 
     let callCount = ref(0);
@@ -15,7 +15,7 @@ describe("onUnhandledEscape", ({test, _}) => {
 
     dispose();
   });
-  test("unhandled escape not called when in insert", ({expect}) => {
+  test("unhandled escape not called when in insert", ({expect, _}) => {
     let _ = resetBuffer();
 
     let callCount = ref(0);

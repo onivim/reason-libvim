@@ -5,21 +5,22 @@ let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 let input = s => ignore(Vim.input(s));
 
 describe("DirectoryChanged", ({test, _}) => {
-  test("get changed directory event", ({expect}) => {
+  test("get changed directory event", ({expect, _}) => {
     let _ = resetBuffer();
 
     let updates: ref(list(string)) = ref([]);
     let dispose = onDirectoryChanged(upd => updates := [upd, ...updates^]);
 
-    command("cd test");
+    let (_context: Context.t, _effects: list(Effect.t)) =
+      command("cd test");
     expect.int(List.length(updates^)).toBe(1);
 
-    command("cd ..");
+    let (_context: Context.t, _effects: list(Effect.t)) = command("cd ..");
     expect.int(List.length(updates^)).toBe(2);
 
     dispose();
   });
-  test("change directory via input", ({expect}) => {
+  test("change directory via input", ({expect, _}) => {
     let _ = resetBuffer();
 
     let updates: ref(list(string)) = ref([]);

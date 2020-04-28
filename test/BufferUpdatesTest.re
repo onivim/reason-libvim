@@ -1,4 +1,3 @@
-open EditorCoreTypes;
 open Vim;
 open TestFramework;
 
@@ -7,7 +6,7 @@ let input = s => ignore(Vim.input(s));
 
 describe("Buffer.onUpdate", ({describe, _}) => {
   describe("reloading", ({test, _}) =>
-    test("make changes, and reload", ({expect}) => {
+    test("make changes, and reload", ({expect, _}) => {
       let buffer = resetBuffer();
 
       input("I");
@@ -34,7 +33,7 @@ describe("Buffer.onUpdate", ({describe, _}) => {
   );
 
   describe("normal mode", ({test, _}) => {
-    test("add line before", ({expect}) => {
+    test("add line before", ({expect, _}) => {
       let _buf = resetBuffer();
 
       let updates: ref(list(BufferUpdate.t)) = ref([]);
@@ -59,7 +58,7 @@ describe("Buffer.onUpdate", ({describe, _}) => {
 
       dispose();
     });
-    test("add line", ({expect}) => {
+    test("add line", ({expect, _}) => {
       let _buf = resetBuffer();
 
       let updates: ref(list(BufferUpdate.t)) = ref([]);
@@ -82,7 +81,7 @@ describe("Buffer.onUpdate", ({describe, _}) => {
 
       dispose();
     });
-    test("delete 2nd line", ({expect}) => {
+    test("delete 2nd line", ({expect, _}) => {
       let _ = resetBuffer();
 
       let updates: ref(list(BufferUpdate.t)) = ref([]);
@@ -101,7 +100,7 @@ describe("Buffer.onUpdate", ({describe, _}) => {
 
       dispose();
     });
-    test("delete all lines", ({expect}) => {
+    test("delete all lines", ({expect, _}) => {
       let _ = resetBuffer();
 
       let updates: ref(list(BufferUpdate.t)) = ref([]);
@@ -117,7 +116,7 @@ describe("Buffer.onUpdate", ({describe, _}) => {
 
       dispose();
     });
-    test("join", ({expect}) => {
+    test("join", ({expect, _}) => {
       let _ = resetBuffer();
 
       let updates: ref(list(BufferUpdate.t)) = ref([]);
@@ -150,7 +149,7 @@ describe("Buffer.onUpdate", ({describe, _}) => {
     });
   });
   describe("insert mode", ({test, _}) =>
-    test("single file", ({expect}) => {
+    test("single file", ({expect, _}) => {
       let _ = resetBuffer();
 
       let updates: ref(list(BufferUpdate.t)) = ref([]);

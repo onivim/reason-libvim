@@ -7,7 +7,7 @@ let input = s => ignore(Vim.input(s));
 
 describe("CommandLine", ({describe, _}) => {
   describe("getType", ({test, _}) =>
-    test("simple command line", ({expect}) => {
+    test("simple command line", ({expect, _}) => {
       let _ = reset();
       input(":");
       expect.bool(CommandLine.getType() == Types.Ex).toBe(true);
@@ -24,7 +24,7 @@ describe("CommandLine", ({describe, _}) => {
   );
 
   describe("getCompletions", ({test, _}) => {
-    test("basic completion test", ({expect}) => {
+    test("basic completion test", ({expect, _}) => {
       let _ = reset();
       input(":");
       input("e");
@@ -32,7 +32,7 @@ describe("CommandLine", ({describe, _}) => {
       expect.int(Array.length(CommandLine.getCompletions())).toBe(20);
     });
 
-    test("request completions multiple times", ({expect}) => {
+    test("request completions multiple times", ({expect, _}) => {
       let _ = reset();
       input(":");
       input("e");
@@ -44,7 +44,7 @@ describe("CommandLine", ({describe, _}) => {
       expect.string(completions[0]).toEqual("earlier");
     });
 
-    test("regression test - eh", ({expect}) => {
+    test("regression test - eh", ({expect, _}) => {
       let _ = reset();
       input(":");
       input("e");
@@ -55,7 +55,7 @@ describe("CommandLine", ({describe, _}) => {
   });
 
   describe("listeners", ({test, _}) => {
-    test("enter / leave listeners", ({expect}) => {
+    test("enter / leave listeners", ({expect, _}) => {
       open Vim.Types;
       let _ = reset();
       let enterEvents: ref(list(CommandLine.t)) = ref([]);
@@ -101,7 +101,7 @@ describe("CommandLine", ({describe, _}) => {
       dispose2();
     });
 
-    test("update listener", ({expect}) => {
+    test("update listener", ({expect, _}) => {
       open Vim.Types;
       let _ = reset();
 
@@ -136,7 +136,7 @@ describe("CommandLine", ({describe, _}) => {
   });
 
   describe("ex", ({test, _}) => {
-    test("substitution command", ({expect}) => {
+    test("substitution command", ({expect, _}) => {
       let buffer = reset();
       input(":");
       input("%");
@@ -155,7 +155,7 @@ describe("CommandLine", ({describe, _}) => {
       expect.string(line).toEqual("Dhis is the third line of a test file");
     });
 
-    test("move to line", ({expect}) => {
+    test("move to line", ({expect, _}) => {
       let _ = reset();
       input(":");
       input("3");
@@ -164,31 +164,39 @@ describe("CommandLine", ({describe, _}) => {
       expect.int((Cursor.getLine() :> int)).toBe(2);
     });
 
-    test(":intro", ({expect}) => {
+    test(":intro", ({expect, _}) => {
       let _ = reset();
 
       input(":");
       input("intro");
       let (_context, effects) = Vim.input("<cr>");
 
-      expect.bool(effects |>
-      Effect.matches(msg => msg == Vim.Effect.ShowIntro)).toBe(true);
+      expect.bool(
+        effects |> Effect.matches(msg => msg == Vim.Effect.ShowIntro),
+      ).
+        toBe(
+        true,
+      );
     });
 
-    test(":version", ({expect}) => {
+    test(":version", ({expect, _}) => {
       let _ = reset();
 
       input(":");
       input("version");
       let (_context, effects) = Vim.input("<cr>");
 
-      expect.bool(effects |>
-      Effect.matches(msg => msg == Vim.Effect.ShowVersion)).toBe(true);
+      expect.bool(
+        effects |> Effect.matches(msg => msg == Vim.Effect.ShowVersion),
+      ).
+        toBe(
+        true,
+      );
     });
   });
 
   describe("getText", ({test, _}) =>
-    test("simple command line", ({expect}) => {
+    test("simple command line", ({expect, _}) => {
       let _ = reset();
 
       input(":");
@@ -216,7 +224,7 @@ describe("CommandLine", ({describe, _}) => {
   );
 
   describe("getPosition", ({test, _}) =>
-    test("simple command line", ({expect}) => {
+    test("simple command line", ({expect, _}) => {
       let _ = reset();
       input(":");
       expect.int(CommandLine.getPosition()).toBe(0);

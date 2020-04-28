@@ -7,7 +7,7 @@ let input = s => ignore(Vim.input(s));
 
 describe("Options", ({describe, _}) => {
   describe("tabs / spaces", ({test, _}) => {
-    test("get / set tab options", ({expect}) => {
+    test("get / set tab options", ({expect, _}) => {
       let _ = resetBuffer();
 
       Options.setTabSize(5);
@@ -23,7 +23,7 @@ describe("Options", ({describe, _}) => {
       expect.bool(Options.getInsertSpaces()).toBe(false);
     });
 
-    test("options persist when switching buffers", ({expect}) => {
+    test("options persist when switching buffers", ({expect, _}) => {
       let b1 = resetBuffer();
 
       Options.setTabSize(3);
@@ -34,13 +34,13 @@ describe("Options", ({describe, _}) => {
       Options.setTabSize(4);
       Options.setInsertSpaces(false);
 
-      Buffer.setCurrent(b1);
+      let _effects: list(Effect.t) = Buffer.setCurrent(b1);
 
       expect.int(Options.getTabSize()).toBe(3);
       expect.bool(Options.getInsertSpaces()).toBe(true);
     });
 
-    test("insert spaces / tabs based on settings", ({expect}) => {
+    test("insert spaces / tabs based on settings", ({expect, _}) => {
       let b = resetBuffer();
 
       Options.setTabSize(3);
@@ -70,7 +70,7 @@ describe("Options", ({describe, _}) => {
   });
 
   describe("line comment", ({test, _}) => {
-    test("toggle comment based on settings", ({expect}) => {
+    test("toggle comment based on settings", ({expect, _}) => {
       let b = resetBuffer();
 
       Options.setLineComment("; ");

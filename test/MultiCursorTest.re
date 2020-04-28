@@ -17,7 +17,7 @@ let input = (~autoClosingPairs=AutoClosingPairs.empty, ~cursors=[], key) => {
 describe("Multi-cursor", ({describe, _}) => {
   describe("normal mode", ({describe, _}) => {
     describe("single cursor", ({test, _}) => {
-      test("set cursor works as expected", ({expect}) => {
+      test("set cursor works as expected", ({expect, _}) => {
         let _ = resetBuffer();
         let cursors1 = input("j");
 
@@ -45,7 +45,7 @@ describe("Multi-cursor", ({describe, _}) => {
     })
   });
   describe("insert mode", ({test, _}) => {
-    test("multi-cursor auto-closing paris", ({expect}) => {
+    test("multi-cursor auto-closing paris", ({expect, _}) => {
       let buf = resetBuffer();
 
       let autoClosingPairs =
@@ -102,7 +102,7 @@ describe("Multi-cursor", ({describe, _}) => {
 
       dispose();
     });
-    test("insert / backspace", ({expect}) => {
+    test("insert / backspace", ({expect, _}) => {
       let buf = resetBuffer();
 
       let updates: ref(list(BufferUpdate.t)) = ref([]);
