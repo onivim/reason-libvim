@@ -146,7 +146,7 @@ let synchronizeAndUpdateState = (~context: Context.t, f) => {
 
     flushQueue();
     let outContext = {
-      ...Context.default(),
+      ...Context.current(),
       cursors,
       autoClosingPairs: context.autoClosingPairs,
     };
@@ -301,7 +301,7 @@ let _getDefaultCursors = (cursors: list(Cursor.t)) =>
     cursors;
   };
 
-let input = (~context=Context.default(), v: string) => {
+let input = (~context=Context.current(), v: string) => {
   let {autoClosingPairs, cursors, _}: Context.t = context;
   synchronizeAndUpdateState(
     ~context,
@@ -374,13 +374,11 @@ let input = (~context=Context.default(), v: string) => {
 
           let newMode = Mode.getCurrent();
           // If we're still in insert mode, run the command for all the rest of the characters too
-          let remainingCursors =
-            if (newMode == Types.Insert) {
-              List.map(runCursor, tail);
-            } else {
-              tail;
-            };
-
+          let remainingCursors = switch (newMode) {
+          | Types.Insert => List.map(runCursor, tail)
+          | _ => tail;
+          };
+            
           [newHead, ...remainingCursors];
         // This should never happen...
         | [] => cursors
@@ -399,7 +397,7 @@ let input = (~context=Context.default(), v: string) => {
 
 let command = v => {
   synchronizeAndUpdateState(
-    ~context=Context.default(),
+    ~context=Context.current(),
     () => {
       Native.vimCommand(v);
       [];

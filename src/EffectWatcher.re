@@ -1,8 +1,8 @@
-type context = {revEffects: ref(list(Effect.t))};
+type effectStack = list(Effect.t);
 
 module Internal = {
   let unhandledEffectEvent = Event.create();
-  let currentContext: ref(option(context)) = ref(None);
+  let currentEffectStack: ref(option(effectStack)) = ref(None);
 };
 
 let onUnhandledEffect = handler => {
@@ -10,26 +10,32 @@ let onUnhandledEffect = handler => {
 };
 
 let notifyEffect = effect => {
-  switch (Internal.currentContext^) {
+  switch (Internal.currentEffectStack^) {
   | None => Event.dispatch(effect, Internal.unhandledEffectEvent)
-  | Some(context) => context.revEffects := [effect, ...context.revEffects^]
+  | Some(effects) => 
+    Internal.currentEffectStack := Some([effect, ...effects])
   };
 };
 
 let runAndTrackEffects = f => {
-  let context =
-    switch (Internal.currentContext^) {
-    | None => {revEffects: ref([])}
-    | Some(context) => context
+  let effectStack =
+    switch (Internal.currentEffectStack^) {
+    | None => []
+    | Some(effectStack) => effectStack
     };
 
-  Internal.currentContext := Some(context);
+  Internal.currentEffectStack := Some(effectStack);
+
+  // Run side-effectful operation - it's expected that the operation [f]
+  // will call [notifyEffect] to let us know that some side-effect occurred
+  // over the course of running the command.
   let ret = f();
+
   let effects =
-    switch (Internal.currentContext^) {
+    switch (Internal.currentEffectStack^) {
     | None => []
-    | Some(eff) => eff.revEffects^ |> List.rev
+    | Some(eff) => eff |> List.rev
     };
-  Internal.currentContext := None;
+  Internal.currentEffectStack := None;
   (ret, effects);
 };

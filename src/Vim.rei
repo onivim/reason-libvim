@@ -60,7 +60,7 @@ module Context: {
     insertSpaces: bool,
   };
 
-  let default: unit => t;
+  let current: unit => t;
 };
 
 module Buffer: {

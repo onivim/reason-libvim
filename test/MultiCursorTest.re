@@ -56,7 +56,7 @@ describe("Multi-cursor", ({describe, _}) => {
       let updates: ref(list(BufferUpdate.t)) = ref([]);
       let dispose = Buffer.onUpdate(upd => updates := [upd, ...updates^]);
 
-      let _ = input("i");
+      let (_context, _effects) = Vim.input("i");
       expect.int(List.length(updates^)).toBe(0);
 
       let cursors =

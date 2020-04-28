@@ -11,7 +11,7 @@ type t = {
   insertSpaces: bool,
 };
 
-let default = () => {
+let current = () => {
   autoClosingPairs: AutoClosingPairs.empty,
   bufferId: Buffer.getCurrent() |> Buffer.getId,
   width: Window.getWidth(),
