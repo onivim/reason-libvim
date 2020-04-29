@@ -22,8 +22,6 @@ module VisualRange = VisualRange;
 module Window = Window;
 module Yank = Yank;
 
-module Effect = Effect;
-
 type fn = unit => unit;
 
 let queuedFunctions: ref(list(fn)) = ref([]);

@@ -5,9 +5,9 @@ open TestFramework;
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 
 let input = (~autoClosingPairs=AutoClosingPairs.empty, ~cursors=[], key) => {
-  let (out, _eff) =
+  let out =
     Vim.input(
-      ~context={...Context.default(), autoClosingPairs, cursors},
+      ~context={...Context.current(), autoClosingPairs, cursors},
       key,
     );
 
@@ -56,7 +56,7 @@ describe("Multi-cursor", ({describe, _}) => {
       let updates: ref(list(BufferUpdate.t)) = ref([]);
       let dispose = Buffer.onUpdate(upd => updates := [upd, ...updates^]);
 
-      let (_context, _effects) = Vim.input("i");
+      let _context: Context.t = Vim.input("i");
       expect.int(List.length(updates^)).toBe(0);
 
       let cursors =

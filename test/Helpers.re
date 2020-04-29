@@ -6,7 +6,7 @@ let resetBuffer = filePath => {
 
   let _ = input("<esc>");
   let _ = input("<esc>");
-  command("e!");
+  let _context = command("e!");
   let ret = Buffer.openFile(filePath);
 
   /* Move cursor to initial location */

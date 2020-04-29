@@ -15,7 +15,7 @@ describe("Quit", ({test, _}) => {
         updates := [(quitType, forced), ...updates^]
       );
 
-    let (_context: Context.t, _effects: list(Effect.t)) = command("q");
+    let _context: Context.t = command("q");
     let (qt, forced) = List.hd(updates^);
 
     expect.int(List.length(updates^)).toBe(1);
@@ -65,7 +65,7 @@ describe("Quit", ({test, _}) => {
         updates := [(quitType, forced), ...updates^]
       );
 
-    let (_context: Context.t, _effects: list(Effect.t)) = command("q!");
+    let _context: Context.t = command("q!");
     let (qt, forced) = List.hd(updates^);
 
     expect.int(List.length(updates^)).toBe(1);
@@ -89,7 +89,7 @@ describe("Quit", ({test, _}) => {
         updates := [(quitType, forced), ...updates^]
       );
 
-    let (_context: Context.t, _effects: list(Effect.t)) = command("qall");
+    let _context: Context.t = command("qall");
     let (qt, forced) = List.hd(updates^);
 
     expect.int(List.length(updates^)).toBe(1);

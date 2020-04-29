@@ -34,7 +34,7 @@ describe("Options", ({describe, _}) => {
       Options.setTabSize(4);
       Options.setInsertSpaces(false);
 
-      let _effects: list(Effect.t) = Buffer.setCurrent(b1);
+      Buffer.setCurrent(b1);
 
       expect.int(Options.getTabSize()).toBe(3);
       expect.bool(Options.getInsertSpaces()).toBe(true);

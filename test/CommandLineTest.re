@@ -166,32 +166,26 @@ describe("CommandLine", ({describe, _}) => {
 
     test(":intro", ({expect, _}) => {
       let _ = reset();
+      let hit = ref(false);
 
+      let _: Event.unsubscribe = Vim.onIntro(() => hit := true);
       input(":");
       input("intro");
-      let (_context, effects) = Vim.input("<cr>");
+      input("<cr>");
 
-      expect.bool(
-        effects |> Effect.matches(msg => msg == Vim.Effect.ShowIntro),
-      ).
-        toBe(
-        true,
-      );
+      expect.equal(hit^, true);
     });
 
     test(":version", ({expect, _}) => {
       let _ = reset();
+      let hit = ref(false);
 
+      let _: Event.unsubscribe = Vim.onVersion(() => hit := true);
       input(":");
       input("version");
-      let (_context, effects) = Vim.input("<cr>");
+      input("<cr>");
 
-      expect.bool(
-        effects |> Effect.matches(msg => msg == Vim.Effect.ShowVersion),
-      ).
-        toBe(
-        true,
-      );
+      expect.equal(hit^, true);
     });
   });
 
