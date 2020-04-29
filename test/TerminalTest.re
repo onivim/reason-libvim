@@ -9,7 +9,9 @@ describe("Terminal", ({test, _}) => {
     let hitCount = ref(0);
     let unsubscribe =
       Vim.onTerminal(terminalRequest => {
+        expect.equal(terminalRequest.cmd, None);
         expect.equal(terminalRequest.curwin, false);
+        expect.equal(terminalRequest.closeOnFinish, true);
         incr(hitCount);
       });
 
@@ -27,8 +29,9 @@ describe("Terminal", ({test, _}) => {
     let hitCount = ref(0);
     let unsubscribe =
       Vim.onTerminal(terminalRequest => {
-        expect.equal(terminalRequest.cmd, "bash");
+        expect.equal(terminalRequest.cmd, Some("bash"));
         expect.equal(terminalRequest.curwin, false);
+        expect.equal(terminalRequest.closeOnFinish, true);
         incr(hitCount);
       });
 
@@ -47,8 +50,9 @@ describe("Terminal", ({test, _}) => {
     let hitCount = ref(0);
     let unsubscribe =
       Vim.onTerminal(terminalRequest => {
-        expect.equal(terminalRequest.cmd, "bash");
+        expect.equal(terminalRequest.cmd, Some("bash"));
         expect.equal(terminalRequest.curwin, true);
+        expect.equal(terminalRequest.closeOnFinish, true);
         incr(hitCount);
       });
 
@@ -60,14 +64,38 @@ describe("Terminal", ({test, _}) => {
 
     unsubscribe();
   });
+<<<<<<< HEAD
   test("GC stress test", ({expect, _}) => {
+=======
+  test("No close flag is set", ({expect}) => {
+    let _ = resetBuffer();
+
+    let hitCount = ref(0);
+    let unsubscribe =
+      Vim.onTerminal(terminalRequest => {
+        expect.equal(terminalRequest.cmd, Some("bash"));
+        expect.equal(terminalRequest.curwin, false);
+        expect.equal(terminalRequest.closeOnFinish, false);
+        incr(hitCount);
+      });
+
+    // Enter term command
+    let _ = Vim.input(":term ++noclose bash");
+    let _ = Vim.input("<CR>");
+
+    expect.equal(hitCount^, 1);
+
+    unsubscribe();
+  });
+  test("GC stress test", ({expect}) => {
+>>>>>>> master
     let _ = resetBuffer();
 
     let hitCount = ref(0);
     let unsubscribe =
       Vim.onTerminal(terminalRequest => {
         Gc.full_major();
-        expect.equal(terminalRequest.cmd, "bash");
+        expect.equal(terminalRequest.cmd, Some("bash"));
         incr(hitCount);
       });
 
