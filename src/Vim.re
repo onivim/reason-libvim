@@ -37,121 +37,115 @@ let flushQueue = () => {
 };
 
 let runWith = (~context: Context.t, f) => {
-  EffectWatcher.runAndTrackEffects(() => {
-    let currentBufferId = Buffer.getCurrent() |> Buffer.getId;
+  let currentBufferId = Buffer.getCurrent() |> Buffer.getId;
 
-    if (currentBufferId != context.bufferId) {
-      let currentBuffer = Buffer.getById(context.bufferId);
+  if (currentBufferId != context.bufferId) {
+    let currentBuffer = Buffer.getById(context.bufferId);
 
-      // TODO: Turn to result?
-      currentBuffer |> Option.iter(Buffer.setCurrent);
-    };
+    // TODO: Turn to result?
+    currentBuffer |> Option.iter(Buffer.setCurrent);
+  };
 
-    if (Window.getWidth() != context.width) {
-      Window.setWidth(context.width);
-    };
+  if (Window.getWidth() != context.width) {
+    Window.setWidth(context.width);
+  };
 
-    if (Window.getHeight() != context.height) {
-      Window.setHeight(context.height);
-    };
+  if (Window.getHeight() != context.height) {
+    Window.setHeight(context.height);
+  };
 
-    if (Window.getTopLine() != context.topLine
-        || Window.getLeftColumn() != context.leftColumn) {
-      Window.setTopLeft(context.topLine, context.leftColumn);
-    };
+  if (Window.getTopLine() != context.topLine
+      || Window.getLeftColumn() != context.leftColumn) {
+    Window.setTopLeft(context.topLine, context.leftColumn);
+  };
 
-    Options.setTabSize(context.tabSize);
-    Options.setInsertSpaces(context.insertSpaces);
+  Options.setTabSize(context.tabSize);
+  Options.setInsertSpaces(context.insertSpaces);
 
-    context.lineComment |> Option.iter(Options.setLineComment);
+  context.lineComment |> Option.iter(Options.setLineComment);
 
-    let oldBuf = Buffer.getCurrent();
-    let prevMode = Mode.getCurrent();
-    let prevLocation = Cursor.getLocation();
-    let prevRange = Visual.getRange();
-    let prevTopLine = Window.getTopLine();
-    let prevLeftColumn = Window.getLeftColumn();
-    let prevVisualMode = Visual.getType();
-    let prevModified = Buffer.isModified(oldBuf);
-    let prevLineEndings = Buffer.getLineEndings(oldBuf);
+  let oldBuf = Buffer.getCurrent();
+  let prevMode = Mode.getCurrent();
+  let prevLocation = Cursor.getLocation();
+  let prevRange = Visual.getRange();
+  let prevTopLine = Window.getTopLine();
+  let prevLeftColumn = Window.getLeftColumn();
+  let prevVisualMode = Visual.getType();
+  let prevModified = Buffer.isModified(oldBuf);
+  let prevLineEndings = Buffer.getLineEndings(oldBuf);
 
-    let cursors = f();
+  let cursors = f();
 
-    let newBuf = Buffer.getCurrent();
-    let newLocation = Cursor.getLocation();
-    let newMode = Mode.getCurrent();
-    let newRange = Visual.getRange();
-    let newLeftColumn = Window.getLeftColumn();
-    let newTopLine = Window.getTopLine();
-    let newVisualMode = Visual.getType();
-    let newModified = Buffer.isModified(newBuf);
-    let newLineEndings = Buffer.getLineEndings(newBuf);
+  let newBuf = Buffer.getCurrent();
+  let newLocation = Cursor.getLocation();
+  let newMode = Mode.getCurrent();
+  let newRange = Visual.getRange();
+  let newLeftColumn = Window.getLeftColumn();
+  let newTopLine = Window.getTopLine();
+  let newVisualMode = Visual.getType();
+  let newModified = Buffer.isModified(newBuf);
+  let newLineEndings = Buffer.getLineEndings(newBuf);
 
-    BufferInternal.checkCurrentBufferForUpdate();
+  BufferInternal.checkCurrentBufferForUpdate();
 
-    if (newMode != prevMode) {
-      Event.dispatch(newMode, Listeners.modeChanged);
+  if (newMode != prevMode) {
+    Event.dispatch(newMode, Listeners.modeChanged);
 
-      if (newMode == CommandLine) {
-        Event.dispatch(
-          CommandLineInternal.getState(),
-          Listeners.commandLineEnter,
-        );
-      } else if (prevMode == CommandLine) {
-        Event.dispatch((), Listeners.commandLineLeave);
-      };
-    } else if (newMode == CommandLine) {
+    if (newMode == CommandLine) {
       Event.dispatch(
         CommandLineInternal.getState(),
-        Listeners.commandLineUpdate,
+        Listeners.commandLineEnter,
       );
+    } else if (prevMode == CommandLine) {
+      Event.dispatch((), Listeners.commandLineLeave);
     };
+  } else if (newMode == CommandLine) {
+    Event.dispatch(
+      CommandLineInternal.getState(),
+      Listeners.commandLineUpdate,
+    );
+  };
 
-    if (!Location.(prevLocation == newLocation)) {
-      Event.dispatch(newLocation, Listeners.cursorMoved);
-    };
+  if (!Location.(prevLocation == newLocation)) {
+    Event.dispatch(newLocation, Listeners.cursorMoved);
+  };
 
-    if (prevTopLine != newTopLine) {
-      Event.dispatch(newTopLine, Listeners.topLineChanged);
-    };
+  if (prevTopLine != newTopLine) {
+    Event.dispatch(newTopLine, Listeners.topLineChanged);
+  };
 
-    if (prevLeftColumn != newLeftColumn) {
-      Event.dispatch(newLeftColumn, Listeners.leftColumnChanged);
-    };
+  if (prevLeftColumn != newLeftColumn) {
+    Event.dispatch(newLeftColumn, Listeners.leftColumnChanged);
+  };
 
-    if (!Range.equals(prevRange, newRange)
-        || newMode == Visual
-        && prevMode != Visual
-        || prevVisualMode != newVisualMode) {
-      let vr =
-        VisualRange.create(~range=newRange, ~visualType=newVisualMode, ());
-      Event.dispatch(vr, Listeners.visualRangeChanged);
-    };
+  if (!Range.equals(prevRange, newRange)
+      || newMode == Visual
+      && prevMode != Visual
+      || prevVisualMode != newVisualMode) {
+    let vr =
+      VisualRange.create(~range=newRange, ~visualType=newVisualMode, ());
+    Event.dispatch(vr, Listeners.visualRangeChanged);
+  };
 
-    let id = Buffer.getId(newBuf);
-    if (prevModified != newModified) {
-      Event.dispatch2(id, newModified, Listeners.bufferModifiedChanged);
-    };
+  let id = Buffer.getId(newBuf);
+  if (prevModified != newModified) {
+    Event.dispatch2(id, newModified, Listeners.bufferModifiedChanged);
+  };
 
-    if (newLineEndings != prevLineEndings) {
-      newLineEndings
-      |> Option.iter(lineEndings =>
-           Event.dispatch2(
-             id,
-             lineEndings,
-             Listeners.bufferLineEndingsChanged,
-           )
-         );
-    };
+  if (newLineEndings != prevLineEndings) {
+    newLineEndings
+    |> Option.iter(lineEndings =>
+         Event.dispatch2(id, lineEndings, Listeners.bufferLineEndingsChanged)
+       );
+  };
 
-    flushQueue();
-    let outContext = {
-      ...Context.current(),
-      cursors,
-      autoClosingPairs: context.autoClosingPairs,
-    };
-    outContext;
-  });
+  flushQueue();
+  let outContext = {
+    ...Context.current(),
+    cursors,
+    autoClosingPairs: context.autoClosingPairs,
+  };
+  outContext;
 };
 
 let _onAutocommand = (autoCommand: Types.autocmd, buffer: Buffer.t) => {
@@ -186,7 +180,7 @@ let _onIntro = () => {
 };
 
 let _onMessage = (priority, title, message) => {
-  queue(() => Event.dispatch3(priority, title, contents, Listeners.message));
+  queue(() => Event.dispatch3(priority, title, message, Listeners.message));
 };
 
 let _onQuit = (q, f) => {
@@ -267,7 +261,7 @@ let _onTerminal = terminalRequest => {
 };
 
 let _onVersion = () => {
-  queue(() => Event.dispatch((), Listeners.version);
+  queue(() => Event.dispatch((), Listeners.version));
 };
 
 let init = () => {
@@ -374,11 +368,12 @@ let input = (~context=Context.current(), v: string) => {
 
           let newMode = Mode.getCurrent();
           // If we're still in insert mode, run the command for all the rest of the characters too
-          let remainingCursors = switch (newMode) {
-          | Types.Insert => List.map(runCursor, tail)
-          | _ => tail;
-          };
-            
+          let remainingCursors =
+            switch (newMode) {
+            | Types.Insert => List.map(runCursor, tail)
+            | _ => tail
+            };
+
           [newHead, ...remainingCursors];
         // This should never happen...
         | [] => cursors
@@ -409,18 +404,17 @@ let onDirectoryChanged = f => {
   Event.add(f, Listeners.directoryChanged);
 };
 
-let onGoto = f => {	
-  Event.add2(f, Listeners.goto);	
-};	
+let onGoto = f => {
+  Event.add2(f, Listeners.goto);
+};
 
-let onIntro = f => {	
-  Event.add(f, Listeners.intro);	
-};	
+let onIntro = f => {
+  Event.add(f, Listeners.intro);
+};
 
-let onMessage = f => {	
-  Event.add3(f, Listeners.message);	
-};	
-
+let onMessage = f => {
+  Event.add3(f, Listeners.message);
+};
 
 let onTerminal = f => {
   Event.add(f, Listeners.terminalRequested);
@@ -434,8 +428,8 @@ let onUnhandledEscape = f => {
   Event.add(f, Listeners.unhandledEscape);
 };
 
-let onVersion = f => {	
-  Event.add(f, Listeners.version);	
+let onVersion = f => {
+  Event.add(f, Listeners.version);
 };
 
 let onYank = f => {

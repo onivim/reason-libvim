@@ -220,17 +220,17 @@ via a [command("cd some-new-directory")].
 let onDirectoryChanged:
   Listeners.directoryChangedListener => Event.unsubscribe;
 
-/**	
-[onGoto(f)] registers a handler for the goto command [f].	
-[f] is called whenever a goto command is executed, for example,	
-"gd" (go-to definition) or "gD" (go-to declaration)	
-*/	
-let onGoto: Listeners.gotoListener => Event.unsubscribe;	
+/**
+[onGoto(f)] registers a handler for the goto command [f].
+[f] is called whenever a goto command is executed, for example,
+"gd" (go-to definition) or "gD" (go-to declaration)
+*/
+let onGoto: Listeners.gotoListener => Event.unsubscribe;
 
-/**	
-[onMessage(f)] registers a message listener [f].	
-[f] is called whenever a message is emitted from Vim.	
-*/	
+/**
+[onMessage(f)] registers a message listener [f].
+[f] is called whenever a message is emitted from Vim.
+*/
 let onMessage: Listeners.messageListener => Event.unsubscribe;
 
 /**
@@ -256,14 +256,14 @@ The default Vim behavior was to 'beep', but UIs might want to handle this differ
 */
 let onUnhandledEscape: Listeners.noopListener => Event.unsubscribe;
 
-/**	
-[onVersionCallback(f)] registers a handler when the :version command is used	
-*/	
-let onVersion: Listeners.noopListener => Event.unsubscribe;	
+/**
+[onVersionCallback(f)] registers a handler when the :version command is used
+*/
+let onVersion: Listeners.noopListener => Event.unsubscribe;
 
-/**	
-[onIntroCallback(f)] registers a handler when the :intro command is used	
-*/	
+/**
+[onIntroCallback(f)] registers a handler when the :intro command is used
+*/
 let onIntro: Listeners.noopListener => Event.unsubscribe;
 
 /**
