@@ -28,24 +28,6 @@ module AutoClosingPairs: {
   let isBetweenDeletionPairs: (string, Index.t, t) => bool;
 };
 
-module Effect: {
-  type t =
-    | ShowIntro
-    | ShowVersion
-    | Goto({
-        location: Location.t,
-        gotoType: Types.gotoType,
-      })
-    | Message({
-        priority: Types.msgPriority,
-        title: string,
-        message: string,
-      })
-    | BufferUpdate;
-
-  let matches: (t => bool, list(t)) => bool;
-};
-
 module Context: {
   type t = {
     autoClosingPairs: AutoClosingPairs.t,
@@ -216,7 +198,7 @@ The value [s] may be of the following form:
 
 The keystroke is processed synchronously.
 */
-let input: (~context: Context.t=?, string) => (Context.t, list(Effect.t));
+let input: (~context: Context.t=?, string) => Context.t;
 
 /**
 [command(cmd)] executes [cmd] as an Ex command.
@@ -227,7 +209,7 @@ You may use any valid Ex command, although you must omit the leading semicolon.
 
 The command [cmd] is processed synchronously.
 */
-let command: string => (Context.t, list(Effect.t));
+let command: string => Context.t;
 
 /**
 [onDirectoryChanged(f)] registers a directory changed listener [f].
@@ -237,6 +219,19 @@ via a [command("cd some-new-directory")].
 */
 let onDirectoryChanged:
   Listeners.directoryChangedListener => Event.unsubscribe;
+
+/**	
+[onGoto(f)] registers a handler for the goto command [f].	
+[f] is called whenever a goto command is executed, for example,	
+"gd" (go-to definition) or "gD" (go-to declaration)	
+*/	
+let onGoto: Listeners.gotoListener => Event.unsubscribe;	
+
+/**	
+[onMessage(f)] registers a message listener [f].	
+[f] is called whenever a message is emitted from Vim.	
+*/	
+let onMessage: Listeners.messageListener => Event.unsubscribe;
 
 /**
 [onQuit(f)] registers a quit listener [f].
@@ -260,6 +255,16 @@ if the user presses <esc> while in normal mode, but there is no pending operator
 The default Vim behavior was to 'beep', but UIs might want to handle this differently.
 */
 let onUnhandledEscape: Listeners.noopListener => Event.unsubscribe;
+
+/**	
+[onVersionCallback(f)] registers a handler when the :version command is used	
+*/	
+let onVersion: Listeners.noopListener => Event.unsubscribe;	
+
+/**	
+[onIntroCallback(f)] registers a handler when the :intro command is used	
+*/	
+let onIntro: Listeners.noopListener => Event.unsubscribe;
 
 /**
 [onYank(f)] registers a yank listener [f]

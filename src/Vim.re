@@ -36,7 +36,7 @@ let flushQueue = () => {
   queuedFunctions := [];
 };
 
-let synchronizeAndUpdateState = (~context: Context.t, f) => {
+let runWith = (~context: Context.t, f) => {
   EffectWatcher.runAndTrackEffects(() => {
     let currentBufferId = Buffer.getCurrent() |> Buffer.getId;
 
@@ -182,11 +182,11 @@ let _onDirectoryChanged = _ => {
 };
 
 let _onIntro = () => {
-  EffectWatcher.notifyEffect(Effect.ShowIntro);
+  queue(() => Event.dispatch((), Listeners.intro));
 };
 
 let _onMessage = (priority, title, message) => {
-  EffectWatcher.notifyEffect(Effect.Message({priority, title, message}));
+  queue(() => Event.dispatch3(priority, title, contents, Listeners.message));
 };
 
 let _onQuit = (q, f) => {
@@ -259,7 +259,7 @@ let _onGoto = (line: int, column: int, gotoType: Types.gotoType) => {
       ~line=Index.fromOneBased(line),
       ~column=Index.fromZeroBased(column),
     );
-  EffectWatcher.notifyEffect(Effect.Goto({location, gotoType}));
+  queue(() => Event.dispatch2(location, gotoType, Listeners.goto));
 };
 
 let _onTerminal = terminalRequest => {
@@ -267,7 +267,7 @@ let _onTerminal = terminalRequest => {
 };
 
 let _onVersion = () => {
-  EffectWatcher.notifyEffect(Effect.ShowVersion);
+  queue(() => Event.dispatch((), Listeners.version);
 };
 
 let init = () => {
@@ -303,7 +303,7 @@ let _getDefaultCursors = (cursors: list(Cursor.t)) =>
 
 let input = (~context=Context.current(), v: string) => {
   let {autoClosingPairs, cursors, _}: Context.t = context;
-  synchronizeAndUpdateState(
+  runWith(
     ~context,
     () => {
       // Special auto-closing pairs handling...
@@ -396,7 +396,7 @@ let input = (~context=Context.current(), v: string) => {
 };
 
 let command = v => {
-  synchronizeAndUpdateState(
+  runWith(
     ~context=Context.current(),
     () => {
       Native.vimCommand(v);
@@ -409,6 +409,19 @@ let onDirectoryChanged = f => {
   Event.add(f, Listeners.directoryChanged);
 };
 
+let onGoto = f => {	
+  Event.add2(f, Listeners.goto);	
+};	
+
+let onIntro = f => {	
+  Event.add(f, Listeners.intro);	
+};	
+
+let onMessage = f => {	
+  Event.add3(f, Listeners.message);	
+};	
+
+
 let onTerminal = f => {
   Event.add(f, Listeners.terminalRequested);
 };
@@ -419,6 +432,10 @@ let onQuit = f => {
 
 let onUnhandledEscape = f => {
   Event.add(f, Listeners.unhandledEscape);
+};
+
+let onVersion = f => {	
+  Event.add(f, Listeners.version);	
 };
 
 let onYank = f => {
