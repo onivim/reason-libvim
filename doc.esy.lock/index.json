@@ -1,5 +1,5 @@
 {
-  "checksum": "fea6b06f0e2bdc03cf0e962b7af7a80f",
+  "checksum": "d639021156e8418857bfa3fc27d56326",
   "root": "reason-libvim@link-dev:./package.json",
   "node": {
     "url-join@2.0.5@d41d8cd9": {
@@ -90,7 +90,7 @@
       "overrides": [ "doc.json" ],
       "dependencies": [
         "refmterr@3.3.0@d41d8cd9", "ocaml@4.9.0@d41d8cd9",
-        "libvim@8.10869.42@d41d8cd9", "http-server@0.12.3@d41d8cd9",
+        "libvim@8.10869.43@d41d8cd9", "http-server@0.12.3@d41d8cd9",
         "editor-core-types@github:onivim/editor-core-types#6a8afaf@d41d8cd9",
         "@reason-native/rely@2.2.0@d41d8cd9",
         "@opam/odoc@opam:1.5.0@35218f5f",
@@ -231,14 +231,14 @@
       "dependencies": [],
       "devDependencies": []
     },
-    "libvim@8.10869.42@d41d8cd9": {
-      "id": "libvim@8.10869.42@d41d8cd9",
+    "libvim@8.10869.43@d41d8cd9": {
+      "id": "libvim@8.10869.43@d41d8cd9",
       "name": "libvim",
-      "version": "8.10869.42",
+      "version": "8.10869.43",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://registry.npmjs.org/libvim/-/libvim-8.10869.42.tgz#sha1:31dacfda32526eba86087bbeaa762b6342116158"
+          "archive:https://registry.npmjs.org/libvim/-/libvim-8.10869.43.tgz#sha1:bea17634cc9bb797fe0abf90973ba7813efd055e"
         ]
       },
       "overrides": [],
