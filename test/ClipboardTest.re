@@ -2,10 +2,12 @@ open EditorCoreTypes;
 open Vim;
 open TestFramework;
 
+open Types;
+
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 let input = s => ignore(Vim.input(s));
 
-let makeFun = (s, _) => Some([|s|]);
+let makeFun = (s, _) => Some({lines: [|s|], blockType: Line});
 
 describe("Clipboard", ({describe, _}) => {
   describe("override", ({test, _}) => {
@@ -26,7 +28,7 @@ describe("Clipboard", ({describe, _}) => {
     test("return single line", ({expect, _}) => {
       let buf = resetBuffer();
 
-      Clipboard.setProvider(_ => Some([|"a"|]));
+      Clipboard.setProvider(_ => Some({lines: [|"a"|], blockType: Line}));
 
       input("y");
       input("y");
@@ -40,7 +42,9 @@ describe("Clipboard", ({describe, _}) => {
     test("return multiple lines", ({expect, _}) => {
       let buf = resetBuffer();
 
-      Clipboard.setProvider(_ => Some([|"a", "b", "c"|]));
+      Clipboard.setProvider(_ =>
+        Some({lines: [|"a", "b", "c"|], blockType: Line})
+      );
 
       input("y");
       input("y");

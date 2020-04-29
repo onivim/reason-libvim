@@ -1,6 +1,15 @@
 type buffer;
 
-type clipboardProvider = int => option(array(string));
+type blockType =
+  | Line
+  | Character;
+
+type clipboardContents = {
+  lines: array(string),
+  blockType,
+};
+
+type clipboardProvider = int => option(clipboardContents);
 
 type lineEnding =
   | CR
