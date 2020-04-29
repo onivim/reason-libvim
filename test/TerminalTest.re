@@ -64,10 +64,7 @@ describe("Terminal", ({test, _}) => {
 
     unsubscribe();
   });
-<<<<<<< HEAD
-  test("GC stress test", ({expect, _}) => {
-=======
-  test("No close flag is set", ({expect}) => {
+  test("No close flag is set", ({expect, _}) => {
     let _ = resetBuffer();
 
     let hitCount = ref(0);
@@ -87,8 +84,7 @@ describe("Terminal", ({test, _}) => {
 
     unsubscribe();
   });
-  test("GC stress test", ({expect}) => {
->>>>>>> master
+  test("GC stress test", ({expect, _}) => {
     let _ = resetBuffer();
 
     let hitCount = ref(0);
