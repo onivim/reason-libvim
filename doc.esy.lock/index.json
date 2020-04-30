@@ -1,5 +1,5 @@
 {
-  "checksum": "875c21dabef2cd2b6192e5410e7d3add",
+  "checksum": "d639021156e8418857bfa3fc27d56326",
   "root": "reason-libvim@link-dev:./package.json",
   "node": {
     "url-join@2.0.5@d41d8cd9": {
@@ -90,7 +90,7 @@
       "overrides": [ "doc.json" ],
       "dependencies": [
         "refmterr@3.3.0@d41d8cd9", "ocaml@4.9.0@d41d8cd9",
-        "libvim@8.10869.41@d41d8cd9", "http-server@0.12.3@d41d8cd9",
+        "libvim@8.10869.43@d41d8cd9", "http-server@0.12.3@d41d8cd9",
         "editor-core-types@github:onivim/editor-core-types#6a8afaf@d41d8cd9",
         "@reason-native/rely@2.2.0@d41d8cd9",
         "@opam/odoc@opam:1.5.0@35218f5f",
@@ -116,14 +116,14 @@
       "dependencies": [],
       "devDependencies": []
     },
-    "portfinder@1.0.25@d41d8cd9": {
-      "id": "portfinder@1.0.25@d41d8cd9",
+    "portfinder@1.0.26@d41d8cd9": {
+      "id": "portfinder@1.0.26@d41d8cd9",
       "name": "portfinder",
-      "version": "1.0.25",
+      "version": "1.0.26",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://registry.npmjs.org/portfinder/-/portfinder-1.0.25.tgz#sha1:254fd337ffba869f4b9d37edc298059cb4d35eca"
+          "archive:https://registry.npmjs.org/portfinder/-/portfinder-1.0.26.tgz#sha1:475658d56ca30bed72ac7f1378ed350bd1b64e70"
         ]
       },
       "overrides": [],
@@ -231,14 +231,14 @@
       "dependencies": [],
       "devDependencies": []
     },
-    "libvim@8.10869.41@d41d8cd9": {
-      "id": "libvim@8.10869.41@d41d8cd9",
+    "libvim@8.10869.43@d41d8cd9": {
+      "id": "libvim@8.10869.43@d41d8cd9",
       "name": "libvim",
-      "version": "8.10869.41",
+      "version": "8.10869.43",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://registry.npmjs.org/libvim/-/libvim-8.10869.41.tgz#sha1:b22bae4a0f9661e4f4e4ed9b8a540eefe5d3bb37"
+          "archive:https://registry.npmjs.org/libvim/-/libvim-8.10869.43.tgz#sha1:bea17634cc9bb797fe0abf90973ba7813efd055e"
         ]
       },
       "overrides": [],
@@ -258,7 +258,7 @@
       "overrides": [],
       "dependencies": [
         "union@0.5.0@d41d8cd9", "secure-compare@3.0.1@d41d8cd9",
-        "portfinder@1.0.25@d41d8cd9", "opener@1.5.1@d41d8cd9",
+        "portfinder@1.0.26@d41d8cd9", "opener@1.5.1@d41d8cd9",
         "minimist@1.2.5@d41d8cd9", "http-proxy@1.18.0@d41d8cd9",
         "ecstatic@3.3.2@d41d8cd9", "corser@2.0.1@d41d8cd9",
         "colors@1.4.0@d41d8cd9", "basic-auth@1.1.0@d41d8cd9"

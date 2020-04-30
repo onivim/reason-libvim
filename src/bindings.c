@@ -240,9 +240,10 @@ void onWindowSplit(windowSplit_T splitType, char_u *path) {
   CAMLreturn0;
 }
 
-int getClipboardCallback(int regname, int *num_lines, char_u ***lines) {
+int getClipboardCallback(int regname, int *num_lines, char_u ***lines,
+                         int *blockType) {
   CAMLparam0();
-  CAMLlocal1(clipboardArray);
+  CAMLlocal3(vRecord, clipboardArray, vBlockType);
 
   static const value *lv_clipboardGet = NULL;
 
@@ -255,7 +256,16 @@ int getClipboardCallback(int regname, int *num_lines, char_u ***lines) {
   int ret = 0;
   // Some
   if (Is_block(v)) {
-    clipboardArray = Field(v, 0);
+    vRecord = Field(v, 0);
+    clipboardArray = Field(vRecord, 0);
+    vBlockType = Int_val(Field(vRecord, 1));
+
+    if (vBlockType == 0) {
+      *blockType = MLINE;
+    } else {
+      *blockType = MCHAR;
+    }
+
     int len = Wosize_val(clipboardArray);
 
     *num_lines = len;
