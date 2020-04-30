@@ -147,7 +147,7 @@ describe("Multi-cursor", ({describe, _}) => {
         "abThis is the third line of a test file",
       );
 
-      let _: list(Cursor.t)= input(~cursors, "<bs>");
+      let _: list(Cursor.t) = input(~cursors, "<bs>");
 
       let line1 = Buffer.getLine(buf, Index.zero);
       let line2 = Buffer.getLine(buf, Index.(zero + 1));
