@@ -108,7 +108,7 @@ describe("Multi-cursor", ({describe, _}) => {
       let updates: ref(list(BufferUpdate.t)) = ref([]);
       let dispose = Buffer.onUpdate(upd => updates := [upd, ...updates^]);
 
-      let _ = input("i");
+      let _: Context.t = Vim.input("i");
       expect.int(List.length(updates^)).toBe(0);
 
       let cursors =
@@ -147,7 +147,7 @@ describe("Multi-cursor", ({describe, _}) => {
         "abThis is the third line of a test file",
       );
 
-      let _ = input(~cursors, "<bs>");
+      let _: list(Cursor.t)= input(~cursors, "<bs>");
 
       let line1 = Buffer.getLine(buf, Index.zero);
       let line2 = Buffer.getLine(buf, Index.(zero + 1));
