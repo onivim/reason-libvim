@@ -11,6 +11,13 @@ let uname () =
     let () = close_in ic in
     uname;;
 
+let getLibIntlPath () =
+    let ic = Unix.open_process_in "find /usr/local/Cellar -name libintl.a -print 2>/dev/null" in
+    let path = input_line ic in
+    let () = close_in ic in
+    let () = prerr_endline ("libintl path: " ^ path) in
+    path;;
+
 let get_os =
     match Sys.os_type with
     | "Win32" -> Windows
@@ -57,7 +64,7 @@ let flags =
         @ cclib("-lXt")
     | _ -> []
         @ ccopt(libPath)
-        @ cclib("-lintl")
+        @ cclib(getLibIntlPath())
         @ cclib("-lvim")
         @ cclib("-lm")
         @ cclib("-lncurses")
