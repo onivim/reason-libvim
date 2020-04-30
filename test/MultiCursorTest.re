@@ -18,7 +18,7 @@ describe("Multi-cursor", ({describe, _}) => {
   describe("normal mode", ({describe, _}) => {
     describe("single cursor", ({test, _}) => {
       test("set cursor works as expected", ({expect, _}) => {
-        let _ = resetBuffer();
+        let _: Buffer.t = resetBuffer();
         let cursors1 = input("j");
 
         cursors1
@@ -84,7 +84,7 @@ describe("Multi-cursor", ({describe, _}) => {
         "{}This is the third line of a test file",
       );
 
-      let _ = input(~autoClosingPairs, ~cursors, "a");
+      let _: list(Cursor.t) = input(~autoClosingPairs, ~cursors, "a");
 
       let line1 = Buffer.getLine(buf, Index.zero);
       let line2 = Buffer.getLine(buf, Index.(zero + 1));

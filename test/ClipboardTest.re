@@ -2,10 +2,12 @@ open EditorCoreTypes;
 open Vim;
 open TestFramework;
 
+open Types;
+
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 let input = s => ignore(Vim.input(s));
 
-let makeFun = (s, _) => Some([|s|]);
+let makeFun = (s, _) => Some({lines: [|s|], blockType: Line});
 
 describe("Clipboard", ({describe, _}) => {
   describe("override", ({test, _}) => {
@@ -26,7 +28,7 @@ describe("Clipboard", ({describe, _}) => {
     test("return single line", ({expect, _}) => {
       let buf = resetBuffer();
 
-      Clipboard.setProvider(_ => Some([|"a"|]));
+      Clipboard.setProvider(_ => Some({lines: [|"a"|], blockType: Line}));
 
       input("y");
       input("y");
@@ -37,10 +39,46 @@ describe("Clipboard", ({describe, _}) => {
       expect.string(line).toEqual("a");
     });
 
+    test("return single line, blockType character", ({expect, _}) => {
+      let buf = resetBuffer();
+
+      Clipboard.setProvider(_ =>
+        Some({lines: [|"a"|], blockType: Character})
+      );
+
+      input("y");
+      input("y");
+      input("p");
+
+      let line = Buffer.getLine(buf, Index.zero);
+
+      expect.string(line).toEqual("Tahis is the first line of a test file");
+    });
+
+    test("return multiple lines, blockType character", ({expect, _}) => {
+      let buf = resetBuffer();
+
+      Clipboard.setProvider(_ =>
+        Some({lines: [|"a", "b"|], blockType: Character})
+      );
+
+      input("y");
+      input("y");
+      input("p");
+
+      let line0 = Buffer.getLine(buf, Index.zero);
+      let line1 = Buffer.getLine(buf, Index.(zero + 1));
+
+      expect.string(line0).toEqual("Ta");
+      expect.string(line1).toEqual("bhis is the first line of a test file");
+    });
+
     test("return multiple lines", ({expect, _}) => {
       let buf = resetBuffer();
 
-      Clipboard.setProvider(_ => Some([|"a", "b", "c"|]));
+      Clipboard.setProvider(_ =>
+        Some({lines: [|"a", "b", "c"|], blockType: Line})
+      );
 
       input("y");
       input("y");
