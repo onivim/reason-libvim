@@ -7,7 +7,7 @@ let input = s => ignore(Vim.input(s));
 
 describe("Window", ({describe, _}) => {
   describe("get / set metrics", ({test, _}) =>
-    test("simple test", ({expect}) => {
+    test("simple test", ({expect, _}) => {
       let _ = resetBuffer();
 
       Window.setWidth(50);
@@ -19,7 +19,7 @@ describe("Window", ({describe, _}) => {
   );
 
   describe("setTopLeft", ({test, _}) =>
-    test("simple test", ({expect}) => {
+    test("simple test", ({expect, _}) => {
       let _ = resetBuffer();
 
       Window.setWidth(3);
@@ -36,7 +36,7 @@ describe("Window", ({describe, _}) => {
   );
 
   describe("onLeftColumnChanged", ({test, _}) =>
-    test("dispatches on change", ({expect}) => {
+    test("dispatches on change", ({expect, _}) => {
       let _ = resetBuffer();
 
       Window.setWidth(3);
@@ -62,7 +62,7 @@ describe("Window", ({describe, _}) => {
   );
 
   describe("onTopLineChanged", ({test, _}) =>
-    test("dispatches on change", ({expect}) => {
+    test("dispatches on change", ({expect, _}) => {
       let _ = resetBuffer();
 
       Window.setWidth(50);
@@ -102,7 +102,7 @@ describe("Window", ({describe, _}) => {
   );
 
   describe("onMovement", ({test, _}) => {
-    test("simple movement", ({expect}) => {
+    test("simple movement", ({expect, _}) => {
       let _ = resetBuffer();
 
       let movements = ref([]);
@@ -124,7 +124,7 @@ describe("Window", ({describe, _}) => {
       dispose();
     });
 
-    test("movement with count", ({expect}) => {
+    test("movement with count", ({expect, _}) => {
       let _ = resetBuffer();
 
       let movements = ref([]);
@@ -147,7 +147,7 @@ describe("Window", ({describe, _}) => {
       dispose();
     });
 
-    test("rotate downwards", ({expect}) => {
+    test("rotate downwards", ({expect, _}) => {
       let _ = resetBuffer();
 
       let movements = ref([]);
@@ -169,7 +169,7 @@ describe("Window", ({describe, _}) => {
       dispose();
     });
 
-    test("rotate upwards", ({expect}) => {
+    test("rotate upwards", ({expect, _}) => {
       let _ = resetBuffer();
 
       let movements = ref([]);
@@ -192,7 +192,7 @@ describe("Window", ({describe, _}) => {
     });
   });
   describe("onSplit", ({test, _}) => {
-    test("vsp creates split", ({expect}) => {
+    test("vsp creates split", ({expect, _}) => {
       let _ = resetBuffer();
 
       let splits = ref([]);
@@ -201,7 +201,7 @@ describe("Window", ({describe, _}) => {
           splits := [(splitType, name), ...splits^]
         );
 
-      command("vsp test.txt");
+      let _context: Context.t = command("vsp test.txt");
 
       expect.int(List.length(splits^)).toBe(1);
 
@@ -213,7 +213,7 @@ describe("Window", ({describe, _}) => {
       dispose();
     });
 
-    test("sp creates split", ({expect}) => {
+    test("sp creates split", ({expect, _}) => {
       let _ = resetBuffer();
 
       let splits = ref([]);
@@ -222,7 +222,7 @@ describe("Window", ({describe, _}) => {
           splits := [(splitType, name), ...splits^]
         );
 
-      command("sp test2.txt");
+      let _context: Context.t = command("sp test2.txt");
 
       expect.int(List.length(splits^)).toBe(1);
 
@@ -234,7 +234,7 @@ describe("Window", ({describe, _}) => {
       dispose();
     });
 
-    test("<C-w>v creates split, with same buffer", ({expect}) => {
+    test("<C-w>v creates split, with same buffer", ({expect, _}) => {
       let buf = resetBuffer();
 
       let splits = ref([]);
@@ -258,7 +258,7 @@ describe("Window", ({describe, _}) => {
       dispose();
     });
 
-    test("<C-w>s creates split, with same buffer", ({expect}) => {
+    test("<C-w>s creates split, with same buffer", ({expect, _}) => {
       let buf = resetBuffer();
 
       let splits = ref([]);

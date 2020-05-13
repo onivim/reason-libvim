@@ -7,7 +7,7 @@ let input = s => ignore(Vim.input(s));
 
 describe("Edit", ({describe, _}) =>
   describe("insert mode", ({test, _}) => {
-    test("insert mode should flip modified flag", ({expect}) => {
+    test("insert mode should flip modified flag", ({expect, _}) => {
       let buffer = resetBuffer();
 
       expect.bool(Buffer.isModified(buffer)).toBe(false);
@@ -24,7 +24,7 @@ describe("Edit", ({describe, _}) =>
 
       expect.bool(Buffer.isModified(buffer)).toBe(true);
     });
-    test("getLine reflects inserted text", ({expect}) => {
+    test("getLine reflects inserted text", ({expect, _}) => {
       let buffer = resetBuffer();
 
       input("I");
@@ -49,7 +49,7 @@ describe("Edit", ({describe, _}) =>
       let line = Buffer.getLine(buffer, Index.zero);
       expect.string(line).toEqual("abc");
     });
-    test("changed tick should be updated after each input", ({expect}) => {
+    test("changed tick should be updated after each input", ({expect, _}) => {
       let buffer = resetBuffer();
 
       let startChangedTick = Buffer.getVersion(buffer);

@@ -1,5 +1,5 @@
 {
-  "checksum": "989878d45b1f088877542295660ade1e",
+  "checksum": "74f703f347d203f06969b006f0fb6503",
   "root": "reason-libvim@link-dev:./package.json",
   "node": {
     "refmterr@3.3.0@d41d8cd9": {
@@ -36,13 +36,13 @@
         "refmterr@3.3.0@d41d8cd9", "ocaml@4.9.0@d41d8cd9",
         "libvim@8.10869.43@d41d8cd9",
         "editor-core-types@github:onivim/editor-core-types#6a8afaf@d41d8cd9",
-        "@reason-native/rely@2.2.0@d41d8cd9",
+        "@reason-native/rely@3.2.1@d41d8cd9",
         "@opam/odoc@opam:1.5.0@35218f5f",
         "@opam/dune-configurator@opam:2.5.1@aeb9d8d5",
         "@opam/dune@opam:2.5.1@a0c1e658", "@esy-ocaml/reason@3.6.0@d41d8cd9"
       ],
       "devDependencies": [
-        "ocaml@4.9.0@d41d8cd9",
+        "ocaml@4.9.0@d41d8cd9", "@reason-native/rely@3.2.1@d41d8cd9",
         "@opam/ocaml-lsp-server@github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#5782d1d@d41d8cd9"
       ]
     },
@@ -91,21 +91,21 @@
       ],
       "devDependencies": [ "ocaml@4.9.0@d41d8cd9" ]
     },
-    "@reason-native/rely@2.2.0@d41d8cd9": {
-      "id": "@reason-native/rely@2.2.0@d41d8cd9",
+    "@reason-native/rely@3.2.1@d41d8cd9": {
+      "id": "@reason-native/rely@3.2.1@d41d8cd9",
       "name": "@reason-native/rely",
-      "version": "2.2.0",
+      "version": "3.2.1",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://registry.npmjs.org/@reason-native/rely/-/rely-2.2.0.tgz#sha1:85f34f15dcd8547033759d9fccdba03e12a32031"
+          "archive:https://registry.npmjs.org/@reason-native/rely/-/rely-3.2.1.tgz#sha1:7945ac6a51773a97b8f8cfd97d2855ac7ac4ecb2"
         ]
       },
       "overrides": [],
       "dependencies": [
-        "refmterr@3.3.0@d41d8cd9", "ocaml@4.9.0@d41d8cd9",
-        "@reason-native/pastel@0.3.0@d41d8cd9",
+        "ocaml@4.9.0@d41d8cd9", "@reason-native/pastel@0.3.0@d41d8cd9",
         "@reason-native/file-context-printer@0.0.3@d41d8cd9",
+        "@reason-native/cli@0.0.1-alpha@d41d8cd9",
         "@opam/re@opam:1.9.0@d4d5e13d", "@opam/junit@opam:2.0.2@0b7bd730",
         "@opam/dune@opam:2.5.1@a0c1e658", "@esy-ocaml/reason@3.6.0@d41d8cd9"
       ],
@@ -159,6 +159,24 @@
       "overrides": [],
       "dependencies": [
         "ocaml@4.9.0@d41d8cd9", "@opam/dune@opam:2.5.1@a0c1e658",
+        "@esy-ocaml/reason@3.6.0@d41d8cd9"
+      ],
+      "devDependencies": []
+    },
+    "@reason-native/cli@0.0.1-alpha@d41d8cd9": {
+      "id": "@reason-native/cli@0.0.1-alpha@d41d8cd9",
+      "name": "@reason-native/cli",
+      "version": "0.0.1-alpha",
+      "source": {
+        "type": "install",
+        "source": [
+          "archive:https://registry.npmjs.org/@reason-native/cli/-/cli-0.0.1-alpha.tgz#sha1:0b911053fa7cc661eac10ead50d6ea6cc1fcd94d"
+        ]
+      },
+      "overrides": [],
+      "dependencies": [
+        "ocaml@4.9.0@d41d8cd9", "@reason-native/pastel@0.3.0@d41d8cd9",
+        "@opam/re@opam:1.9.0@d4d5e13d", "@opam/dune@opam:2.5.1@a0c1e658",
         "@esy-ocaml/reason@3.6.0@d41d8cd9"
       ],
       "devDependencies": []

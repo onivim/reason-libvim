@@ -2,10 +2,10 @@ open TestFramework;
 open Vim;
 
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
-let input = s => ignore(Vim.input(s));
+let input = s => ignore(Vim.input(s): Context.t);
 
 describe("Goto", ({test, _}) => {
-  test("gd", ({expect}) => {
+  test("gd", ({expect, _}) => {
     let _ = resetBuffer();
 
     let updates = ref([]);
@@ -21,7 +21,7 @@ describe("Goto", ({test, _}) => {
 
     dispose();
   });
-  test("gD", ({expect}) => {
+  test("gD", ({expect, _}) => {
     let _ = resetBuffer();
 
     let updates = ref([]);

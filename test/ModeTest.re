@@ -1,12 +1,10 @@
-open EditorCoreTypes;
-open Vim;
 open TestFramework;
 
 let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 
 describe("Mode", ({describe, _}) => {
   describe("replace mode", ({test, _}) => {
-    test("replace mode is reported correctly", ({expect}) => {
+    test("replace mode is reported correctly", ({expect, _}) => {
       let _ = resetBuffer();
 
       // Enter replace mode
@@ -16,7 +14,7 @@ describe("Mode", ({describe, _}) => {
     })
   });
   describe("select mode", ({test, _}) => {
-    test("select mode is reported correctly", ({expect}) => {
+    test("select mode is reported correctly", ({expect, _}) => {
       let _ = resetBuffer();
 
       // Enter replace mode

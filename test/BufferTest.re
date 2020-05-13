@@ -7,7 +7,7 @@ let input = s => ignore(Vim.input(s));
 
 describe("Buffer", ({describe, _}) => {
   describe("fileformats", ({test, _}) => {
-    test("get / set", ({expect}) => {
+    test("get / set", ({expect, _}) => {
       let buffer = resetBuffer();
 
       Buffer.setLineEndings(buffer, CRLF);
@@ -18,13 +18,13 @@ describe("Buffer", ({describe, _}) => {
       let lineEndings = Buffer.getLineEndings(buffer);
       expect.equal(lineEndings, Some(LF));
     });
-    test("get: crlf", ({expect}) => {
+    test("get: crlf", ({expect, _}) => {
       let buffer = Helpers.resetBuffer("test/test.crlf");
       let lineEndings = Buffer.getLineEndings(buffer);
 
       expect.equal(lineEndings, Some(CRLF));
     });
-    test("get: lf", ({expect}) => {
+    test("get: lf", ({expect, _}) => {
       let buffer = Helpers.resetBuffer("test/test.lf");
       let lineEndings = Buffer.getLineEndings(buffer);
 
@@ -32,7 +32,7 @@ describe("Buffer", ({describe, _}) => {
     });
   });
   describe("read-only", ({test, _}) => {
-    test("get / set", ({expect}) => {
+    test("get / set", ({expect, _}) => {
       let buffer = resetBuffer();
 
       Buffer.setReadOnly(~readOnly=true, buffer);
@@ -43,7 +43,7 @@ describe("Buffer", ({describe, _}) => {
     })
   });
   describe("modifiable", ({test, _}) => {
-    test("get / set", ({expect}) => {
+    test("get / set", ({expect, _}) => {
       let buffer = resetBuffer();
       Buffer.setModifiable(~modifiable=false, buffer);
       expect.equal(Buffer.isModifiable(buffer), false);
@@ -53,7 +53,7 @@ describe("Buffer", ({describe, _}) => {
     })
   });
   describe("setLines", ({test, _}) => {
-    test("add a line at beginning", ({expect}) => {
+    test("add a line at beginning", ({expect, _}) => {
       let buffer = resetBuffer();
 
       let updates: ref(list(BufferUpdate.t)) = ref([]);
@@ -77,7 +77,7 @@ describe("Buffer", ({describe, _}) => {
 
       dispose();
     });
-    test("change line in middle", ({expect}) => {
+    test("change line in middle", ({expect, _}) => {
       let buffer = resetBuffer();
 
       let line1Index = Index.(zero + 1);
@@ -94,7 +94,7 @@ describe("Buffer", ({describe, _}) => {
       expect.string(line1).toEqual("abc");
       expect.string(line2).toEqual("This is the third line of a test file");
     });
-    test("replace whole buffer - set both start / stop", ({expect}) => {
+    test("replace whole buffer - set both start / stop", ({expect, _}) => {
       let buffer = resetBuffer();
 
       Buffer.setLines(
@@ -108,7 +108,7 @@ describe("Buffer", ({describe, _}) => {
       expect.int(lineCount).toBe(1);
       expect.string(line0).toEqual("abc");
     });
-    test("replace whole buffer - set just start", ({expect}) => {
+    test("replace whole buffer - set just start", ({expect, _}) => {
       let buffer = resetBuffer();
 
       Buffer.setLines(~start=Index.zero, ~lines=[|"abc"|], buffer);
@@ -117,7 +117,7 @@ describe("Buffer", ({describe, _}) => {
       expect.int(lineCount).toBe(1);
       expect.string(line0).toEqual("abc");
     });
-    test("replace whole buffer - not setting start / stop", ({expect}) => {
+    test("replace whole buffer - not setting start / stop", ({expect, _}) => {
       let buffer = resetBuffer();
 
       let updates: ref(list(BufferUpdate.t)) = ref([]);
@@ -139,7 +139,7 @@ describe("Buffer", ({describe, _}) => {
 
       dispose();
     });
-    test("add a line at end", ({expect}) => {
+    test("add a line at end", ({expect, _}) => {
       let buffer = resetBuffer();
 
       let endPoint = Buffer.getLineCount(buffer) |> Index.fromZeroBased;
@@ -154,7 +154,7 @@ describe("Buffer", ({describe, _}) => {
     });
   });
   describe("getLine", ({test, _}) =>
-    test("single file", ({expect}) => {
+    test("single file", ({expect, _}) => {
       let _ = resetBuffer();
       let buffer = Buffer.openFile("test/testfile.txt");
       let line = Buffer.getLine(buffer, Index.fromOneBased(1));
@@ -162,7 +162,7 @@ describe("Buffer", ({describe, _}) => {
     })
   );
   describe("getLineCount", ({test, _}) =>
-    test("single file", ({expect}) => {
+    test("single file", ({expect, _}) => {
       let _ = resetBuffer();
       let buffer = Buffer.openFile("test/testfile.txt");
       expect.int(Buffer.getLineCount(buffer)).toBe(3);
@@ -171,7 +171,7 @@ describe("Buffer", ({describe, _}) => {
   describe("onModifiedChanged", ({test, _}) =>
     test(
       "switching to a new file should not trigger an onFilenameChanged event",
-      ({expect}) => {
+      ({expect, _}) => {
       let _ = resetBuffer();
 
       let modifyVals = ref([]);
@@ -211,7 +211,7 @@ describe("Buffer", ({describe, _}) => {
   describe("onFilenameChanged", ({test, _}) => {
     test(
       "switching to a new file should not trigger an onFilenameChanged event",
-      ({expect}) => {
+      ({expect, _}) => {
       let _ = resetBuffer();
 
       let updates = ref([]);
@@ -220,7 +220,7 @@ describe("Buffer", ({describe, _}) => {
         Buffer.onFilenameChanged(meta => updates := [meta, ...updates^]);
       let dispose2 = Buffer.onEnter(v => onEnter := [v, ...onEnter^]);
 
-      command("e! some-new-file.txt");
+      let _: Context.t = command("e! some-new-file.txt");
 
       /* A filename changed event should not have been triggered */
       expect.int(List.length(updates^)).toBe(0);
@@ -232,7 +232,7 @@ describe("Buffer", ({describe, _}) => {
     });
     test(
       "saving to a new file should trigger an onFilenameChanged event",
-      ({expect}) => {
+      ({expect, _}) => {
       let _ = resetBuffer();
 
       let updates = ref([]);
@@ -249,7 +249,7 @@ describe("Buffer", ({describe, _}) => {
 
       let previousFilename =
         Buffer.getCurrent() |> Buffer.getFilename |> string_opt;
-      command("sav! some-new-file-2.txt");
+      let _: Context.t = command("sav! some-new-file-2.txt");
       let newFilename =
         Buffer.getCurrent() |> Buffer.getFilename |> string_opt;
 
@@ -265,7 +265,7 @@ describe("Buffer", ({describe, _}) => {
     });
   });
   describe("onFiletypeChanged", ({test, _}) => {
-    test("switching filetype should trigger event", ({expect}) => {
+    test("switching filetype should trigger event", ({expect, _}) => {
       let _ = resetBuffer();
 
       let updates = ref([]);
@@ -274,7 +274,7 @@ describe("Buffer", ({describe, _}) => {
           updates := [meta.fileType, ...updates^]
         );
 
-      command("set filetype=derp");
+      let _: Context.t = command("set filetype=derp");
 
       /* A filename changed event should not have been triggered */
       expect.int(List.length(updates^)).toBe(1);
@@ -286,7 +286,7 @@ describe("Buffer", ({describe, _}) => {
   });
   describe("onEnter", ({test, _}) => {
     test(
-      "editing a new file should trigger a buffer enter event", ({expect}) => {
+      "editing a new file should trigger a buffer enter event", ({expect, _}) => {
       let _ = resetBuffer();
 
       let updates: ref(list(Buffer.t)) = ref([]);
@@ -301,7 +301,7 @@ describe("Buffer", ({describe, _}) => {
 
     test(
       "editing a new file via ':e' should trigger a buffer enter event",
-      ({expect}) => {
+      ({expect, _}) => {
       let _ = resetBuffer();
 
       let updates: ref(list(Buffer.t)) = ref([]);
@@ -315,7 +315,7 @@ describe("Buffer", ({describe, _}) => {
 
     test(
       "jumping to a previous file via '<c-o>' should trigger buffer enter",
-      ({expect}) => {
+      ({expect, _}) => {
       let _ = resetBuffer();
 
       let buf1 = Buffer.openFile("test/lines_100.txt");
@@ -341,13 +341,13 @@ describe("Buffer", ({describe, _}) => {
     });
   });
   describe("onWrite", ({test, _}) => {
-    test("saving the file should trigger an onWrite event", ({expect}) => {
+    test("saving the file should trigger an onWrite event", ({expect, _}) => {
       let _ = resetBuffer();
 
       let writes = ref([]);
       let dispose = Buffer.onWrite(id => writes := [id, ...writes^]);
 
-      command("w! some-new-file-again-write.txt");
+      let _context: Context.t = command("w! some-new-file-again-write.txt");
 
       expect.int(List.length(writes^)).toBe(1);
 

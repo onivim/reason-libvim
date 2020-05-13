@@ -28,6 +28,23 @@ module AutoClosingPairs: {
   let isBetweenDeletionPairs: (string, Index.t, t) => bool;
 };
 
+module Context: {
+  type t = {
+    autoClosingPairs: AutoClosingPairs.t,
+    bufferId: int,
+    width: int,
+    height: int,
+    leftColumn: int,
+    topLine: int,
+    cursors: list(Cursor.t),
+    lineComment: option(string),
+    tabSize: int,
+    insertSpaces: bool,
+  };
+
+  let current: unit => t;
+};
+
 module Buffer: {
   type t = Native.buffer;
 
@@ -181,13 +198,7 @@ The value [s] may be of the following form:
 
 The keystroke is processed synchronously.
 */
-let input:
-  (
-    ~autoClosingPairs: AutoClosingPairs.t=?,
-    ~cursors: list(Cursor.t)=?,
-    string
-  ) =>
-  list(Cursor.t);
+let input: (~context: Context.t=?, string) => Context.t;
 
 /**
 [command(cmd)] executes [cmd] as an Ex command.
@@ -198,7 +209,7 @@ You may use any valid Ex command, although you must omit the leading semicolon.
 
 The command [cmd] is processed synchronously.
 */
-let command: string => unit;
+let command: string => Context.t;
 
 /**
 [onDirectoryChanged(f)] registers a directory changed listener [f].
@@ -211,7 +222,6 @@ let onDirectoryChanged:
 
 /**
 [onGoto(f)] registers a handler for the goto command [f].
-
 [f] is called whenever a goto command is executed, for example,
 "gd" (go-to definition) or "gD" (go-to declaration)
 */
@@ -219,7 +229,6 @@ let onGoto: Listeners.gotoListener => Event.unsubscribe;
 
 /**
 [onMessage(f)] registers a message listener [f].
-
 [f] is called whenever a message is emitted from Vim.
 */
 let onMessage: Listeners.messageListener => Event.unsubscribe;

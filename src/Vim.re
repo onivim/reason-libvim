@@ -9,6 +9,7 @@ module BufferMetadata = BufferMetadata;
 module BufferUpdate = BufferUpdate;
 module Clipboard = Clipboard;
 module CommandLine = CommandLine;
+module Context = Context;
 module Cursor = Cursor;
 module Event = Event;
 module Mode = Mode;
@@ -33,7 +34,34 @@ let flushQueue = () => {
   queuedFunctions := [];
 };
 
-let checkAndUpdateState = f => {
+let runWith = (~context: Context.t, f) => {
+  let currentBufferId = Buffer.getCurrent() |> Buffer.getId;
+
+  if (currentBufferId != context.bufferId) {
+    let currentBuffer = Buffer.getById(context.bufferId);
+
+    // TODO: Turn to result?
+    currentBuffer |> Option.iter(Buffer.setCurrent);
+  };
+
+  if (Window.getWidth() != context.width) {
+    Window.setWidth(context.width);
+  };
+
+  if (Window.getHeight() != context.height) {
+    Window.setHeight(context.height);
+  };
+
+  if (Window.getTopLine() != context.topLine
+      || Window.getLeftColumn() != context.leftColumn) {
+    Window.setTopLeft(context.topLine, context.leftColumn);
+  };
+
+  Options.setTabSize(context.tabSize);
+  Options.setInsertSpaces(context.insertSpaces);
+
+  context.lineComment |> Option.iter(Options.setLineComment);
+
   let oldBuf = Buffer.getCurrent();
   let prevMode = Mode.getCurrent();
   let prevLocation = Cursor.getLocation();
@@ -44,7 +72,7 @@ let checkAndUpdateState = f => {
   let prevModified = Buffer.isModified(oldBuf);
   let prevLineEndings = Buffer.getLineEndings(oldBuf);
 
-  let ret = f();
+  let cursors = f();
 
   let newBuf = Buffer.getCurrent();
   let newLocation = Cursor.getLocation();
@@ -110,7 +138,12 @@ let checkAndUpdateState = f => {
   };
 
   flushQueue();
-  ret;
+  let outContext = {
+    ...Context.current(),
+    cursors,
+    autoClosingPairs: context.autoClosingPairs,
+  };
+  outContext;
 };
 
 let _onAutocommand = (autoCommand: Types.autocmd, buffer: Buffer.t) => {
@@ -144,8 +177,8 @@ let _onIntro = () => {
   queue(() => Event.dispatch((), Listeners.intro));
 };
 
-let _onMessage = (priority, title, contents) => {
-  queue(() => Event.dispatch3(priority, title, contents, Listeners.message));
+let _onMessage = (priority, title, message) => {
+  queue(() => Event.dispatch3(priority, title, message, Listeners.message));
 };
 
 let _onQuit = (q, f) => {
@@ -260,100 +293,109 @@ let _getDefaultCursors = (cursors: list(Cursor.t)) =>
     cursors;
   };
 
-let input = (~autoClosingPairs=AutoClosingPairs.empty, ~cursors=[], v: string) => {
-  checkAndUpdateState(() => {
-    // Special auto-closing pairs handling...
+let input = (~context=Context.current(), v: string) => {
+  let {autoClosingPairs, cursors, _}: Context.t = context;
+  runWith(
+    ~context,
+    () => {
+      // Special auto-closing pairs handling...
 
-    let runCursor = cursor => {
-      Cursor.set(cursor);
-      if (Mode.getCurrent() == Types.Insert) {
-        let location = Cursor.getLocation();
-        let line = Buffer.getLine(Buffer.getCurrent(), location.line);
+      let runCursor = cursor => {
+        Cursor.set(cursor);
+        if (Mode.getCurrent() == Types.Insert) {
+          let location = Cursor.getLocation();
+          let line = Buffer.getLine(Buffer.getCurrent(), location.line);
 
-        let isBetweenClosingPairs = () => {
-          AutoClosingPairs.isBetweenClosingPairs(
-            line,
-            location.column,
-            autoClosingPairs,
-          );
-        };
+          let isBetweenClosingPairs = () => {
+            AutoClosingPairs.isBetweenClosingPairs(
+              line,
+              location.column,
+              autoClosingPairs,
+            );
+          };
 
-        let canCloseBefore = () =>
-          AutoClosingPairs.canCloseBefore(
-            line,
-            location.column,
-            autoClosingPairs,
-          );
+          let canCloseBefore = () =>
+            AutoClosingPairs.canCloseBefore(
+              line,
+              location.column,
+              autoClosingPairs,
+            );
 
-        if (v == "<BS>"
-            && AutoClosingPairs.isBetweenDeletionPairs(
-                 line,
-                 location.column,
-                 autoClosingPairs,
-               )) {
-          Native.vimInput("<DEL>");
-          Native.vimInput("<BS>");
-        } else if (v == "<CR>" && isBetweenClosingPairs()) {
-          Native.vimInput("<CR>");
-          Native.vimInput("<CR>");
-          Native.vimInput("<UP>");
-          Native.vimInput("<TAB>");
-        } else if (AutoClosingPairs.isPassThrough(
-                     v,
-                     line,
-                     location.column,
-                     autoClosingPairs,
-                   )) {
-          Native.vimInput("<RIGHT>");
-        } else if (AutoClosingPairs.isOpeningPair(v, autoClosingPairs)
-                   && canCloseBefore()) {
-          let pair = AutoClosingPairs.getByOpeningPair(v, autoClosingPairs);
-          Native.vimInput(v);
-          Native.vimInput(pair.closing);
-          Native.vimInput("<LEFT>");
+          if (v == "<BS>"
+              && AutoClosingPairs.isBetweenDeletionPairs(
+                   line,
+                   location.column,
+                   autoClosingPairs,
+                 )) {
+            Native.vimInput("<DEL>");
+            Native.vimInput("<BS>");
+          } else if (v == "<CR>" && isBetweenClosingPairs()) {
+            Native.vimInput("<CR>");
+            Native.vimInput("<CR>");
+            Native.vimInput("<UP>");
+            Native.vimInput("<TAB>");
+          } else if (AutoClosingPairs.isPassThrough(
+                       v,
+                       line,
+                       location.column,
+                       autoClosingPairs,
+                     )) {
+            Native.vimInput("<RIGHT>");
+          } else if (AutoClosingPairs.isOpeningPair(v, autoClosingPairs)
+                     && canCloseBefore()) {
+            let pair = AutoClosingPairs.getByOpeningPair(v, autoClosingPairs);
+            Native.vimInput(v);
+            Native.vimInput(pair.closing);
+            Native.vimInput("<LEFT>");
+          } else {
+            Native.vimInput(v);
+          };
         } else {
           Native.vimInput(v);
         };
+        Cursor.get();
+      };
+
+      let mode = Mode.getCurrent();
+      let cursors = _getDefaultCursors(cursors);
+      if (mode == Types.Insert) {
+        // Run first command, verify we don't go back to normal mode
+        switch (cursors) {
+        | [hd, ...tail] =>
+          let newHead = runCursor(hd);
+
+          let newMode = Mode.getCurrent();
+          // If we're still in insert mode, run the command for all the rest of the characters too
+          let remainingCursors =
+            switch (newMode) {
+            | Types.Insert => List.map(runCursor, tail)
+            | _ => tail
+            };
+
+          [newHead, ...remainingCursors];
+        // This should never happen...
+        | [] => cursors
+        };
       } else {
+        switch (cursors) {
+        | [hd, ..._] => Cursor.set(hd)
+        | _ => ()
+        };
         Native.vimInput(v);
+        _getDefaultCursors([]);
       };
-      Cursor.get();
-    };
-
-    let mode = Mode.getCurrent();
-    let cursors = _getDefaultCursors(cursors);
-    if (mode == Types.Insert) {
-      // Run first command, verify we don't go back to normal mode
-      switch (cursors) {
-      | [hd, ...tail] =>
-        let newHead = runCursor(hd);
-
-        let newMode = Mode.getCurrent();
-        // If we're still in insert mode, run the command for all the rest of the characters too
-        let remainingCursors =
-          if (newMode == Types.Insert) {
-            List.map(runCursor, tail);
-          } else {
-            tail;
-          };
-
-        [newHead, ...remainingCursors];
-      // This should never happen...
-      | [] => cursors
-      };
-    } else {
-      switch (cursors) {
-      | [hd, ..._] => Cursor.set(hd)
-      | _ => ()
-      };
-      Native.vimInput(v);
-      _getDefaultCursors([]);
-    };
-  });
+    },
+  );
 };
 
 let command = v => {
-  checkAndUpdateState(() => Native.vimCommand(v));
+  runWith(
+    ~context=Context.current(),
+    () => {
+      Native.vimCommand(v);
+      [];
+    },
+  );
 };
 
 let onDirectoryChanged = f => {

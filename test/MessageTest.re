@@ -5,7 +5,7 @@ let reset = () => Helpers.resetBuffer("test/testfile.txt");
 let input = s => ignore(Vim.input(s));
 
 describe("Messages", ({test, _}) => {
-  test("echo dispatches message", ({expect}) => {
+  test("echo dispatches message", ({expect, _}) => {
     let _ = reset();
 
     let messages = ref([]);
@@ -14,7 +14,7 @@ describe("Messages", ({test, _}) => {
         messages := [(priority, title, contents), ...messages^]
       );
 
-    command("echo 'hello'");
+    let _: Context.t = command("echo 'hello'");
 
     expect.int(List.length(messages^)).toBe(1);
 
@@ -26,7 +26,7 @@ describe("Messages", ({test, _}) => {
 
     dispose();
   });
-  test("echoerr dispatches error message", ({expect}) => {
+  test("echoerr dispatches error message", ({expect, _}) => {
     let _ = reset();
 
     let messages = ref([]);
@@ -35,7 +35,7 @@ describe("Messages", ({test, _}) => {
         messages := [(priority, title, contents), ...messages^]
       );
 
-    command("echoerr 'aproblem'");
+    let _: Context.t = command("echoerr 'aproblem'");
 
     /* TODO: Fix this! */
     /* expect.int(List.length(messages^)).toBe(1); */

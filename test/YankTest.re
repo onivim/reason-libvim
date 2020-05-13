@@ -5,7 +5,7 @@ let resetBuffer = () => Helpers.resetBuffer("test/testfile.txt");
 let input = s => ignore(Vim.input(s));
 
 describe("Yank", ({test, _}) => {
-  test("onYank works for deleting single line", ({expect}) => {
+  test("onYank works for deleting single line", ({expect, _}) => {
     let _ = resetBuffer();
 
     let yanks: ref(list(Yank.t)) = ref([]);
@@ -30,7 +30,7 @@ describe("Yank", ({test, _}) => {
 
     dispose();
   });
-  test("onYank works for deleting multiple lines", ({expect}) => {
+  test("onYank works for deleting multiple lines", ({expect, _}) => {
     let _ = resetBuffer();
 
     let yanks: ref(list(Yank.t)) = ref([]);
@@ -56,7 +56,7 @@ describe("Yank", ({test, _}) => {
     dispose();
   });
 
-  test("onYank works for single character", ({expect}) => {
+  test("onYank works for single character", ({expect, _}) => {
     let _ = resetBuffer();
 
     let yanks: ref(list(Yank.t)) = ref([]);
@@ -81,7 +81,7 @@ describe("Yank", ({test, _}) => {
     dispose();
   });
 
-  test("onYank works for yanking a line", ({expect}) => {
+  test("onYank works for yanking a line", ({expect, _}) => {
     let _ = resetBuffer();
 
     let yanks: ref(list(Yank.t)) = ref([]);
@@ -104,7 +104,7 @@ describe("Yank", ({test, _}) => {
     dispose();
   });
 
-  test("onYank sets register correctly", ({expect}) => {
+  test("onYank sets register correctly", ({expect, _}) => {
     let _ = resetBuffer();
 
     let yanks: ref(list(Yank.t)) = ref([]);
