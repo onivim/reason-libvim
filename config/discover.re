@@ -11,22 +11,21 @@ let uname = () => {
   uname;
 };
 
-let getLibIntlPath = () => {
-  try ({
-  let ic =
-    Unix.open_process_in(
-      "find /usr/local/Cellar -name libintl.a -print 2>/dev/null",
-    );
-  let path = input_line(ic);
-  let () = close_in(ic);
-  path;
+let getLibIntlPath = () =>
+  try({
+    let ic =
+      Unix.open_process_in(
+        "find /usr/local/Cellar -name libintl.a -print 2>/dev/null",
+      );
+    let path = input_line(ic);
+    let () = close_in(ic);
+    path;
   }) {
-  | ex => 
-    prerr_endline ("Unable to find libintl: " ++ Printexc.to_string(ex));
-    prerr_endline ("You may need to install gettext: `brew install gettext`");
+  | ex =>
+    prerr_endline("Unable to find libintl: " ++ Printexc.to_string(ex));
+    prerr_endline("You may need to install gettext: `brew install gettext`");
     failwith("Unable to find libintl");
   };
-};
 
 let get_os =
   switch (Sys.os_type) {
