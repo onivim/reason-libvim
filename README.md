@@ -1,3 +1,5 @@
+> __NOTE:__ This is now deprecated - future development is happening in the core [Onivim 2](https://github.com/onivim/oni2) repo.
+
 # reason-libvim
 [![Build Status](https://dev.azure.com/onivim/oni2/_apis/build/status/onivim.reason-libvim?branchName=master)](https://dev.azure.com/onivim/oni2/_build/latest?definitionId=5&branchName=master)
 
